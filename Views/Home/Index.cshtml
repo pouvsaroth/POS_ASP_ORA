@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "POS Dashboard";
+}
+
+<div class="row">
+
+    <!-- LEFT: Products Area -->
+    <div class="col-md-8">
+
+        <!-- Tables -->
+        <h5>Select Table</h5>
+        <div class="d-flex mb-3">
+            <button class="btn btn-outline-success me-2">Table 1</button>
+            <button class="btn btn-outline-success me-2">Table 2</button>
+            <button class="btn btn-outline-success">VIP</button>
+        </div>
+
+        <!-- Categories -->
+        <h5>Categories</h5>
+        <div class="mb-3">
+            <button class="btn btn-outline-primary me-2">Drink</button>
+            <button class="btn btn-outline-primary me-2">Food</button>
+            <button class="btn btn-outline-primary">Beer</button>
+        </div>
+
+        <!-- Products -->
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card p-2">
+                    <img src="https://via.placeholder.com/100" class="img-fluid">
+                    <h6>Coffee</h6>
+                    <p>$2.00</p>
+                    <button class="btn btn-sm btn-success">Add</button>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card p-2">
+                    <img src="https://via.placeholder.com/100" class="img-fluid">
+                    <h6>Beer</h6>
+                    <p>$3.00</p>
+                    <button class="btn btn-sm btn-success">Add</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT: Cart -->
+    <div class="col-md-4 border-start">
+
+        <h5>Order</h5>
+
+        <div class="mb-3">
+            <p>Cart is empty</p>
+        </div>
+
+        <hr>
+
+        <p>Subtotal: $0.00</p>
+        <p>Discount: $0.00</p>
+
+        <h5>Total: $0.00</h5>
+
+        <button class="btn btn-warning w-100 mb-2">Pending</button>
+        <button class="btn btn-primary w-100">Payment</button>
+
+    </div>
+
+</div>

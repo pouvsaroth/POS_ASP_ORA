@@ -1,0 +1,36 @@
+﻿using Microsoft.EntityFrameworkCore;
+using POS_ASP_ORA.Models;
+
+namespace POS_ASP_ORA.Data
+{
+    public class AppDbContext : DbContext
+    {
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+            : base(options) { }
+
+        public DbSet<Users> UsersModel { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Users>(entity =>
+            {
+                entity.Property(e => e.Id)
+                    .HasColumnType("RAW(16)")
+                    .HasDefaultValueSql("SYS_GUID()");
+                entity.Property(e => e.Username)
+                    .HasColumnType("VARCHAR2(100)");
+
+                entity.Property(e => e.Password)
+                    .HasColumnType("VARCHAR2(255)");
+
+                entity.Property(e => e.Email)
+                    .HasColumnType("VARCHAR2(100)");
+
+                entity.Property(e => e.IsActive)
+                    .HasColumnType("NUMBER(1)");
+                entity.Property(e => e.CreatedAt)
+                    .HasDefaultValueSql("SYSDATE");
+            });
+        }
+    }
+}

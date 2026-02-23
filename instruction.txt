@@ -1,0 +1,11 @@
+========== db migration==========
+-------install package-------
+dotnet add package Oracle.EntityFrameworkCore --version 8.21.150
+dotnet add package Oracle.ManagedDataAccess.Core --version 3.21.150
+dotnet add package Microsoft.EntityFrameworkCore.Tools --version 8.0.0
+dotnet tool install --global dotnet-ef
+
+-----create migration-------
+dotnet ef migrations add InitialCreate
+-----apply migration-------
+dotnet ef database update
