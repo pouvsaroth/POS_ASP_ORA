@@ -9,8 +9,8 @@ namespace POS_ASP_ORA.Data
             : base(options) { }
 
         public DbSet<Users> UsersModel { get; set; }
-
-        public DbSet<Customer> CustomerModel { get; set; }
+        public DbSet<Group> GroundModel { get; set; }
+        public DbSet<BeginingBalance> BeginingBalanceModel { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,38 +34,55 @@ namespace POS_ASP_ORA.Data
                     .HasDefaultValueSql("SYSDATE");
             });
 
-            modelBuilder.Entity<Customer>(entity =>
+            modelBuilder.Entity<Group>(entity =>
+                {
+                    entity.HasKey(e => e.Id);
+
+                    entity.Property(e => e.Id)
+                          .HasColumnType("NUMBER")
+                          .ValueGeneratedOnAdd();
+
+                    entity.Property(e => e.GroundName)
+                          .HasColumnType("VARCHAR2(100)")
+                          .IsRequired();
+
+                    entity.Property(e => e.Remark)
+                          .HasColumnType("VARCHAR2(100)");
+
+                    entity.Property(e => e.CompanyId)
+                          .HasColumnType("NUMBER")
+                          .IsRequired();
+                });
+
+            modelBuilder.Entity<BeginingBalance>(entity =>
             {
                 entity.HasKey(e => e.Id);
 
                 entity.Property(e => e.Id)
-                      .HasColumnType("NUMBER");
+                      .HasColumnType("NUMBER")
+                      .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.CustomerName)
-                      .HasColumnType("VARCHAR2(50)")
+                entity.Property(e => e.BalanceDate)
+                      .HasColumnType("DATE")
                       .IsRequired();
 
-                entity.Property(e => e.Sex)
-                      .HasColumnType("VARCHAR2(10)")
+                entity.Property(e => e.ToAccountId)
+                      .HasColumnType("NUMBER")
                       .IsRequired();
 
-                entity.Property(e => e.Phone)
-                      .HasColumnType("VARCHAR2(50)")
+                entity.Property(e => e.Amount)
+                      .HasColumnType("NUMBER(18,6)")
                       .IsRequired();
 
-                entity.Property(e => e.Email)
-                      .HasColumnType("VARCHAR2(100)")
+                entity.Property(e => e.Remark)
+                      .HasColumnType("NVARCHAR2(100)")
                       .IsRequired();
-
-                entity.Property(e => e.Address)
-                      .HasColumnType("VARCHAR2(150)")
-                      .IsRequired();
-
 
                 entity.Property(e => e.UserAccessId)
-                      .HasColumnType("RAW(16)");
-
+                      .HasColumnType("NUMBER")
+                      .IsRequired();
             });
+
         }
     }
 }
