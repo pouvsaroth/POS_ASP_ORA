@@ -10,7 +10,7 @@ namespace POS_ASP_ORA.Data
 
         public DbSet<Users> UsersModel { get; set; }
         public DbSet<Group> GroundModel { get; set; }
-        public DbSet<BeginingBalance> BeginingBalanceModel { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -54,34 +54,7 @@ namespace POS_ASP_ORA.Data
                           .IsRequired();
                 });
 
-            modelBuilder.Entity<BeginingBalance>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-
-                entity.Property(e => e.Id)
-                      .HasColumnType("NUMBER")
-                      .ValueGeneratedOnAdd();
-
-                entity.Property(e => e.BalanceDate)
-                      .HasColumnType("DATE")
-                      .IsRequired();
-
-                entity.Property(e => e.ToAccountId)
-                      .HasColumnType("NUMBER")
-                      .IsRequired();
-
-                entity.Property(e => e.Amount)
-                      .HasColumnType("NUMBER(18,6)")
-                      .IsRequired();
-
-                entity.Property(e => e.Remark)
-                      .HasColumnType("NVARCHAR2(100)")
-                      .IsRequired();
-
-                entity.Property(e => e.UserAccessId)
-                      .HasColumnType("NUMBER")
-                      .IsRequired();
-            });
+           
 
         }
     }
