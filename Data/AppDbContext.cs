@@ -27,6 +27,10 @@ namespace POS_ASP_ORA.Data
         public DbSet<Sale> SaleModel { get; set; }
         public DbSet<ObjectEntity> ObjectModel { get; set; }
         public DbSet<GroupObject> GroupObjectModel { get; set; }
+        public DbSet<GroupMember> GroupMemberModel { get; set; }
+        public DbSet<Supplier> SupplierModel { get; set; }
+        public DbSet<Group> GroupModel { get; set; }
+        public DbSet<Product> ProductModel { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -48,6 +52,142 @@ namespace POS_ASP_ORA.Data
                     .HasColumnType("NUMBER(1)");
                 entity.Property(e => e.CreatedAt)
                     .HasDefaultValueSql("SYSDATE");
+            });
+
+            modelBuilder.Entity<Product>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                      .HasColumnType("NUMBER")
+                      .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.ProductCode)
+                      .HasColumnType("NVARCHAR2(50)")
+                      .IsRequired();
+
+                entity.Property(e => e.Barcode)
+                      .HasColumnType("NVARCHAR2(50)")
+                      .IsRequired();
+
+                entity.Property(e => e.ProductName)
+                      .HasColumnType("NVARCHAR2(50)")
+                      .IsRequired();
+
+                entity.Property(e => e.ProductNameKh)
+                      .HasColumnType("NVARCHAR2(50)")
+                      .IsRequired();
+
+                entity.Property(e => e.CategoryId)
+                      .HasColumnType("NUMBER")
+                      .IsRequired();
+
+                entity.Property(e => e.SupplierId)
+                      .HasColumnType("NUMBER")
+                      .IsRequired();
+
+                entity.Property(e => e.QtyOnHand)
+                      .HasColumnType("NUMBER(18,6)");
+
+                entity.Property(e => e.QtyAlert)
+                      .HasColumnType("NUMBER");
+
+                entity.Property(e => e.Image)
+                      .HasColumnType("BLOB");
+
+                entity.Property(e => e.Description)
+                      .HasColumnType("NVARCHAR2(50)");
+
+                entity.Property(e => e.Status)
+                      .HasColumnType("NUMBER(1)")
+                      .HasConversion<int?>();  // ✅ Conversion fixes Oracle bool mapping
+
+                entity.Property(e => e.UserAccessId)
+                      .HasColumnType("NUMBER");
+
+                // Foreign keys
+                entity.HasOne(p => p.Category)
+                      .WithMany()
+                      .HasForeignKey(p => p.CategoryId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(p => p.Supplier)
+                      .WithMany()
+                      .HasForeignKey(p => p.SupplierId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<Group>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                      .HasColumnType("NUMBER")
+                      .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.GroupName)
+                      .HasColumnType("NVARCHAR2(100)")
+                      .IsRequired();
+
+                entity.Property(e => e.Remark)
+                      .HasColumnType("NVARCHAR2(50)")
+                      .IsRequired();
+
+                entity.Property(e => e.CompanyID)
+                      .HasColumnType("NUMBER")
+                      .IsRequired();
+
+                // Foreign Key Relationship
+                entity.HasOne(g => g.Company)
+                      .WithMany()
+                      .HasForeignKey(g => g.CompanyID)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<GroupMember>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                      .HasColumnType("NUMBER")
+                      .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.GroupID)
+                      .HasColumnType("NUMBER")
+                      .IsRequired();
+
+                entity.Property(e => e.UserID)
+                      .HasColumnType("NUMBER")
+                      .IsRequired();
+            });
+
+            modelBuilder.Entity<Supplier>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                      .HasColumnType("NUMBER")
+                      .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.SupplierName)
+                      .HasColumnType("NVARCHAR2(50)")
+                      .IsRequired();
+
+                entity.Property(e => e.Sex)
+                      .HasColumnType("NVARCHAR2(50)")
+                      .IsRequired();
+
+                entity.Property(e => e.Phone)
+                      .HasColumnType("NVARCHAR2(100)")
+                      .IsRequired();
+
+                entity.Property(e => e.Email)
+                      .HasColumnType("NVARCHAR2(100)")
+                      .IsRequired();
+
+                entity.Property(e => e.Address)
+                      .HasColumnType("NVARCHAR2(100)")
+                      .IsRequired();
             });
 
             modelBuilder.Entity<GroupObject>(entity =>
