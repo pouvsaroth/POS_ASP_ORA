@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 using POS_ASP_ORA.Data;
@@ -11,9 +12,11 @@ using POS_ASP_ORA.Data;
 namespace POS_ASP_ORA.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260303033724_PurchasePaymentCreate")]
+    partial class PurchasePaymentCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -158,58 +161,6 @@ namespace POS_ASP_ORA.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("COMPANY_TBL");
-                });
-
-            modelBuilder.Entity("POS_ASP_ORA.Models.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)")
-                        .HasColumnName("ID");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .HasMaxLength(200)
-                        .HasColumnType("NVARCHAR2(200)")
-                        .HasColumnName("ADDRESS");
-
-                    b.Property<string>("CustomerName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)")
-                        .HasColumnName("CUSTOMERNAME");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)")
-                        .HasColumnName("EMAIL");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("NVARCHAR2(50)")
-                        .HasColumnName("PHONE");
-
-                    b.Property<int>("Sex")
-                        .HasColumnType("NUMBER(1)")
-                        .HasColumnName("SEX");
-
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(1)")
-                        .HasDefaultValue(1)
-                        .HasColumnName("STATUS");
-
-                    b.Property<decimal?>("UserAccessID")
-                        .HasColumnType("NUMBER")
-                        .HasColumnName("USERACCESSID");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Phone");
-
-                    b.ToTable("CUSTOMER_TBL");
                 });
 
             modelBuilder.Entity("POS_ASP_ORA.Models.CustomerCheckin", b =>
@@ -429,74 +380,6 @@ namespace POS_ASP_ORA.Migrations
                     b.ToTable("OWNERDRAWING_TBL");
                 });
 
-            modelBuilder.Entity("POS_ASP_ORA.Models.PaymentMethod", b =>
-                {
-                    b.Property<decimal>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER")
-                        .HasColumnName("ID");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
-
-                    b.Property<string>("MethodName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("NVARCHAR2(50)")
-                        .HasColumnName("METHODNAME");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("NUMBER(1)")
-                        .HasColumnName("STATUS");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PAYMENTMETHOD_TBL");
-                });
-
-            modelBuilder.Entity("POS_ASP_ORA.Models.Purchase", b =>
-                {
-                    b.Property<decimal>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER")
-                        .HasColumnName("ID");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
-
-                    b.Property<string>("BillNo")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("NVARCHAR2(50)")
-                        .HasColumnName("BILLNO");
-
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("NUMBER(18,6)")
-                        .HasColumnName("DISCOUNT");
-
-                    b.Property<DateTime>("PurchaseDate")
-                        .HasColumnType("TIMESTAMP")
-                        .HasColumnName("PURCHASEDATE");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("NUMBER(1)")
-                        .HasColumnName("STATUS");
-
-                    b.Property<decimal>("SupplierId")
-                        .HasColumnType("NUMBER")
-                        .HasColumnName("SUPPLIERID");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("NUMBER(18,6)")
-                        .HasColumnName("TOTALAMOUNT");
-
-                    b.Property<decimal?>("UserAccessId")
-                        .HasColumnType("NUMBER")
-                        .HasColumnName("USERACCESSID");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PURCHASE_TBL");
-                });
-
             modelBuilder.Entity("POS_ASP_ORA.Models.PurchasePayment", b =>
                 {
                     b.Property<decimal>("Id")
@@ -525,140 +408,6 @@ namespace POS_ASP_ORA.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PURCHASEPAYMENT_TBL");
-                });
-
-            modelBuilder.Entity("POS_ASP_ORA.Models.Sale", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)")
-                        .HasColumnName("ID");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("CustomerId")
-                        .HasColumnType("NUMBER")
-                        .HasColumnName("CUSTOMERID");
-
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("NUMBER(18,6)")
-                        .HasColumnName("DISCOUNT");
-
-                    b.Property<decimal>("InvoiceNo")
-                        .HasColumnType("NUMBER")
-                        .HasColumnName("INVOICENO");
-
-                    b.Property<DateTime>("SaleDate")
-                        .HasColumnType("TIMESTAMP")
-                        .HasColumnName("SALEDATE");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("NUMBER(1)")
-                        .HasColumnName("STATUS");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("NUMBER(18,6)")
-                        .HasColumnName("TOTALAMOUNT");
-
-                    b.Property<decimal?>("UserAccessID")
-                        .HasColumnType("NUMBER")
-                        .HasColumnName("USERACCESSID");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SALE_TBL");
-                });
-
-            modelBuilder.Entity("POS_ASP_ORA.Models.SaleDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)")
-                        .HasColumnName("ID");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Cost")
-                        .HasColumnType("NUMBER(18,6)")
-                        .HasColumnName("COST");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("NUMBER(18,6)")
-                        .HasColumnName("PRICE");
-
-                    b.Property<decimal>("ProductId")
-                        .HasColumnType("NUMBER")
-                        .HasColumnName("PRODUCTID");
-
-                    b.Property<decimal>("Qty")
-                        .HasColumnType("NUMBER(18,3)")
-                        .HasColumnName("QTY");
-
-                    b.Property<decimal>("SaleId")
-                        .HasColumnType("NUMBER")
-                        .HasColumnName("SALEID");
-
-                    b.Property<decimal>("SubDiscount")
-                        .HasColumnType("NUMBER(18,6)")
-                        .HasColumnName("SUBDISCOUNT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SALEDETAIL_TBL");
-                });
-
-            modelBuilder.Entity("POS_ASP_ORA.Models.SalePayment", b =>
-                {
-                    b.Property<decimal>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER")
-                        .HasColumnName("ID");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
-
-                    b.Property<decimal>("PayAmount")
-                        .HasColumnType("NUMBER(18,6)")
-                        .HasColumnName("PAYAMOUNT");
-
-                    b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("TIMESTAMP")
-                        .HasColumnName("PAYMENTDATE");
-
-                    b.Property<decimal>("PaymentMethod")
-                        .HasColumnType("NUMBER")
-                        .HasColumnName("PAYMENTMETHOD");
-
-                    b.Property<decimal>("SaleId")
-                        .HasColumnType("NUMBER")
-                        .HasColumnName("SALEID");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SALEPAYMENT_TBL");
-                });
-
-            modelBuilder.Entity("POS_ASP_ORA.Models.UnitType", b =>
-                {
-                    b.Property<decimal>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER")
-                        .HasColumnName("ID");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
-
-                    b.Property<int>("Status")
-                        .HasColumnType("NUMBER(1)")
-                        .HasColumnName("STATUS");
-
-                    b.Property<string>("UnitTypeName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("NVARCHAR2(50)")
-                        .HasColumnName("UNITTYPENAME");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UNITTYPE_TBL");
                 });
 
             modelBuilder.Entity("POS_ASP_ORA.Models.Users", b =>

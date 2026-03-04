@@ -12,8 +12,8 @@ using POS_ASP_ORA.Data;
 namespace POS_ASP_ORA.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260302110736_CreateGroundTable")]
-    partial class CreateGroundTable
+    [Migration("20260302122109_CreateCategoryTable")]
+    partial class CreateCategoryTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace POS_ASP_ORA.Migrations
 
             OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("POS_ASP_ORA.Models.Customer", b =>
+            modelBuilder.Entity("POS_ASP_ORA.Models.BeginingBalance", b =>
                 {
                     b.Property<decimal>("Id")
                         .ValueGeneratedOnAdd()
@@ -34,43 +34,95 @@ namespace POS_ASP_ORA.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("VARCHAR2(150)")
-                        .HasColumnName("ADDRESS");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("NUMBER(18,6)")
+                        .HasColumnName("AMOUNT");
 
-                    b.Property<string>("CustomerName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("VARCHAR2(50)")
-                        .HasColumnName("CUSTOMERNAME");
+                    b.Property<DateTime>("BalanceDate")
+                        .HasColumnType("DATE")
+                        .HasColumnName("BALANCE_DATE");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("Remark")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("VARCHAR2(100)")
-                        .HasColumnName("EMAIL");
+                        .HasColumnType("NVARCHAR2(100)")
+                        .HasColumnName("REMARK");
 
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("VARCHAR2(50)")
-                        .HasColumnName("PHONE");
+                    b.Property<decimal>("ToAccountId")
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("TOACCOUNTID");
 
-                    b.Property<string>("Sex")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("VARCHAR2(10)")
-                        .HasColumnName("SEX");
-
-                    b.Property<byte[]>("UserAccessId")
-                        .HasColumnType("RAW(16)")
+                    b.Property<decimal>("UserAccessId")
+                        .HasColumnType("NUMBER")
                         .HasColumnName("USERACCESSID");
 
                     b.HasKey("Id");
 
-                    b.ToTable("CUSTOMER_TBL");
+                    b.ToTable("BEGININGBALANCE_TBL");
+                });
+
+            modelBuilder.Entity("POS_ASP_ORA.Models.CashTransfer", b =>
+                {
+                    b.Property<decimal>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("ID");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("NUMBER(18,6)")
+                        .HasColumnName("AMOUNT");
+
+                    b.Property<decimal>("FromAccountId")
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("FROMACCOUNTID");
+
+                    b.Property<string>("Remark")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("NVARCHAR2(100)")
+                        .HasColumnName("REMARK");
+
+                    b.Property<decimal>("ToAccountId")
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("TOACCOUNTID");
+
+                    b.Property<DateTime>("TransferDate")
+                        .HasColumnType("TIMESTAMP")
+                        .HasColumnName("TRANSFERDATE");
+
+                    b.Property<decimal>("UserAccessId")
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("USERACCESSID");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CASHTRANSFER_TBL");
+                });
+
+            modelBuilder.Entity("POS_ASP_ORA.Models.Category", b =>
+                {
+                    b.Property<decimal>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("ID");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)")
+                        .HasColumnName("CATEGORYNAME");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("NUMBER(1)")
+                        .HasColumnName("STATUS");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CATEGORY_TBL");
                 });
 
             modelBuilder.Entity("POS_ASP_ORA.Models.Group", b =>

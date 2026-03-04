@@ -1,28 +1,30 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace POS_ASP_ORA.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateGroundTable : Migration
+    public partial class SalePaymentCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "GROUND_TBL",
+                name: "SALEPAYMENT_TBL",
                 columns: table => new
                 {
                     ID = table.Column<decimal>(type: "NUMBER", nullable: false)
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    GROUPNAME = table.Column<string>(type: "VARCHAR2(100)", maxLength: 100, nullable: false),
-                    REMARK = table.Column<string>(type: "VARCHAR2(100)", maxLength: 100, nullable: true),
-                    COMPANYID = table.Column<decimal>(type: "NUMBER", nullable: false)
+                    SALEID = table.Column<decimal>(type: "NUMBER", nullable: false),
+                    PAYMENTDATE = table.Column<DateTime>(type: "TIMESTAMP", nullable: false),
+                    PAYMENTMETHOD = table.Column<decimal>(type: "NUMBER", nullable: false),
+                    PAYAMOUNT = table.Column<decimal>(type: "NUMBER(18,6)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GROUND_TBL", x => x.ID);
+                    table.PrimaryKey("PK_SALEPAYMENT_TBL", x => x.ID);
                 });
         }
 
@@ -30,7 +32,7 @@ namespace POS_ASP_ORA.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "GROUND_TBL");
+                name: "SALEPAYMENT_TBL");
         }
     }
 }

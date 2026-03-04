@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 using POS_ASP_ORA.Data;
@@ -11,9 +12,11 @@ using POS_ASP_ORA.Data;
 namespace POS_ASP_ORA.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260304013033_AddSaleTable")]
+    partial class AddSaleTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -158,58 +161,6 @@ namespace POS_ASP_ORA.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("COMPANY_TBL");
-                });
-
-            modelBuilder.Entity("POS_ASP_ORA.Models.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)")
-                        .HasColumnName("ID");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .HasMaxLength(200)
-                        .HasColumnType("NVARCHAR2(200)")
-                        .HasColumnName("ADDRESS");
-
-                    b.Property<string>("CustomerName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)")
-                        .HasColumnName("CUSTOMERNAME");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)")
-                        .HasColumnName("EMAIL");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("NVARCHAR2(50)")
-                        .HasColumnName("PHONE");
-
-                    b.Property<int>("Sex")
-                        .HasColumnType("NUMBER(1)")
-                        .HasColumnName("SEX");
-
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(1)")
-                        .HasDefaultValue(1)
-                        .HasColumnName("STATUS");
-
-                    b.Property<decimal?>("UserAccessID")
-                        .HasColumnType("NUMBER")
-                        .HasColumnName("USERACCESSID");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Phone");
-
-                    b.ToTable("CUSTOMER_TBL");
                 });
 
             modelBuilder.Entity("POS_ASP_ORA.Models.CustomerCheckin", b =>
