@@ -25,6 +25,8 @@ namespace POS_ASP_ORA.Data
         public DbSet<SalePayment> SalePaymentModel { get; set; }
         public DbSet<SaleDetail> SaleDetailModel { get; set; }
         public DbSet<Sale> SaleModel { get; set; }
+        public DbSet<ObjectEntity> ObjectModel { get; set; }
+        public DbSet<GroupObject> GroupObjectModel { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -48,7 +50,37 @@ namespace POS_ASP_ORA.Data
                     .HasDefaultValueSql("SYSDATE");
             });
 
-          
+            modelBuilder.Entity<GroupObject>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                      .UseIdentityColumn();
+
+                entity.Property(e => e.GroupID)
+                      .HasColumnType("NUMBER")
+                      .IsRequired();
+
+                entity.Property(e => e.ObjectID)
+                      .HasColumnType("NUMBER")
+                      .IsRequired();
+            });
+
+            modelBuilder.Entity<ObjectEntity>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                      .UseIdentityColumn();
+
+                entity.Property(e => e.ObjectName)
+                      .HasColumnType("NVARCHAR2(50)")
+                      .IsRequired();
+
+                entity.Property(e => e.Description)
+                      .HasColumnType("NVARCHAR2(50)")
+                      .IsRequired();
+            });
 
             modelBuilder.Entity<Sale>(entity =>
             {

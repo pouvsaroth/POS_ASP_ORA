@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 using POS_ASP_ORA.Data;
@@ -11,9 +12,11 @@ using POS_ASP_ORA.Data;
 namespace POS_ASP_ORA.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260304022300_AddGroupObject")]
+    partial class AddGroupObject
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -172,6 +175,28 @@ namespace POS_ASP_ORA.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("EXPENSETYPE_TBL");
+                });
+
+            modelBuilder.Entity("POS_ASP_ORA.Models.GroupMember", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("ID");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("GroupID")
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("GROUPID");
+
+                    b.Property<decimal>("UserID")
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("USERID");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GROUPMEMBER_TBL");
                 });
 
             modelBuilder.Entity("POS_ASP_ORA.Models.GroupObject", b =>
@@ -566,50 +591,6 @@ namespace POS_ASP_ORA.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SALEPAYMENT_TBL");
-                });
-
-            modelBuilder.Entity("POS_ASP_ORA.Models.Supplier", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)")
-                        .HasColumnName("ID");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)")
-                        .HasColumnName("ADDRESS");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)")
-                        .HasColumnName("EMAIL");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)")
-                        .HasColumnName("PHONE");
-
-                    b.Property<string>("Sex")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("NVARCHAR2(50)")
-                        .HasColumnName("SEX");
-
-                    b.Property<string>("SupplierName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("NVARCHAR2(50)")
-                        .HasColumnName("SUPPLIERNAME");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SUPPLIER_TBL");
                 });
 
             modelBuilder.Entity("POS_ASP_ORA.Models.UnitType", b =>
