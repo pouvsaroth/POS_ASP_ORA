@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("POS_ASP_ORA")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b0066dddad593dc39ab0178f6f650642cb08ea27")]
 [assembly: System.Reflection.AssemblyProductAttribute("POS_ASP_ORA")]
 [assembly: System.Reflection.AssemblyTitleAttribute("POS_ASP_ORA")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
