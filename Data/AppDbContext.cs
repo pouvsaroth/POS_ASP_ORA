@@ -31,6 +31,7 @@ namespace POS_ASP_ORA.Data
         public DbSet<Supplier> SupplierModel { get; set; }
         public DbSet<Group> GroupModel { get; set; }
         public DbSet<Product> ProductModel { get; set; }
+        public DbSet<Warehouse> WarehouseModel { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -52,6 +53,34 @@ namespace POS_ASP_ORA.Data
                     .HasColumnType("NUMBER(1)");
                 entity.Property(e => e.CreatedAt)
                     .HasDefaultValueSql("SYSDATE");
+            });
+
+            modelBuilder.Entity<Warehouse>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                      .UseIdentityColumn();
+
+                entity.Property(e => e.Warehousename)
+                      .HasColumnType("NVARCHAR2(100)")
+                      .IsRequired();
+
+                entity.Property(e => e.Location)
+                      .HasColumnType("VARCHAR2(100)")
+                      .IsRequired();
+
+                entity.Property(e => e.Phone)
+                      .HasColumnType("NVARCHAR2(50)")
+                      .IsRequired();
+
+                entity.Property(e => e.Remark)
+                      .HasColumnType("NVARCHAR2(50)")
+                      .IsRequired();
+
+                entity.Property(e => e.CompanyID)
+                      .HasColumnType("NUMBER")
+                      .IsRequired();
             });
 
             modelBuilder.Entity<Product>(entity =>
