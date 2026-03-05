@@ -11,10 +11,6 @@
       "RelativeMoniker": "D:0:0:{3963CB8B-498F-4AC5-B639-A7ED4178A61A}|POS_ASP_ORA.csproj|solutionrelative:models\\users.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3963CB8B-498F-4AC5-B639-A7ED4178A61A}|POS_ASP_ORA.csproj|d:\\b_flexi\\system\\pos_asp_ora\\readme.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{3963CB8B-498F-4AC5-B639-A7ED4178A61A}|POS_ASP_ORA.csproj|solutionrelative:readme.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3963CB8B-498F-4AC5-B639-A7ED4178A61A}|POS_ASP_ORA.csproj|d:\\b_flexi\\system\\pos_asp_ora\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3963CB8B-498F-4AC5-B639-A7ED4178A61A}|POS_ASP_ORA.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -46,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,26 +54,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "readme.txt",
-              "DocumentMoniker": "D:\\B_FLEXI\\System\\POS_ASP_ORA\\readme.txt",
-              "RelativeDocumentMoniker": "readme.txt",
-              "ToolTip": "D:\\B_FLEXI\\System\\POS_ASP_ORA\\readme.txt",
-              "RelativeToolTip": "readme.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2026-02-23T07:17:39.526Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "D:\\B_FLEXI\\System\\POS_ASP_ORA\\Data\\AppDbContext.cs",
               "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
               "ToolTip": "D:\\B_FLEXI\\System\\POS_ASP_ORA\\Data\\AppDbContext.cs",
               "RelativeToolTip": "Data\\AppDbContext.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAgwBUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAoAAAAAAAAAAAA1wBUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-23T07:12:35.364Z",
               "EditorCaption": ""
@@ -92,12 +75,11 @@
               "RelativeToolTip": "Models\\Users.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAiwBMAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-23T07:09:32.482Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-23T07:09:32.482Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\B_FLEXI\\System\\POS_ASP_ORA\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -105,12 +87,11 @@
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-02-23T07:07:33.023Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-23T07:07:33.023Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\B_FLEXI\\System\\POS_ASP_ORA\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -118,12 +99,11 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-23T06:23:01.92Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-23T06:23:01.92Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "Login.cshtml",
               "DocumentMoniker": "D:\\B_FLEXI\\System\\POS_ASP_ORA\\Views\\Authentication\\Login.cshtml",
               "RelativeDocumentMoniker": "Views\\Authentication\\Login.cshtml",
@@ -131,12 +111,11 @@
               "RelativeToolTip": "Views\\Authentication\\Login.cshtml",
               "ViewState": "AgIAAEIAAAAAAAAAAAAWwE4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-02-23T06:16:35.949Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-23T06:16:35.949Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "D:\\B_FLEXI\\System\\POS_ASP_ORA\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
@@ -144,12 +123,11 @@
               "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
               "ViewState": "AgIAAAwAAAAAAAAAAAAAABIAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-02-22T10:23:24.086Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-22T10:23:24.086Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 7,
               "Title": "HomeController.cs",
               "DocumentMoniker": "D:\\B_FLEXI\\System\\POS_ASP_ORA\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
@@ -161,7 +139,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 6,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\B_FLEXI\\System\\POS_ASP_ORA\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
@@ -169,8 +147,11 @@
               "RelativeToolTip": "Views\\Home\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-02-22T10:20:16.287Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-22T10:20:16.287Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
             }
           ]
         }
