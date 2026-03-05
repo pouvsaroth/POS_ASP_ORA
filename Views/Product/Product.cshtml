@@ -1,5 +1,67 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Create Product";
 }
+
+<h3>Create Product</h3>
+
+<form method="post">
+
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+            <label>Product Code</label>
+            <input type="text" class="form-control" name="PRODUCTCODE" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Barcode</label>
+            <input type="text" class="form-control" name="BARCODE" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Product Name</label>
+            <input type="text" class="form-control" name="PRODUCTNAME" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Product Name KH</label>
+            <input type="text" class="form-control" name="PRODUCTNAMEKH" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Category</label>
+            <select class="form-control" name="CATEGORYID">
+                <option value="1">Drink</option>
+                <option value="2">Food</option>
+                <option value="3">Beer</option>
+            </select>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Supplier</label>
+            <select class="form-control" name="SUPPLIERID">
+                <option value="1">Supplier 1</option>
+                <option value="2">Supplier 2</option>
+            </select>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Qty On Hand</label>
+            <input type="number" class="form-control" name="QTYONHAND" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Qty Alert</label>
+            <input type="number" class="form-control" name="QTYALERT" />
+        </div>
+
+        <div class="col-md-12 mb-3">
+            <label>Description</label>
+            <textarea class="form-control" name="DESCRIPTION"></textarea>
+        </div>
+
+    </div>
+
+    <button class="btn btn-success">Save Product</button>
+
+</form>
