@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using POS_ASP_ORA.Data;
+using POS_ASP_ORA.Helpers;
+using POS_ASP_ORA.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +18,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         //options.LoginPath = "/Account/Login";   // redirect if not logged in
         //options.LogoutPath = "/Account/Logout";
     });
-
+builder.Services.AddScoped<ProductCategoryService>();
+builder.Services.AddScoped<OracleDbHelper>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

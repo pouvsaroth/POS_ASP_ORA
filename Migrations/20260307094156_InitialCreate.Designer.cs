@@ -12,8 +12,8 @@ using POS_ASP_ORA.Data;
 namespace POS_ASP_ORA.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260304012726_AddSaleDetailTable")]
-    partial class AddSaleDetailTable
+    [Migration("20260307094156_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,42 +24,6 @@ namespace POS_ASP_ORA.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("POS_ASP_ORA.Models.BeginingBalance", b =>
-                {
-                    b.Property<decimal>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER")
-                        .HasColumnName("ID");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("NUMBER(18,6)")
-                        .HasColumnName("AMOUNT");
-
-                    b.Property<DateTime>("BalanceDate")
-                        .HasColumnType("DATE")
-                        .HasColumnName("BALANCE_DATE");
-
-                    b.Property<string>("Remark")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)")
-                        .HasColumnName("REMARK");
-
-                    b.Property<decimal>("ToAccountId")
-                        .HasColumnType("NUMBER")
-                        .HasColumnName("TOACCOUNTID");
-
-                    b.Property<decimal>("UserAccessId")
-                        .HasColumnType("NUMBER")
-                        .HasColumnName("USERACCESSID");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BEGININGBALANCE_TBL");
-                });
 
             modelBuilder.Entity("POS_ASP_ORA.Models.CashTransfer", b =>
                 {
@@ -222,24 +186,71 @@ namespace POS_ASP_ORA.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
 
-                    b.Property<decimal>("CompanyId")
+                    b.Property<decimal>("CompanyID")
                         .HasColumnType("NUMBER")
                         .HasColumnName("COMPANYID");
 
-                    b.Property<string>("GroundName")
+                    b.Property<string>("GroupName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("VARCHAR2(100)")
+                        .HasColumnType("NVARCHAR2(100)")
                         .HasColumnName("GROUPNAME");
 
                     b.Property<string>("Remark")
-                        .HasMaxLength(100)
-                        .HasColumnType("VARCHAR2(100)")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)")
                         .HasColumnName("REMARK");
 
                     b.HasKey("Id");
 
-                    b.ToTable("GROUND_TBL");
+                    b.HasIndex("CompanyID");
+
+                    b.ToTable("GROUP_TBL");
+                });
+
+            modelBuilder.Entity("POS_ASP_ORA.Models.GroupMember", b =>
+                {
+                    b.Property<decimal>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("ID");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
+
+                    b.Property<decimal>("GroupID")
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("GROUPID");
+
+                    b.Property<decimal>("UserID")
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("USERID");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GROUPMEMBER_TBL");
+                });
+
+            modelBuilder.Entity("POS_ASP_ORA.Models.GroupObject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("ID");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("GroupID")
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("GROUPID");
+
+                    b.Property<decimal>("ObjectID")
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("OBJECTID");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GROUPOBJECT_TBL");
                 });
 
             modelBuilder.Entity("POS_ASP_ORA.Models.Income", b =>
@@ -344,6 +355,32 @@ namespace POS_ASP_ORA.Migrations
                     b.ToTable("MoreCapital_tbl");
                 });
 
+            modelBuilder.Entity("POS_ASP_ORA.Models.ObjectEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("ID");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)")
+                        .HasColumnName("DESCRIPTION");
+
+                    b.Property<string>("ObjectName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)")
+                        .HasColumnName("OBJECTNAME");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OBJECT_TBL");
+                });
+
             modelBuilder.Entity("POS_ASP_ORA.Models.OwnerDrawing", b =>
                 {
                     b.Property<decimal>("Id")
@@ -402,6 +439,81 @@ namespace POS_ASP_ORA.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PAYMENTMETHOD_TBL");
+                });
+
+            modelBuilder.Entity("POS_ASP_ORA.Models.Product", b =>
+                {
+                    b.Property<decimal>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("ID");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
+
+                    b.Property<string>("Barcode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)")
+                        .HasColumnName("BARCODE");
+
+                    b.Property<decimal>("CategoryId")
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("CATEGORYID");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)")
+                        .HasColumnName("DESCRIPTION");
+
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("BLOB")
+                        .HasColumnName("IMAGE");
+
+                    b.Property<string>("ProductCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)")
+                        .HasColumnName("PRODUCTCODE");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)")
+                        .HasColumnName("PRODUCTNAME");
+
+                    b.Property<string>("ProductNameKh")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)")
+                        .HasColumnName("PRODUCTNAMEKH");
+
+                    b.Property<decimal?>("QtyAlert")
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("QTYALERT");
+
+                    b.Property<decimal?>("QtyOnHand")
+                        .HasColumnType("NUMBER(18,6)")
+                        .HasColumnName("QTYONHAND");
+
+                    b.Property<int?>("Status")
+                        .HasColumnType("NUMBER(1)")
+                        .HasColumnName("STATUS");
+
+                    b.Property<decimal>("SupplierId")
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("SUPPLIERID");
+
+                    b.Property<decimal?>("UserAccessId")
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("USERACCESSID");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("SupplierId");
+
+                    b.ToTable("PRODUCT_TBL");
                 });
 
             modelBuilder.Entity("POS_ASP_ORA.Models.Purchase", b =>
@@ -478,6 +590,48 @@ namespace POS_ASP_ORA.Migrations
                     b.ToTable("PURCHASEPAYMENT_TBL");
                 });
 
+            modelBuilder.Entity("POS_ASP_ORA.Models.Sale", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("ID");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("CustomerId")
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("CUSTOMERID");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("NUMBER(18,6)")
+                        .HasColumnName("DISCOUNT");
+
+                    b.Property<decimal>("InvoiceNo")
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("INVOICENO");
+
+                    b.Property<DateTime>("SaleDate")
+                        .HasColumnType("TIMESTAMP")
+                        .HasColumnName("SALEDATE");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("NUMBER(1)")
+                        .HasColumnName("STATUS");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("NUMBER(18,6)")
+                        .HasColumnName("TOTALAMOUNT");
+
+                    b.Property<decimal?>("UserAccessID")
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("USERACCESSID");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SALE_TBL");
+                });
+
             modelBuilder.Entity("POS_ASP_ORA.Models.SaleDetail", b =>
                 {
                     b.Property<int>("Id")
@@ -546,6 +700,50 @@ namespace POS_ASP_ORA.Migrations
                     b.ToTable("SALEPAYMENT_TBL");
                 });
 
+            modelBuilder.Entity("POS_ASP_ORA.Models.Supplier", b =>
+                {
+                    b.Property<decimal>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER")
+                        .HasColumnName("ID");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("NVARCHAR2(100)")
+                        .HasColumnName("ADDRESS");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("NVARCHAR2(100)")
+                        .HasColumnName("EMAIL");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("NVARCHAR2(100)")
+                        .HasColumnName("PHONE");
+
+                    b.Property<string>("Sex")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)")
+                        .HasColumnName("SEX");
+
+                    b.Property<string>("SupplierName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)")
+                        .HasColumnName("SUPPLIERNAME");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SUPPLIER_TBL");
+                });
+
             modelBuilder.Entity("POS_ASP_ORA.Models.UnitType", b =>
                 {
                     b.Property<decimal>("Id")
@@ -612,6 +810,36 @@ namespace POS_ASP_ORA.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("USERS_TBL");
+                });
+
+            modelBuilder.Entity("POS_ASP_ORA.Models.Group", b =>
+                {
+                    b.HasOne("POS_ASP_ORA.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("POS_ASP_ORA.Models.Product", b =>
+                {
+                    b.HasOne("POS_ASP_ORA.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("POS_ASP_ORA.Models.Supplier", "Supplier")
+                        .WithMany()
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Supplier");
                 });
 #pragma warning restore 612, 618
         }

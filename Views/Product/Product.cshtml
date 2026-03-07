@@ -1,67 +1,121 @@
-﻿@{
-    ViewData["Title"] = "Create Product";
+﻿@model IEnumerable<Product>
+@section Scripts {
+
+    <script src="~/js/product.js"></script>
+
 }
+<h3>Product List</h3>
 
-<h3>Create Product</h3>
+<button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#productModal">
+    Add Product
+</button>
 
-<form method="post">
+<table id="productTable" class="table table-bordered">
 
-    <div class="row">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Qty</th>
+            <th>Supplier</th>
+            <th>Action</th>
+        </tr>
+    </thead>
 
-        <div class="col-md-6 mb-3">
-            <label>Product Code</label>
-            <input type="text" class="form-control" name="PRODUCTCODE" />
-        </div>
+    <tbody>
 
-        <div class="col-md-6 mb-3">
-            <label>Barcode</label>
-            <input type="text" class="form-control" name="BARCODE" />
-        </div>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductCode</td>
+                <td>@item.ProductName</td>
+                <td>@item.Category</td>
+                <td>@item.QtyOnHand</td>
+                <td>@item.Supplier</td>
 
-        <div class="col-md-6 mb-3">
-            <label>Product Name</label>
-            <input type="text" class="form-control" name="PRODUCTNAME" />
-        </div>
+                <td>
+                    <button class="btn btn-warning btn-sm">Edit</button>
+                    <button class="btn btn-danger btn-sm">Delete</button>
+                </td>
 
-        <div class="col-md-6 mb-3">
-            <label>Product Name KH</label>
-            <input type="text" class="form-control" name="PRODUCTNAMEKH" />
-        </div>
+            </tr>
+        }
 
-        <div class="col-md-6 mb-3">
-            <label>Category</label>
-            <select class="form-control" name="CATEGORYID">
-                <option value="1">Drink</option>
-                <option value="2">Food</option>
-                <option value="3">Beer</option>
-            </select>
-        </div>
+    </tbody>
 
-        <div class="col-md-6 mb-3">
-            <label>Supplier</label>
-            <select class="form-control" name="SUPPLIERID">
-                <option value="1">Supplier 1</option>
-                <option value="2">Supplier 2</option>
-            </select>
-        </div>
+</table>
 
-        <div class="col-md-6 mb-3">
-            <label>Qty On Hand</label>
-            <input type="number" class="form-control" name="QTYONHAND" />
-        </div>
+<div class="modal fade" id="productModal">
 
-        <div class="col-md-6 mb-3">
-            <label>Qty Alert</label>
-            <input type="number" class="form-control" name="QTYALERT" />
-        </div>
+    <div class="modal-dialog modal-lg">
 
-        <div class="col-md-12 mb-3">
-            <label>Description</label>
-            <textarea class="form-control" name="DESCRIPTION"></textarea>
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5>Add Product</h5>
+            </div>
+
+            <div class="modal-body">
+
+                <form asp-action="Create" method="post">
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <label>Product Code</label>
+                            <input name="ProductCode" class="form-control" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Barcode</label>
+                            <input name="Barcode" class="form-control" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Product Name</label>
+                            <input name="ProductName" class="form-control" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Product Name KH</label>
+                            <input name="ProductNameKH" class="form-control" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Category</label>
+                            <input name="Category" class="form-control" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Supplier</label>
+                            <input name="Supplier" class="form-control" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Qty On Hand</label>
+                            <input name="QtyOnHand" class="form-control" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Qty Alert</label>
+                            <input name="QtyAlert" class="form-control" />
+                        </div>
+
+                    </div>
+
+                    <br>
+
+                    <button type="submit" class="btn btn-success">
+                        Save Product
+                    </button>
+
+                </form>
+
+            </div>
+
         </div>
 
     </div>
 
-    <button class="btn btn-success">Save Product</button>
-
-</form>
+</div>
