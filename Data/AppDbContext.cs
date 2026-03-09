@@ -365,6 +365,7 @@ namespace POS_ASP_ORA.Data
 
                 entity.Property(e => e.Status)
                       .HasColumnType("NUMBER(1)")
+                      .HasConversion<int>()
                       .IsRequired();
             });
 

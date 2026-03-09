@@ -1,62 +1,75 @@
+##################################################
+# Visual Studio
+##################################################
 
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
-
-/POS_ASP_ORA.csproj
-bin/
-obj/
 .vs/
 *.user
 *.suo
-appsettings.Development.json
+*.userosscache
+*.sln.docstates
+
+##################################################
+# Build Folders
+##################################################
+
+bin/
+obj/
+Debug/
+Release/
+
+##################################################
+# Rider / VSCode
+##################################################
+
+.idea/
+.vscode/
+
+##################################################
+# Node (if using npm or frontend)
+##################################################
+
 node_modules/
-.vs/POS_ASP_ORA/CopilotIndices/17.14.698.11175/CodeChunks.db
-.vs/POS_ASP_ORA/CopilotIndices/17.14.698.11175/SemanticSymbols.db
-.vs/POS_ASP_ORA/DesignTimeBuild/.dtbcache.v2
-.vs/POS_ASP_ORA/FileContentIndex/1fce662e-5075-47e4-9cbb-e3d6b906c3fe.vsidx
-.vs/POS_ASP_ORA/FileContentIndex/60e1427e-ded7-4ae3-ab50-b063a3fec0f2.vsidx
-.vs/POS_ASP_ORA/FileContentIndex/e147d893-fa47-4abb-9366-c82f3ff8d5c1.vsidx
-.vs/POS_ASP_ORA/FileContentIndex/f6630486-aa24-4360-8117-560bc89b30e5.vsidx
-.vs/POS_ASP_ORA/v17/.futdcache.v2
-.vs/POS_ASP_ORA/v17/.suo
-.vs/POS_ASP_ORA/v17/DocumentLayout.backup.json
-.vs/POS_ASP_ORA/v17/DocumentLayout.json
-.vs/ProjectEvaluation/pos_asp_ora.metadata.v9.bin
-.vs/ProjectEvaluation/pos_asp_ora.projects.v9.bin
-.vs/ProjectEvaluation/pos_asp_ora.strings.v9.bin
-bin/Debug/net8.0/POS_ASP_ORA.dll
-bin/Debug/net8.0/POS_ASP_ORA.exe
-bin/Debug/net8.0/POS_ASP_ORA.pdb
-bin/Debug/net8.0/POS_ASP_ORA.staticwebassets.endpoints.json
-bin/Debug/net8.0/POS_ASP_ORA.staticwebassets.runtime.json
-obj/Debug/net8.0/apphost.exe
-obj/Debug/net8.0/POS_ASP_ORA.AssemblyInfo.cs
-obj/Debug/net8.0/POS_ASP_ORA.AssemblyInfoInputs.cache
-obj/Debug/net8.0/POS_ASP_ORA.csproj.CoreCompileInputs.cache
-obj/Debug/net8.0/POS_ASP_ORA.csproj.FileListAbsolute.txt
-obj/Debug/net8.0/POS_ASP_ORA.dll
-obj/Debug/net8.0/POS_ASP_ORA.GeneratedMSBuildEditorConfig.editorconfig
-obj/Debug/net8.0/POS_ASP_ORA.pdb
-obj/Debug/net8.0/ref/POS_ASP_ORA.dll
-obj/Debug/net8.0/refint/POS_ASP_ORA.dll
-obj/Debug/net8.0/rjimswa.dswa.cache.json
-obj/Debug/net8.0/rjsmcshtml.dswa.cache.json
-obj/Debug/net8.0/rjsmrazor.dswa.cache.json
-obj/Debug/net8.0/rpswa.dswa.cache.json
-obj/Debug/net8.0/staticwebassets.build.endpoints.json
-obj/Debug/net8.0/staticwebassets.build.json
-obj/Debug/net8.0/staticwebassets.build.json.cache
-obj/Debug/net8.0/staticwebassets.development.json
-.vs/POS_ASP_ORA/CopilotIndices/17.14.698.11175/CodeChunks.db
-.vs/POS_ASP_ORA/CopilotIndices/17.14.698.11175/SemanticSymbols.db
-bin/Debug/net8.0/POS_ASP_ORA.dll
-bin/Debug/net8.0/POS_ASP_ORA.exe
-.vs/POS_ASP_ORA/CopilotIndices/17.14.698.11175/CodeChunks.db
-.vs/POS_ASP_ORA/CopilotIndices/17.14.698.11175/SemanticSymbols.db
-bin/Debug/net8.0/POS_ASP_ORA.dll
-bin/Debug/net8.0/POS_ASP_ORA.exe
-bin/Debug/net8.0/POS_ASP_ORA.exe
-bin/Debug/net8.0/POS_ASP_ORA.dll
-.vs/POS_ASP_ORA/CopilotIndices/17.14.698.11175/SemanticSymbols.db
-.vs/POS_ASP_ORA/CopilotIndices/17.14.698.11175/CodeChunks.db
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+##################################################
+# Logs
+##################################################
+
+*.log
+
+##################################################
+# OS Files
+##################################################
+
+.DS_Store
+Thumbs.db
+
+##################################################
+# ASP.NET Core
+##################################################
+
+appsettings.Development.json
+appsettings.Local.json
+
+##################################################
+# Publish Folder
+##################################################
+
+publish/
+wwwroot/lib/
+
+##################################################
+# Database
+##################################################
+
+*.mdf
+*.ldf
+*.sqlite
+
+##################################################
+# Secrets
+##################################################
+
+secrets.json
