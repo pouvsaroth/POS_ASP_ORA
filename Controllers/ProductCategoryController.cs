@@ -62,16 +62,27 @@ namespace POS_ASP_ORA.Controllers
         }
 
         // DELETE
+        [HttpPost]
         public IActionResult Delete(int id)
         {
-            string message = _categoryService.DeleteCategory(id);
+            var result = _categoryService.DeleteCategory(id);
+            return Json(new { message = result });
+        }
 
-            if (message.Contains("successfully"))
-                TempData["Success"] = message;
-            else
-                TempData["Error"] = message;
+        [HttpPost]
+        public IActionResult DeleteSelected([FromBody] List<int> ids)
+        {
+            if (ids == null || !ids.Any())
+            {
+                return BadRequest(new { message = "No categories selected for deletion." });
+            }
 
-            return RedirectToAction("ProductCategory");
+            foreach (var id in ids)
+            {
+                _categoryService.DeleteCategory(id);
+            }
+
+            return Json(new { message = "Selected categories deleted successfully." });
         }
     }
 }

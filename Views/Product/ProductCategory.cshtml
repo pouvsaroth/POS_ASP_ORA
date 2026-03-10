@@ -18,35 +18,53 @@
     </div>
 }
 
-<h3>Category List</h3>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <!-- Search Bar -->
+    <div>
+        <input type="text" id="searchBar" class="form-control" placeholder="Search categories..." />
+    </div>
 
-<button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#categoryModal">
-    Add Category
-</button>
+    <!-- Add and Delete Buttons -->
+    <div>
+        <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#categoryModal">
+            Add Category
+        </button>
+        <button class="btn btn-danger" id="deleteSelected">
+            Delete Selected
+        </button>
+    </div>
+</div>
 
-<table id="categoryTable" class="table table-bordered">
-
+<table id="categoryTable" class="table">
     <thead>
         <tr>
+            <th><input type="checkbox" id="selectAll" /></th>
             <th>ID</th>
             <th>Category Name</th>
             <th>Status</th>
+            <th>Actions</th>
         </tr>
     </thead>
-
     <tbody>
-
-        @foreach (var item in Model)
+        @foreach (var category in Model)
         {
             <tr>
-                <td>@item.Id</td>
-                <td>@item.CategoryName</td>
-                <td>@item.Status</td>
+                <td>
+                    <input type="checkbox" class="row-checkbox" value="@category.Id" />
+                </td>
+                <td>@category.Id</td>
+                <td>@category.CategoryName</td>
+                <td>
+                    <input type="checkbox" disabled @(category.Status == 1 ? "checked" : "") />
+                </td>
+                <td>
+                    <button class="btn btn-warning btn-sm edit-btn" data-id="@category.Id" data-name="@category.CategoryName" data-status="@category.Status">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                </td>
             </tr>
         }
-
     </tbody>
-
 </table>
 
 <div class="modal fade" id="categoryModal">
@@ -54,23 +72,25 @@
         <div class="modal-content">
 
             <div class="modal-header modal-brown">
-                <h5 class="modal-title">Add Category</h5>
+                <h5 class="modal-title" id="categoryModalTitle">Add Category</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
 
             <div class="modal-body">
 
-                <form asp-action="Create" method="post">
+                <form id="categoryForm" method="post">
+                    <!-- Hidden input for ID -->
+                    <input type="hidden" id="categoryId" name="Id" />
 
                     <div class="mb-3">
                         <label class="form-label">Category Name</label>
-                        <input name="CategoryName" class="form-control" />
+                        <input id="categoryName" name="CategoryName" class="form-control" />
                     </div>
 
                     <input type="hidden" name="Status" value="0" />
 
                     <div class="form-check">
-                        <input type="checkbox" name="StatusCheck" value="true" class="form-check-input" id="statusCheck" checked>
+                        <input type="checkbox" id="statusCheck" name="StatusCheck" value="true" class="form-check-input">
                         <label class="form-check-label" for="statusCheck">
                             Active
                         </label>
@@ -79,7 +99,6 @@
                     <button type="submit" class="btn btn-brown">
                         Save
                     </button>
-
                 </form>
 
             </div>

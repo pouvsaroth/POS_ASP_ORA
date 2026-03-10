@@ -148,12 +148,34 @@ Product Category
 </li>
 
 </ul>
+ 
 
 </div>
 
 </li>
+<li class="nav-item">
+    <ul class="nav flex-column">
+        <!-- Other existing menu items -->
 
-
+        <!-- Account Menu -->
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#accountMenu" role="button" aria-expanded="false" aria-controls="accountMenu">
+                <i class="bi bi-person-circle"></i> <!-- Bootstrap icon for Account -->
+                Account
+            </a>
+            <div class="collapse" id="accountMenu">
+                <ul class="nav flex-column ms-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Account/IncomeType">
+                            <i class="bi bi-cash"></i> <!-- Bootstrap icon for Income Type -->
+                            Income Type
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</li>
 <!-- Sales -->
 <li class="nav-item">
 <a class="nav-link @(controller=="Sales"?"active":"")"
