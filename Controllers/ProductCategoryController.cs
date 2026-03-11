@@ -37,6 +37,12 @@ namespace POS_ASP_ORA.Controllers
         [HttpPost]
         public IActionResult Create(Category model)
         {
+            if (string.IsNullOrEmpty(model.CategoryName))
+            {
+                TempData["Error"] = "Category Name is required.";
+                return RedirectToAction("ProductCategory");
+            }
+
             string message = _categoryService.InsertCategory(model);
 
             if (message.Contains("successfully"))
@@ -51,6 +57,11 @@ namespace POS_ASP_ORA.Controllers
         [HttpPost]
         public IActionResult Update(Category model)
         {
+            if (string.IsNullOrEmpty(model.CategoryName))
+            {
+                TempData["Error"] = "Category Name is required.";
+                return RedirectToAction("ProductCategory");
+            }
             string message = _categoryService.UpdateCategory(model);
 
             if (message.Contains("successfully"))

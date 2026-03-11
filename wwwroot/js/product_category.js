@@ -1,7 +1,13 @@
-﻿<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+﻿
 
 $(document).ready(function () {
-    $('#categoryTable').DataTable();
+    var categoryTable = $('#categoryTable').DataTable({
+        dom: 'rt<"bottom d-flex justify-content-between align-items-center"lip>',
+        searching: false,
+        scrollY: "60vh",
+        scrollCollapse: true,
+        paging: true
+    });
 
     // Handle select all
     $('#selectAll').on('change', function () {
@@ -27,32 +33,48 @@ $(document).ready(function () {
 
     // Handle delete selected
     $('#deleteSelected').on('click', function () {
+
         var selectedIds = [];
+
         $('.row-checkbox:checked').each(function () {
-            selectedIds.push($(this).val());
+            selectedIds.push(parseInt($(this).val()));
         });
 
         if (selectedIds.length === 0) {
-            alert('Please select at least one category to delete.');
+            showWarning('Please select at least one category to delete.');
             return;
         }
 
-        if (confirm('Are you sure you want to delete the selected categories?')) {
+        confirmDelete(function () {
+
             $.ajax({
                 url: '/ProductCategory/DeleteSelected',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(selectedIds),
+
                 success: function (response) {
-                    alert(response.message);
-                    location.reload();
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted',
+                        text: response.message
+                    }).then(() => {
+                        location.reload();
+                    });
+
                 },
+
                 error: function () {
-                    alert('Failed to delete categories.');
+                    showError('Failed to delete categories.');
                 }
+
             });
-        }
+
+        });
+
     });
+
 
     // Handle search
     $('#searchBar').on('keyup', function () {
@@ -63,7 +85,7 @@ $(document).ready(function () {
     });
 
     // Handle Add button click
-    $('.btn-primary').on('click', function () {
+    $('#btnAddCategory').on('click', function () {
         // Reset the modal for Add operation
         $('#categoryModalTitle').text('Add Category');
         $('#categoryForm').attr('action', '/ProductCategory/Create');

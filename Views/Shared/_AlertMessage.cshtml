@@ -1,0 +1,56 @@
+﻿@if (TempData["Success"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: '@TempData["Success"]',
+            confirmButtonColor: '#8B4513'
+        });
+    </script>
+}
+
+@if (TempData["Error"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '@TempData["Error"]',
+            confirmButtonColor: '#d33'
+        });
+    </script>
+}
+
+@if (TempData["Warning"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Warning',
+            text: '@TempData["Warning"]'
+        });
+    </script>
+}
+
+@if (TempData["Info"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'info',
+            title: 'Info',
+            text: '@TempData["Info"]'
+        });
+    </script>
+}
+@if (TempData["Delete"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Deleted',
+            text: '@TempData["Delete"]',
+            confirmButtonColor: '#d33'
+        });
+    </script>
+}

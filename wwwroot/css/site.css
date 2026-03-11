@@ -1,29 +1,24 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+@media (min-width:768px) {
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    margin: 0;
+    min-height: 100vh;
 }
+
+/* SIDEBAR */
 
 .sidebar {
     width: 230px;
     min-height: 100vh;
+    padding: 15px;
     transition: all 0.3s;
 }
 
@@ -31,108 +26,79 @@ body {
         width: 70px;
     }
 
-        .sidebar.collapsed span {
-            display: none;
-        }
+.sidebar-title {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
 
-        .sidebar.collapsed h5 {
-            display: none;
-        }
+.sidebar.collapsed .sidebar-title {
+    display: none;
+}
 
-    .sidebar .nav-link {
-        color: #333;
-        font-size: 15px;
+.sidebar.collapsed .menu-text {
+    display: none;
+}
+
+.sidebar.collapsed .collapse {
+    display: none;
+}
+
+.sidebar .nav-link {
+    color: #333;
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+    .sidebar .nav-link:hover {
+        background: #f1f1f1;
     }
 
-        .sidebar .nav-link:hover {
-            background: #f1f1f1;
-            border-radius: 5px;
-        }
-
-        .sidebar .nav-link.active {
-            background: #0d6efd;
-            color: white;
-            border-radius: 5px;
-        }
-
-    .sidebar i {
-        margin-right: 6px;
+    .sidebar .nav-link.active {
+        background: #0d6efd;
+        color: white;
     }
 
-/* ===== Brown Theme ===== */
+.sidebar i {
+    width: 22px;
+    margin-right: 6px;
+}
 
-.modal-brown {
-    background-color: #8B4513;
+/* NAVBAR */
+
+.navbar-brown {
+    background: #8B4513;
     color: white;
 }
 
-/* Brown Button */
+/* BUTTONS */
+
 .btn-brown {
-    background-color: #8B4513;
+    background: #8B4513;
     color: white;
     border: none;
 }
 
-.btn-brown:hover {
-    background-color: #6f3710;
+    .btn-brown:hover {
+        background: #6f3710;
+        color: white;
+    }
+
+/* MODAL */
+
+.modal-brown {
+    background: #8B4513;
     color: white;
 }
 
-/* Optional nicer modal header */
 .modal-header {
     border-bottom: none;
 }
 
-/* Form spacing improvement */
-.modal-body label {
-    font-weight: 500;
-}
+/* LOGIN MODAL */
 
-.navbar-brown {
-    background-color: #8B4513 !important;
-    color: white !important;
-}
-
-/* Style for Sign In and Sign Up buttons */
-.btn-outline-primary {
-    color: white !important; /* White text */
-    border: 1px solid white !important; /* White border */
-    background-color: transparent !important; /* No background */
-}
-
-.btn-outline-primary:hover {
-    color: #8B4513 !important; /* Brown text on hover */
-    background-color: white !important; /* White background on hover */
-    border-color: white !important; /* White border */
-}
-
-.btn-primary {
-    color: white !important; /* White text */
-    border: 1px solid white !important; /* White border */
-    background-color: transparent !important; /* No background */
-}
-
-.btn-primary:hover {
-    color: #8B4513 !important; /* Brown text on hover */
-    background-color: white !important; /* White background on hover */
-    border-color: white !important; /* White border */
-}
-
-/* Style for the three-dot sidebar toggle button */
-#toggleSidebar {
-    background-color: transparent !important; /* No background */
-    color: white !important; /* White text */
-    border: none !important; /* No border */
-}
-
-#toggleSidebar:hover {
-    background-color: rgba(255, 255, 255, 0.1) !important; /* Slight hover effect */
-    color: white !important; /* Keep text white */
-}
-
-/* Login Modal Styles */
 .left-panel {
-    background-color: #6b2f00;
+    background: #6b2f00;
     color: white;
     display: flex;
     flex-direction: column;
@@ -140,12 +106,12 @@ body {
     align-items: center;
 }
 
-.left-panel img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    margin-bottom: 20px;
-}
+    .left-panel img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin-bottom: 20px;
+    }
 
 .brand-text {
     font-family: cursive;
@@ -153,7 +119,7 @@ body {
 }
 
 .right-panel {
-    background-color: #f5f5f5;
+    background: #f5f5f5;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -169,27 +135,40 @@ body {
     margin-bottom: 20px;
 }
 
-/* Ensure the login button is visible and styled */
 .btn-login {
-    background-color: #0d6efd; /* Bootstrap primary color */
+    background: #0d6efd;
     color: white;
     border: none;
-    cursor: pointer;
 }
 
-.btn-login:disabled {
-    background-color: #d6d6d6; /* Gray color for disabled state */
-    color: #a1a1a1;
-    cursor: not-allowed;
-}
-
-.btn-cancel {
-    background-color: #c25a00;
-    color: white;
-}
+    .btn-login:disabled {
+        background: #d6d6d6;
+        color: #a1a1a1;
+    }
 
 .register-link {
     margin-top: 40px;
     color: white;
     text-decoration: underline;
+}
+
+/* TOGGLE BUTTON */
+
+#toggleSidebar {
+    background: transparent;
+    color: white;
+    border: none;
+}
+
+    #toggleSidebar:hover {
+        background: rgba(255,255,255,0.1);
+    }
+
+/*datatable*/
+table.dataTable thead th {
+    background-color: #006400;
+    color: white;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: 600;
 }

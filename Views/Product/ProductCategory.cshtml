@@ -4,19 +4,7 @@
     <script src="~/js/product_category.js"></script>
 
 }
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["Success"]
-    </div>
-}
 
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["Error"]
-    </div>
-}
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <!-- Search Bar -->
@@ -26,11 +14,11 @@
 
     <!-- Add and Delete Buttons -->
     <div>
-        <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#categoryModal">
-            Add Category
+        <button class="btn btn-brown me-2" id="btnAddCategory" data-bs-toggle="modal" data-bs-target="#categoryModal">
+            Add
         </button>
         <button class="btn btn-danger" id="deleteSelected">
-            Delete Selected
+            Delete
         </button>
     </div>
 </div>
@@ -68,7 +56,7 @@
 </table>
 
 <div class="modal fade" id="categoryModal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content">
 
             <div class="modal-header modal-brown">
@@ -83,14 +71,12 @@
                     <input type="hidden" id="categoryId" name="Id" />
 
                     <div class="mb-3">
-                        <label class="form-label">Category Name</label>
+                        <label class="form-label">Category Name*</label>
                         <input id="categoryName" name="CategoryName" class="form-control" />
                     </div>
 
-                    <input type="hidden" name="Status" value="0" />
-
                     <div class="form-check">
-                        <input type="checkbox" id="statusCheck" name="StatusCheck" value="true" class="form-check-input">
+                        <input type="checkbox" id="statusCheck" name="Status" value="1" class="form-check-input" checked>
                         <label class="form-check-label" for="statusCheck">
                             Active
                         </label>
