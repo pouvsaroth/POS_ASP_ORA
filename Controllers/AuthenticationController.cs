@@ -1,42 +1,51 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
+﻿using Microsoft.AspNetCore.Mvc;
+using POS_ASP_ORA.Services;
 
 namespace POS_ASP_ORA.Controllers
 {
     public class AuthenticationController : Controller
     {
+        private readonly AuthenticationService _authService;
+
+        public AuthenticationController(AuthenticationService authService)
+        {
+            _authService = authService;
+        }
+
         public IActionResult Login()
         {
             return View();
         }
-        // POST: Login logic
+
         [HttpPost]
-        public async Task<IActionResult> Login(string username, string password)
+        public IActionResult Login(string username, string password)
         {
-            // 🔥 Replace this with Oracle DB later
-            if (username == "admin" && password == "123")
+            try
             {
-                var claims = new List<Claim>
+                var (result, userId, isActive, email) = _authService.Login(username, password);
+
+                if (result == "SUCCESS")
                 {
-                    new Claim(ClaimTypes.Name, username)
-                };
+                    // Set user session or authentication logic
+                    HttpContext.Session.SetString("UserId", userId);
+                    HttpContext.Session.SetString("Username", username);
+                    HttpContext.Session.SetString("Email", email);
 
-                var identity = new ClaimsIdentity(
-                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                var principal = new ClaimsPrincipal(identity);
-
-                await HttpContext.SignInAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme,
-                    principal);
-
-                return RedirectToAction("Index", "Home");
+                    return Json(new { success = true, message = "Login successful!" });
+                }
+                else if (result == "INACTIVE")
+                {
+                    return Json(new { success = false, message = "Your account is inactive." });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Invalid username or password." });
+                }
             }
-
-            ViewBag.Error = "Invalid username or password";
-            return View();
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred: " + ex.Message });
+            }
         }
 
         public IActionResult Register()
@@ -46,7 +55,7 @@ namespace POS_ASP_ORA.Controllers
 
         public IActionResult Logout()
         {
-            // TODO: Clear session or cookie
+            HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
     }

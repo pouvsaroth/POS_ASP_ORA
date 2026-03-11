@@ -11,15 +11,17 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-// Add Cookie Authentication
+builder.Services.AddSession(); // Enable session
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
         //options.LoginPath = "/Account/Login";   // redirect if not logged in
         //options.LogoutPath = "/Account/Logout";
     });
+builder.Services.AddSingleton<OracleDbHelper>(); // Register OracleDbHelper
 builder.Services.AddScoped<ProductCategoryService>();
-builder.Services.AddScoped<OracleDbHelper>();
+builder.Services.AddScoped<AuthenticationService>(); // Register AuthenticationService
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,6 +36,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession(); // Enable session
 
 app.UseAuthentication(); 
 app.UseAuthorization();
