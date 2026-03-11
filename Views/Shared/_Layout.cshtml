@@ -18,6 +18,7 @@
 
 <body>
 
+<<<<<<< Updated upstream
 <!-- ================= NAVBAR ================= -->
 <nav class="navbar navbar-brown shadow-sm px-3">
 
@@ -25,23 +26,33 @@
     <button class="btn" id="toggleSidebar">
         <i class="bi bi-list"></i>
     </button>
+=======
+    <!-- ================= NAVBAR ================= -->
+    <nav class="navbar navbar-light bg-white shadow-sm px-3">
 
-    <!-- Logo -->
-    <div class="d-flex align-items-center">
-        <img src="~/images/vorakchuncoffeelogo.png"
-             style="height:40px;width:40px;object-fit:cover"
-             class="me-2" />
+        <!-- Sidebar Toggle -->
+        <button class="btn btn-light me-2" id="toggleSidebar">
+            <i class="bi bi-list"></i>
+        </button>
+>>>>>>> Stashed changes
 
-        <span class="fw-bold">Vorakchun Coffee</span>
-    </div>
+        <!-- Logo -->
+        <div class="d-flex align-items-center">
+            <img src="~/images/vorakchuncoffeelogo.png"
+            style="height:40px;width:40px;object-fit:cover"
+            class="me-2" />
 
-    <!-- Right Side -->
-    <div class="ms-auto d-flex">
+            <span class="fw-bold">Vorakchun Coffee</span>
+        </div>
 
-        @if (User.Identity.IsAuthenticated)
-        {
-            <span class="me-3">Hello, @User.Identity.Name</span>
+        <!-- Right Side -->
+        <div class="ms-auto d-flex">
 
+            @if (User.Identity.IsAuthenticated)
+            {
+                <span class="me-3">Hello, @User.Identity.Name</span>
+
+<<<<<<< Updated upstream
             <a class="btn btn-outline-danger"
                asp-controller="Authentication"
                asp-action="Logout">
@@ -53,18 +64,34 @@
             <button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
                 Sign In
             </button>
+=======
+                <a class="btn btn-outline-danger"
+                asp-controller="Authentication"
+                asp-action="Logout">
+                    Logout
+                </a>
+            }
+            else
+            {
+                <a class="btn btn-outline-primary me-2"
+                asp-controller="Authentication"
+                asp-action="Login">
+                    Sign In
+                </a>
+>>>>>>> Stashed changes
 
-            <a class="btn btn-primary"
-               asp-controller="Authentication"
-               asp-action="Register">
-                Sign Up
-            </a>
-        }
+                <a class="btn btn-primary"
+                asp-controller="Authentication"
+                asp-action="Register">
+                    Sign Up
+                </a>
+            }
 
-    </div>
+        </div>
 
-</nav>
+    </nav>
 
+<<<<<<< Updated upstream
 <!-- Login Modal -->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -111,113 +138,142 @@
 
 <!-- ================= MAIN LAYOUT ================= -->
 <div class="d-flex">
+=======
+    <!-- ================= MAIN LAYOUT ================= -->
+    <div class="d-flex">
+>>>>>>> Stashed changes
 
-<!-- ================= SIDEBAR ================= -->
-<div id="sidebar" class="sidebar bg-light border-end p-3">
+        <!-- ================= SIDEBAR ================= -->
+        <div id="sidebar" class="sidebar bg-light border-end p-3">
 
-<h5 class="mb-3">Menu</h5>
+            <h5 class="mb-3">Menu</h5>
 
-@{
-    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+            @{
+                var controller = ViewContext.RouteData.Values["controller"]?.ToString();
 
-    var productOpen =
-        controller == "Product" ||
-        controller == "ProductCategory";
-}
+                var productOpen =
+                    controller == "Product" ||
+                    controller == "ProductCategory";
 
-<ul class="nav flex-column">
-
-<!-- Dashboard -->
-<li class="nav-item">
-<a class="nav-link @(controller=="Home"?"active":"")"
-   asp-controller="Home"
-   asp-action="Index">
-
-<i class="bi bi-speedometer2"></i>
-<span>Dashboard</span>
-
-</a>
-</li>
+                var accountOpen =
+                controller == "IncomeType"
+                
+                ;
+            }
 
 
-<!-- POS -->
-<li class="nav-item">
-<a class="nav-link @(controller=="POS"?"active":"")"
-   asp-controller="POS"
-   asp-action="Index">
+            <ul class="nav flex-column">
 
-<i class="bi bi-cart"></i>
-<span>POS</span>
+                <!-- Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link @(controller=="Home"?"active":"")"
+                    asp-controller="Home"
+                    asp-action="Index">
 
-</a>
-</li>
+                        <i class="bi bi-speedometer2"></i>
+                        <span>Dashboard</span>
+
+                    </a>
+                </li>
 
 
-<!-- Products -->
-<li class="nav-item">
+                <!-- POS -->
+                <li class="nav-item">
+                    <a class="nav-link @(controller=="POS"?"active":"")"
+                    asp-controller="POS"
+                    asp-action="Index">
 
-<a class="nav-link d-flex justify-content-between align-items-center"
-   data-bs-toggle="collapse"
-   href="#productMenu">
+                        <i class="bi bi-cart"></i>
+                        <span>POS</span>
 
-<span>
-<i class="bi bi-box"></i>
-Products
-</span>
+                    </a>
+                </li>
 
-<i class="bi bi-chevron-down"></i>
 
-</a>
+                <!-- Products -->
+                <li class="nav-item">
+                   
+                    <a class="nav-link d-flex justify-content-between align-items-center"
+                    data-bs-toggle="collapse"
+                    href="#productMenu">
 
-<div class="collapse @(productOpen ? "show" : "")" id="productMenu">
+                        <span>
+                            <i class="bi bi-box"></i>
+                            Products
+                        </span>
 
-<ul class="nav flex-column ms-3">
+                        <i class="bi bi-chevron-down"></i>
 
-<li class="nav-item">
-<a class="nav-link @(controller=="Product"?"active":"")"
-   asp-controller="Product"
-   asp-action="Product">
-Product List
-</a>
-</li>
+                    </a>
 
-<li class="nav-item">
-<a class="nav-link @(controller=="ProductCategory"?"active":"")"
-   asp-controller="ProductCategory"
-   asp-action="ProductCategory">
-Product Category
-</a>
-</li>
+                    <div class="collapse @(productOpen ? "show" : "")" id="productMenu">
 
-</ul>
+                        <ul class="nav flex-column ms-3">
+
+                            <li class="nav-item">
+                                <a class="nav-link @(controller=="Product"?"active":"")"
+                                asp-controller="Product"
+                                asp-action="Product">
+                                    Product List
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link @(controller=="ProductCategory"?"active":"")"
+                                asp-controller="ProductCategory"
+                                asp-action="ProductCategory">
+                                    Product Category
+                                </a>
+                            </li>
+
+                        </ul>
+
+
+                    </div>
+
+                </li>
+                <li class="nav-item">
+                    <ul class="nav flex-column">
+                        <!-- Other existing menu items -->
+
+                        <!-- Account Menu -->
+                        <li class="nav-item">
+
+                            <a class="nav-link d-flex justify-content-between align-items-center"
+                               data-bs-toggle="collapse"
+                               href="#accountMenu">
+
+                                <span>
+                                    <i class="bi bi-person-circle"></i>
+                                    Account
+                                </span>
+
+                                <i class="bi bi-chevron-down"></i>
+
+                            </a>
+
+                            <div class="collapse @(accountOpen ? "show" : "")" id="accountMenu">
+
+                                <ul class="nav flex-column ms-3">
+
+                                    <li class="nav-item">
+                                        <a class="nav-link @(controller=="IncomeType"?"active":"")"
+                                           asp-controller="IncomeType"
+                                           asp-action="IncomeType">
+                                            <i class="bi bi-cash"></i>
+                                            Income Type
+                                        </a>
+                                    </li>
+                                </ul>
+
+                            </div>
+
+                        </li>
+
+
+
+               
  
-
-</div>
-
-</li>
-<li class="nav-item">
-    <ul class="nav flex-column">
-        <!-- Other existing menu items -->
-
-        <!-- Account Menu -->
-        <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#accountMenu" role="button" aria-expanded="false" aria-controls="accountMenu">
-                <i class="bi bi-person-circle"></i> <!-- Bootstrap icon for Account -->
-                Account
-            </a>
-            <div class="collapse" id="accountMenu">
-                <ul class="nav flex-column ms-3">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Account/IncomeType">
-                            <i class="bi bi-cash"></i> <!-- Bootstrap icon for Income Type -->
-                            Income Type
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-    </ul>
-</li>
 <!-- Sales -->
 <li class="nav-item">
 <a class="nav-link @(controller=="Sales"?"active":"")"
@@ -261,6 +317,8 @@ document.getElementById("toggleSidebar").onclick = function(){
 }
 
 </script>
+
+
 
 </body>
 </html>

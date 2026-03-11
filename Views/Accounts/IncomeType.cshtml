@@ -1,0 +1,89 @@
+﻿@model IEnumerable<POS_ASP_ORA.Models.IncomeType>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#incometypeTable').DataTable({
+                pageLength: 10
+            });
+        });
+    </script>
+}
+
+<h3>Income Types</h3>
+
+<button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#incomeModal">
+    Add Income Type
+</button>
+
+<table id="incometypeTable" class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Type Name</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.TypeName</td>
+                <td>
+                    @(item.Status == 1 ? "Active" : "Inactive")
+                </td>
+                <td>
+                    <form asp-action="Delete" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Add IncomeType Modal -->
+<div class="modal fade" id="incomeModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5>Add Income Type</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <form asp-action="Create" method="post">
+
+                    <div class="mb-3">
+                        <label>Type Name</label>
+                        <input name="TypeName" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Status</label>
+                        <select name="Status" class="form-control">
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">
+                        Save
+                    </button>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
