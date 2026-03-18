@@ -2,28 +2,14 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+function switchToLoginModal() {
+    // Close the register modal
+    const registerModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+    registerModal.hide();
 
-$(document).ready(function () {
-    $('#signInForm').on('submit', function (e) {
-        e.preventDefault();
-
-        const formData = $(this).serialize();
-
-        $.ajax({
-            url: '/Authentication/Login',
-            type: 'POST',
-            data: formData,
-            success: function (response) {
-                if (response.success) {
-                    alert(response.message);
-                    location.reload(); // Reload the page after successful login
-                } else {
-                    alert(response.message);
-                }
-            },
-            error: function () {
-                alert('An error occurred while processing your request.');
-            }
-        });
-    });
-});
+    // Wait for the register modal to close, then show the login modal
+    registerModal._element.addEventListener('hidden.bs.modal', function () {
+        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show();
+    }, { once: true });
+}

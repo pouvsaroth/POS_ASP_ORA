@@ -172,3 +172,25 @@ table.dataTable thead th {
     vertical-align: middle;
     font-weight: 600;
 }
+/*login*/
+
+.left-panel {
+    background-color: #773800;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+.brand-text {
+    font-family: cursive;
+    font-size: 28px;
+}
+
+.register-link {
+    margin-top: 40px;
+    color: white;
+    text-decoration: underline;
+}

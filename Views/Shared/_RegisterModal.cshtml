@@ -1,0 +1,43 @@
+﻿@model POS_ASP_ORA.Models.Users
+
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" style="min-height: 400px;">
+            <div class="row g-0">
+                <!-- Left Panel -->
+                <div class="col-md-6 left-panel d-flex flex-column align-items-center justify-content-center" style="background:#773800;">
+                    <img src="~/images/vorakchuncoffeelogo.png" style="width:120px;height:120px;border-radius:50%;margin-bottom:20px;" />
+                    <div class="brand-text mb-2" style="font-family:cursive;font-size:28px;">Vorak Chun Coffee</div>
+                    <a href="#" class="register-link text-white" onclick="switchToLoginModal()">
+                        Already have an account? Login
+                    </a>
+                </div>
+                <!-- Right Panel -->
+                <div class="col-md-6 d-flex align-items-center justify-content-center" style="background:#f5f5f5;">
+                    <div class="w-75">
+                        <h3 class="text-center mb-4" style="color:#773800;">Register</h3>
+                        <form method="post" action="@Url.Action("Register", "Authentication")">
+                            <div class="mb-3">
+                                <label for="Username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="Username" name="Username" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="Email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="Email" name="Email" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="Password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="Password" name="Password" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="ConfirmPassword" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" required />
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
