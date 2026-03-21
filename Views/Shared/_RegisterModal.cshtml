@@ -18,7 +18,7 @@
                         <h3 class="text-center mb-4" style="color:#773800;">Register</h3>
                         <form method="post" action="@Url.Action("Register", "Authentication")">
                         @Html.AntiForgeryToken()
-                            <input name="__RequestVerificationToken" hidden/>
+                      
                             <div class="mb-3">
                                 <label for="Username" class="form-label">Username</label>
                                 <input type="text" class="form-control" id="Username" name="Username" required />
@@ -35,7 +35,9 @@
                                 <label for="ConfirmPassword" class="form-label">Confirm Password</label>
                                 <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" required />
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                            <div class="mt-2">
+                                <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                            </div>
                         </form>
                     </div>
                 </div>
