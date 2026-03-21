@@ -35,26 +35,37 @@ class="me-2" />
 </div>
 
 <div class="ms-auto d-flex align-items-center">
+    <!-- Date Time -->
+    <span id="datetime" class="me-4"></span>
 
-@if (User.Identity.IsAuthenticated)
-{
-<span class="me-3 text-white">Hello, @User.Identity.Name</span>
+    @if (User.Identity.IsAuthenticated)
+    {
+    <!-- User Profile -->
+        <div class="d-flex align-items-center me-3">
+            <img src="~/images/user.gif"
+                    style="width:35px;height:35px;border-radius:50%;object-fit:cover"
+                    class="me-2" />
+            <span>@User.Identity.Name</span>
+        </div>
+            <!-- Notification -->
+        <i class="bi bi-bell me-3" style="font-size:20px;"></i>
 
-<a class="btn btn-outline-danger"
-asp-controller="Authentication"
-asp-action="Logout">
-Logout
-</a>
-}
-else
-{
+        <!-- Logout -->
+        <a class="btn btn-outline-light"
+            asp-controller="Authentication"
+            asp-action="Logout">
+            Logout
+        </a>
+    }
+    else
+    {
 
-<button class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
-    Sign In
-</button>
-<button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#registerModal">
-    Sign Up
-</button>
+    <button class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+        Sign In
+    </button>
+    <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#registerModal">
+        Sign Up
+    </button>
 }
 
 </div>
@@ -530,8 +541,15 @@ return new bootstrap.Tooltip(tooltipTriggerEl)
 
 })
 
-
-
+//Date  and time
+function updateTime() {
+    const now = new Date();
+    document.getElementById("datetime").innerText =
+        "Date: " + now.toISOString().slice(0,10) +
+        " Time: " + now.toLocaleTimeString();
+}
+setInterval(updateTime, 1000);
+updateTime();
 </script>
 
 </body>

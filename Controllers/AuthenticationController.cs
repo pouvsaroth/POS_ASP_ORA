@@ -1,13 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
+using POS_ASP_ORA.Helpers;
+using POS_ASP_ORA.Models;
 using POS_ASP_ORA.Services;
+using System.Security.Claims;
+
 
 namespace POS_ASP_ORA.Controllers
 {
     public class AuthenticationController : Controller
     {
-        private readonly AuthenticationService _authService;
+        private readonly AuthService _authService;
 
-        public AuthenticationController(AuthenticationService authService)
+        public AuthenticationController(AuthService authService)
         {
             _authService = authService;
         }
@@ -18,44 +24,66 @@ namespace POS_ASP_ORA.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(string username, string password)
+        public async Task<IActionResult> Login(string username, string password)
         {
-            try
+            string hashedPassword = SecurityHelper.HashPassword(password);
+
+            var (result, userId, isActive, email) = _authService.Login(username, hashedPassword.ToUpper());
+
+            if (result == "SUCCESS")
             {
-                var (result, userId, isActive, email) = _authService.Login(username, password);
+                var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, username),
+            new Claim("UserId", userId),
+            new Claim(ClaimTypes.Email, email ?? "")
+        };
 
-                if (result == "SUCCESS")
-                {
-                    // Set user session or authentication logic
-                    HttpContext.Session.SetString("UserId", userId);
-                    HttpContext.Session.SetString("Username", username);
-                    HttpContext.Session.SetString("Email", email);
+                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                    return Json(new { success = true, message = "Login successful!" });
-                }
-                else if (result == "INACTIVE")
-                {
-                    return Json(new { success = false, message = "Your account is inactive." });
-                }
-                else
-                {
-                    return Json(new { success = false, message = "Invalid username or password." });
-                }
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(identity)
+                );
+
+                return Json(new { success = true });
             }
-            catch (Exception ex)
+
+            return Json(new { success = false, message = result });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Register(Users model)
+        {
+            if (!ModelState.IsValid)
             {
-                return Json(new { success = false, message = "An error occurred: " + ex.Message });
+                TempData["Error"] = "Please fill in all required fields.";
+                return View(model);
+            }
+
+            // Hash the password before saving
+            model.Password = SecurityHelper.HashPassword(model.Password);
+            model.CreatedAt = DateTime.Now;
+            model.IsActive = true; // or set as needed
+
+            var result = _authService.RegisterUser(model);
+
+            if (result == "SUCCESS")
+            {
+                //TempData["Success"] = "Registration successful! You can now log in.";
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                TempData["Error"] = result;
+                return View(model);
             }
         }
 
-        public IActionResult Register()
+        public async Task<IActionResult> Logout()
         {
-            return View();
-        }
-
-        public IActionResult Logout()
-        {
-            HttpContext.Session.Clear();
+            await HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
     }

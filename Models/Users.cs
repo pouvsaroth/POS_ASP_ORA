@@ -32,6 +32,10 @@ namespace POS_ASP_ORA.Models
 
         [Column("UPDATED_AT")]
         public DateTime? UpdatedAt { get; set; }
+
+        [NotMapped]
+        [Compare("Password", ErrorMessage = "Passwords do not match")]
+        public string ConfirmPassword { get; set; }
     }
 }
 

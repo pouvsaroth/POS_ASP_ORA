@@ -1,5 +1,4 @@
-﻿@model POS_ASP_ORA.Models.Users
-
+﻿
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content" style="min-height: 400px;">
@@ -16,7 +15,7 @@
                 <div class="col-md-6 d-flex align-items-center justify-content-center" style="background:#f5f5f5;">
                     <div class="w-75">
                         <h3 class="text-center mb-4" style="color:#773800;">Login</h3>
-                        <form method="post" action="@Url.Action("Login", "Authentication")">
+                        <form id="loginForm" method="post" action="@Url.Action("Login", "Authentication")">
                             <div class="mb-3">
                                 <label for="Username" class="form-label">Username</label>
                                 <input type="text" class="form-control" id="Username" name="Username" required />
@@ -33,3 +32,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    $("#loginForm").submit(function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: $(this).attr("action"),
+            type: "POST",
+            data: $(this).serialize(),
+            success: function (res) {
+                if (res.success) {
+                    location.reload(); // reload page → show navbar user
+                } else {
+                    alert(res.message);
+                }
+            }
+        });
+    });
+</script>

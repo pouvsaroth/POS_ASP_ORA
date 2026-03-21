@@ -15,12 +15,13 @@ builder.Services.AddSession(); // Enable session
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        //options.LoginPath = "/Account/Login";   // redirect if not logged in
-        //options.LogoutPath = "/Account/Logout";
+        options.LoginPath = "/"; // or your login page
     });
+
+builder.Services.AddSession();
 builder.Services.AddSingleton<OracleDbHelper>(); // Register OracleDbHelper
 builder.Services.AddScoped<ProductCategoryService>();
-builder.Services.AddScoped<AuthenticationService>(); // Register AuthenticationService
+builder.Services.AddScoped<AuthService>(); // Register AuthenticationService
 
 var app = builder.Build();
 

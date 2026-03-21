@@ -1,4 +1,4 @@
-﻿@model POS_ASP_ORA.Models.Users
+﻿
 
 <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -17,6 +17,8 @@
                     <div class="w-75">
                         <h3 class="text-center mb-4" style="color:#773800;">Register</h3>
                         <form method="post" action="@Url.Action("Register", "Authentication")">
+                        @Html.AntiForgeryToken()
+                            <input name="__RequestVerificationToken" hidden/>
                             <div class="mb-3">
                                 <label for="Username" class="form-label">Username</label>
                                 <input type="text" class="form-control" id="Username" name="Username" required />
