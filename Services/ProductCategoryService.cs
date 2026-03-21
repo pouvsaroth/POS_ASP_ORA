@@ -22,16 +22,16 @@ namespace POS_ASP_ORA.Services
             try
             {
                 var parameters = new List<OracleParameter>
-            {
-                new OracleParameter("P_ACTION","GET"),
-                new OracleParameter("P_ID",DBNull.Value),
-                new OracleParameter("P_CATEGORYNAME",DBNull.Value),
-                new OracleParameter("P_STATUS",DBNull.Value),
-                new OracleParameter("P_CURSOR", OracleDbType.RefCursor)
                 {
-                    Direction = ParameterDirection.Output
-                }
-            };
+                    new OracleParameter("P_ACTION","GET"),
+                    new OracleParameter("P_ID",DBNull.Value),
+                    new OracleParameter("P_CATEGORYNAME",DBNull.Value),
+                    new OracleParameter("P_STATUS",DBNull.Value),
+                    new OracleParameter("P_CURSOR", OracleDbType.RefCursor)
+                    {
+                        Direction = ParameterDirection.Output
+                    }
+                };
 
                 DataTable dt = _db.ExecuteQuery("SP_CATEGORY_CRUD", parameters);
 

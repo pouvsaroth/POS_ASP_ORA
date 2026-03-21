@@ -1,7 +1,8 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using POS_ASP_ORA.Helpers;
-using System.Data;
 using POS_ASP_ORA.Models;
+using System.Collections.Generic;
+using System.Data;
 
 namespace POS_ASP_ORA.Services
 {
@@ -90,5 +91,40 @@ namespace POS_ASP_ORA.Services
 
             return parameters[8].Value.ToString(); // P_RESULT
         }
+
+        public List<MenuModel> GetUserMenu(string userId)
+        {
+            var list = new List<MenuModel>();
+
+            var parameters = new List<OracleParameter>
+            {
+                new OracleParameter("P_USERID", OracleDbType.Raw)
+                {
+                    Value = GeneralHelper.StringToByteArray(userId) // 🔥 convert to RAW
+                },
+                new OracleParameter("P_CURSOR", OracleDbType.RefCursor)
+                {
+                    Direction = ParameterDirection.Output
+                }
+            };
+
+            DataTable dt = _db.ExecuteQuery("SP_GET_USER_MENU", parameters);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                list.Add(new MenuModel
+                {
+                    Id = row["ID"].ToString(),
+                    Name = row["MENUNAME"].ToString(),
+                    Controller = row["CONTROLLERNAME"]?.ToString(),
+                    Action = row["ACTIONNAME"]?.ToString(),
+                    Icon = row["ICON"]?.ToString(),
+                    ParentId = row["PARENTID"]?.ToString()
+                });
+            }
+
+            return list;
+        }
+        
     }
 }

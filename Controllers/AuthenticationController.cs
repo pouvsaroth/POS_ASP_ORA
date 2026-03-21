@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using POS_ASP_ORA.Helpers;
 using POS_ASP_ORA.Models;
 using POS_ASP_ORA.Services;
@@ -33,11 +34,19 @@ namespace POS_ASP_ORA.Controllers
             if (result == "SUCCESS")
             {
                 var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, username),
-            new Claim("UserId", userId),
-            new Claim(ClaimTypes.Email, email ?? "")
-        };
+                {
+                    new Claim(ClaimTypes.Name, username),
+                    new Claim("UserId", userId),
+                    new Claim(ClaimTypes.Email, email ?? "")
+                };
+                var UserMenuList = _authService.GetUserMenu(userId);
+                var menuTree = GeneralHelper.BuildMenuTree(UserMenuList);
+                HttpContext.Session.SetString("Menu", JsonConvert.SerializeObject(menuTree));
+
+                foreach (var UserMenu in UserMenuList)
+                {
+                    claims.Add(new Claim("UserMenuList", UserMenu.Name));
+                }
 
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 

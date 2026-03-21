@@ -15,6 +15,7 @@
 
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js"></script>
+
 </head>
 
 <body>
@@ -97,427 +98,87 @@ class="me-2" />
 <!-- MAIN LAYOUT -->
 <div class="d-flex">
 
-<!-- SIDEBAR -->
-<div id="sidebar" class="sidebar bg-light border-end">
-
-@{
-var controller = ViewContext.RouteData.Values["controller"]?.ToString();
-
-var productOpen =
-controller == "Product" ||
-controller == "ProductCategory";
-
-var financeOpen =
-controller == "IncomeType";
-
-var saleOpen =
-controller == "POSScreen";
-
-var purchaseOpen =
-controller == "PurchaseOrder";
-
-var inventoryOpen =
-controller == "Warehouse";
-
-var administrationOpen =
-controller == "UserAccess";
-
-var settingOpen =
-controller == "Company";
-}
-
-<ul class="nav flex-column">
-
-<!-- Dashboard -->
-<li class="nav-item">
-<a class="nav-link @(controller=="Home"?"active":"")"
-asp-controller="Home"
-asp-action="Index"
-data-bs-toggle="tooltip"
-data-bs-placement="right"
-title="Dashboard">
-
-<i class="bi bi-speedometer2"></i>
-<span class="menu-text">Dashboard</span>
-
-</a>
-</li>
-
-<!-- Sale -->
-<li class="nav-item">
-
-<a class="nav-link d-flex justify-content-between align-items-center"
-data-bs-toggle="collapse"
-href="#saleMenu"
-title="Sale">
-
-<span>
-<i class="bi bi-box"></i>
-<span class="menu-text">Sale</span>
-</span>
-
-<i class="bi bi-chevron-down"></i>
-
-</a>
-
-<div class="collapse @(saleOpen ? "show" : "")" id="saleMenu">
-
-<ul class="nav flex-column ms-3">
-
-<li class="nav-item">
-<a class="nav-link @(controller=="POSScreen"?"active":"")"
-asp-controller="POSScreen"
-asp-action="POSScreen">
-POS Screen
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link @(controller=="SalesInvoice"?"active":"")"
-asp-controller="SalesInvoice"
-asp-action="SaleInvoice">
-Sales Invoice
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link @(controller=="SalesDetail"?"active":"")"
-asp-controller="SalesDetail"
-asp-action="SaleDetail">
-Sales Detail
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link @(controller=="SalesPayment"?"active":"")"
-asp-controller="SalesPayment"
-asp-action="SalePayment">
-Sales Payment
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link @(controller=="Customer"?"active":"")"
-asp-controller="Customer"
-asp-action="Customer">
-Customer
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link @(controller=="CustomerCheck-in"?"active":"")"
-asp-controller="CustomerCheck-in"
-asp-action="CustomerCheck-in">
-CustomerCheck-in
-</a>
-</li>
-
-</ul>
-
-</div>
-
-</li>
-
-<!-- Purchase -->
-<li class="nav-item">
-
-<a class="nav-link d-flex justify-content-between align-items-center"
-data-bs-toggle="collapse"
-href="#purchaseMenu"
-title="Purchase">
-
-<span>
-<i class="bi bi-box"></i>
-<span class="menu-text">Purchase</span>
-</span>
-
-<i class="bi bi-chevron-down"></i>
-
-</a>
-
-<div class="collapse @(purchaseOpen ? "show" : "")" id="purchaseMenu">
-
-<ul class="nav flex-column ms-3">
-
-<li class="nav-item">
-<a class="nav-link @(controller=="PurchaseOrder"?"active":"")"
-asp-controller="PurchaseOrder"
-asp-action="PurchaseOrder">
-Purchase Order
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link @(controller=="PurchaseList"?"active":"")"
-asp-controller="PurchaseList"
-asp-action="PurchaseList">
-Purchase List
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link @(controller=="PurchasePayment"?"active":"")"
-asp-controller="PurchasePayment"
-asp-action="PurchasePayment">
-PurchasePayment
-</a>
-</li>
-
-</ul>
-
-</div>
-
-</li>
-
-<!-- Inventory -->
-<li class="nav-item">
-
-<a class="nav-link d-flex justify-content-between align-items-center"
-data-bs-toggle="collapse"
-href="#inventoryMenu"
-title="Inventory">
-
-<span>
-<i class="bi bi-box"></i>
-<span class="menu-text">Inventory</span>
-</span>
-
-<i class="bi bi-chevron-down"></i>
-
-</a>
-
-<div class="collapse @(inventoryOpen ? "show" : "")" id="inventoryMenu">
-
-<ul class="nav flex-column ms-3">
-
-<li class="nav-item">
-<a class="nav-link @(controller=="Warehouse"?"active":"")"
-asp-controller="Warehouse"
-asp-action="Warehouse">
-Warehouse
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link @(controller=="StockList"?"active":"")"
-asp-controller="StockList"
-asp-action="StockList">
-Stock List
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link @(controller=="StockMovement"?"active":"")"
-asp-controller="StockMovement"
-asp-action="StockMovement">
-Stock Movement
-</a>
-</li>
-
-</ul>
-
-</div>
-
-</li>
-
-<!-- Administration -->
-<li class="nav-item">
-
-<a class="nav-link d-flex justify-content-between align-items-center"
-data-bs-toggle="collapse"
-href="#administrationMenu"
-title="Administration">
-
-<span>
-<i class="bi bi-box"></i>
-<span class="menu-text">Administration</span>
-</span>
-
-<i class="bi bi-chevron-down"></i>
-
-</a>
-
-<div class="collapse @(administrationOpen ? "show" : "")" id="administrationMenu">
-
-<ul class="nav flex-column ms-3">
-
-<li class="nav-item">
-<a class="nav-link @(controller=="UserManagement"?"active":"")"
-asp-controller="UserManagement"
-asp-action="UserManagement">
-User Management
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link @(controller=="UserAccess"?"active":"")"
-asp-controller="UserAccess"
-asp-action="UserAccess">
-User Access
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link @(controller=="GroupManagement"?"active":"")"
-asp-controller="GroupManagement"
-asp-action="GroupManagement">
-Group Management
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link @(controller=="GroupMember"?"active":"")"
-asp-controller="GroupMember"
-asp-action="GroupMember">
-Group Member
-</a>
-</li>
-
-</ul>
-
-</div>
-
-</li>
-
-<!-- PRODUCTS -->
-<li class="nav-item">
-
-<a class="nav-link d-flex justify-content-between align-items-center"
-data-bs-toggle="collapse"
-href="#productMenu"
-title="Products">
-
-<span>
-<i class="bi bi-box"></i>
-<span class="menu-text">Products</span>
-</span>
-
-<i class="bi bi-chevron-down"></i>
-
-</a>
-
-<div class="collapse @(productOpen ? "show" : "")" id="productMenu">
-
-<ul class="nav flex-column ms-3">
-
-<li class="nav-item">
-<a class="nav-link @(controller=="Product"?"active":"")"
-asp-controller="Product"
-asp-action="Product">
-Product List
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link @(controller=="ProductCategory"?"active":"")"
-asp-controller="ProductCategory"
-asp-action="ProductCategory">
-Product Category
-</a>
-</li>
-
-</ul>
-
-</div>
-
-</li>
-
-
-<!-- ACCOUNT -->
-<li class="nav-item">
-
-<a class="nav-link d-flex justify-content-between align-items-center"
-data-bs-toggle="collapse"
-href="#financeMenu"
-title="Finance">
-
-<span>
-<i class="bi bi-person-circle"></i>
-<span class="menu-text">Finance</span>
-</span>
-
-<i class="bi bi-chevron-down"></i>
-
-</a>
-
-<div class="collapse @(financeOpen ? "show" : "")" id="financeMenu">
-
-<ul class="nav flex-column ms-3">
-
-<li class="nav-item">
-<a class="nav-link @(controller=="IncomeType"?"active":"")"
-asp-controller="IncomeType"
-asp-action="IncomeType">
-
-<i class="bi bi-cash"></i>
-Income Type
-
-</a>
-</li>
-
-</ul>
-
-</div>
-
-</li>
-
-<!-- Setting -->
-<li class="nav-item">
-
-<a class="nav-link d-flex justify-content-between align-items-center"
-data-bs-toggle="collapse"
-href="#settingMenu"
-title="Setting">
-
-<span>
-<i class="bi bi-box"></i>
-<span class="menu-text">Setting</span>
-</span>
-
-<i class="bi bi-chevron-down"></i>
-
-</a>
-
-<div class="collapse @(settingOpen ? "show" : "")" id="settingMenu">
-
-<ul class="nav flex-column ms-3">
-
-<li class="nav-item">
-<a class="nav-link @(controller=="Company"?"active":"")"
-asp-controller="Company"
-asp-action="Company">
-Company
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link @(controller=="System0bjects"?"active":"")"
-asp-controller="System0bjects"
-asp-action="System0bjects">
-System 0bjects
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link @(controller=="GroupPermission"?"active":"")"
-asp-controller="GroupPermission"
-asp-action="GroupPermission">
-Group Permission
-</a>
-</li>
-
-</ul>
-
-</div>
-
-</li>
-
-
-
-
-</ul>
-
-</div>
+    <!-- SIDEBAR -->
+    <div id="sidebar" class="sidebar bg-light border-end">
+    
+
+        <ul class="nav flex-column">
+                    @using Newtonsoft.Json
+                    @using POS_ASP_ORA.Models
+
+                    @{
+                        var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+
+                        var menuJson = Context.Session.GetString("Menu");
+
+                        var menus = string.IsNullOrEmpty(menuJson)
+                        ? new List<MenuModel>()
+                        : JsonConvert.DeserializeObject<List<MenuModel>>(menuJson);
+                    }
+
+                    <ul class="nav flex-column">
+
+                        @foreach (var parent in menus)
+                        {
+                            var isActiveParent = parent.Children.Any(c => c.Controller == controller);
+
+                            if (parent.Children.Any())
+                            {
+                                <!-- Parent Menu -->
+                                <li class="nav-item">
+
+                                    <a class="nav-link d-flex justify-content-between align-items-center"
+                                       data-bs-toggle="collapse"
+                                       href="#menu_@parent.Id">
+
+                                        <span>
+                                            <i class="bi @parent.Icon"></i>
+                                            <span class="menu-text">@parent.Name</span>
+                                        </span>
+
+                                        <i class="bi bi-chevron-down"></i>
+                                    </a>
+
+                                    <div class="collapse @(isActiveParent ? "show" : "")" id="menu_@parent.Id">
+                                        <ul class="nav flex-column ms-3">
+
+                                            @foreach (var child in parent.Children)
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link @(controller == child.Controller ? "active" : "")"
+                                                       asp-controller="@child.Controller"
+                                                       asp-action="@child.Action">
+
+                                                        @child.Name
+                                                    </a>
+                                                </li>
+                                            }
+
+                                        </ul>
+                                    </div>
+
+                                </li>
+                            }
+                            else
+                            {
+                                <!-- Single Menu -->
+                                <li class="nav-item">
+                                    <a class="nav-link @(controller == parent.Controller ? "active" : "")"
+                                       asp-controller="@parent.Controller"
+                                       asp-action="@parent.Action">
+
+                                        <i class="bi @parent.Icon"></i>
+                                        <span class="menu-text">@parent.Name</span>
+                                    </a>
+                                </li>
+                            }
+                        }
+
+                    </ul>
+
+        </ul>
+
+    </div>
 
 
 <!-- PAGE CONTENT -->
