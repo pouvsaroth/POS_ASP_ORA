@@ -24,13 +24,13 @@ namespace POS_ASP_ORA.Helpers
 
             foreach (var item in flatList)
             {
-                if (!string.IsNullOrEmpty(item.ParentId) && lookup.ContainsKey(item.ParentId))
+                if (item.ParentId.HasValue && lookup.ContainsKey(item.ParentId.Value))
                 {
-                    lookup[item.ParentId].Children.Add(item);
+                    lookup[item.ParentId.Value].Children.Add(item);
                 }
             }
 
-            return flatList.Where(x => string.IsNullOrEmpty(x.ParentId)).ToList();
+            return flatList.Where(x => !x.ParentId.HasValue).ToList();
         }
 
         public static byte[] StringToByteArray(string hex)

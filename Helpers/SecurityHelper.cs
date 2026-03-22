@@ -1,5 +1,8 @@
-﻿using System.Text;
+﻿using Newtonsoft.Json;
+using POS_ASP_ORA.Models;
+using POS_ASP_ORA.Services;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace POS_ASP_ORA.Helpers
 {
@@ -13,6 +16,7 @@ namespace POS_ASP_ORA.Helpers
                 var hash = sha.ComputeHash(bytes);
                 return Convert.ToBase64String(hash);
             }
-        }
+        }   
     }
+
 }

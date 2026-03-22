@@ -114,12 +114,12 @@ namespace POS_ASP_ORA.Services
             {
                 list.Add(new MenuModel
                 {
-                    Id = row["ID"].ToString(),
-                    Name = row["MENUNAME"].ToString(),
-                    Controller = row["CONTROLLERNAME"]?.ToString(),
-                    Action = row["ACTIONNAME"]?.ToString(),
+                    Id = int.Parse(row["ID"].ToString()),
+                    MenuName = row["MENUNAME"].ToString(),
+                    ControllerName = row["CONTROLLERNAME"]?.ToString(),
+                    ActionName = row["ACTIONNAME"]?.ToString(),
                     Icon = row["ICON"]?.ToString(),
-                    ParentId = row["PARENTID"]?.ToString()
+                    ParentId = row["PARENTID"] == DBNull.Value? null : (int?)Convert.ToInt32(row["PARENTID"]),
                 });
             }
 

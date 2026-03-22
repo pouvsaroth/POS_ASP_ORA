@@ -1,36 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Oracle.ManagedDataAccess.Client;
-using POS_ASP_ORA.Data;
 using POS_ASP_ORA.Models;
 using POS_ASP_ORA.Services;
 
 namespace POS_ASP_ORA.Controllers
 {
-    public class ProductCategoryController : Controller
+    public class POSScreenController:Controller
     {
         private readonly ProductCategoryService _categoryService;
 
-        public ProductCategoryController(ProductCategoryService categoryService)
+        public POSScreenController(ProductCategoryService categoryService)
         {
             _categoryService = categoryService;
         }
 
         // LIST
-        public IActionResult ViewProductCategory()
+        public IActionResult ViewPOSScreen()
         {
-            try
+            var model = new POSScreenModel
             {
-                var categories = _categoryService.GetCategories();
-
-                return View("~/Views/Product/ProductCategory.cshtml", categories);
-            }
-            catch (Exception ex)
-            {
-                TempData["Error"] = "Failed to load categories: " + ex.Message;
-
-                return View("~/Views/Product/ProductCategory.cshtml", new List<Category>());
-            }
+                Products = new List<ProductTest>
+                {
+                    new ProductTest { Name = "Coca Cola", Price = 1, Stock = 120, ImageUrl="/images/coke.png" },
+                    new ProductTest { Name = "Pepsi", Price = 1, Stock = 80, ImageUrl="/images/pepsi.png" },
+                    new ProductTest { Name = "Red Bull", Price = 2, Stock = 50, ImageUrl="/images/redbull.png" }
+                } 
+            };
+            return View("~/Views/Sales/POSScreen.cshtml",model);
         }
 
         // INSERT
@@ -50,7 +45,7 @@ namespace POS_ASP_ORA.Controllers
             else
                 TempData["Error"] = message;
 
-            return RedirectToAction(nameof(ViewProductCategory));
+            return RedirectToAction("ProductCategory");
         }
 
         // UPDATE
@@ -69,7 +64,7 @@ namespace POS_ASP_ORA.Controllers
             else
                 TempData["Error"] = message;
 
-            return RedirectToAction(nameof(ViewProductCategory));
+            return RedirectToAction("ProductCategory");
         }
 
         // DELETE

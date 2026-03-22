@@ -33,20 +33,23 @@ namespace POS_ASP_ORA.Controllers
 
             if (result == "SUCCESS")
             {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, username),
-                    new Claim("UserId", userId),
-                    new Claim(ClaimTypes.Email, email ?? "")
-                };
+                
                 var UserMenuList = _authService.GetUserMenu(userId);
                 var menuTree = GeneralHelper.BuildMenuTree(UserMenuList);
-                HttpContext.Session.SetString("Menu", JsonConvert.SerializeObject(menuTree));
+                // HttpContext.Session.SetString("Menu", JsonConvert.SerializeObject(menuTree));
+                var menuJson = JsonConvert.SerializeObject(menuTree);
+                // ⚠️ Optional (recommended if menu is big)
+                var menuBase64 = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(menuJson));
+                // ✅ Create claims
+                var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, username),
+                        new Claim("UserId", userId),
+                        new Claim(ClaimTypes.Email, email ?? ""),
 
-                foreach (var UserMenu in UserMenuList)
-                {
-                    claims.Add(new Claim("UserMenuList", UserMenu.Name));
-                }
+                        // ✅ Store FULL menu in claim
+                        new Claim("Menu", menuBase64)
+                    };
 
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -81,7 +84,7 @@ namespace POS_ASP_ORA.Controllers
             if (result == "SUCCESS")
             {
                 //TempData["Success"] = "Registration successful! You can now log in.";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("ViewPOSScreen", "POSScreen");
             }
             else
             {
@@ -93,7 +96,7 @@ namespace POS_ASP_ORA.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ViewPOSScreen", "POSScreen");
         }
     }
 }

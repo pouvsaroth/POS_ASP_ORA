@@ -1,94 +1,93 @@
-﻿@model IEnumerable<Category>
+﻿@model POS_ASP_ORA.Models.POSScreenModel
 @section Scripts {
-
-    <script src="~/js/product_category.js"></script>
-
+    <script src="~/js/posscreen.js"></script>
 }
 
+<div class="pos-container">
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <!-- Search Bar -->
-    <div>
-        <input type="text" id="searchBar" class="form-control" placeholder="Search categories..." />
-    </div>
+    <!-- LEFT: PRODUCTS -->
+    <div class="products-section">
 
-    <!-- Add and Delete Buttons -->
-    <div>
-        <button class="btn btn-brown me-2" id="btnAddCategory" data-bs-toggle="modal" data-bs-target="#categoryModal">
-            Add
-        </button>
-        <button class="btn btn-danger" id="deleteSelected">
-            Delete
-        </button>
-    </div>
-</div>
-
-<table id="categoryTable" class="table">
-    <thead>
-        <tr>
-            <th><input type="checkbox" id="selectAll" /></th>
-            <th>ID</th>
-            <th>Category Name</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var category in Model)
-        {
-            <tr>
-                <td>
-                    <input type="checkbox" class="row-checkbox" value="@category.Id" />
-                </td>
-                <td>@category.Id</td>
-                <td>@category.CategoryName</td>
-                <td>
-                    <input type="checkbox" disabled @(category.Status == 1 ? "checked" : "") />
-                </td>
-                <td>
-                    <button class="btn btn-warning btn-sm edit-btn" data-id="@category.Id" data-name="@category.CategoryName" data-status="@category.Status">
-                        <i class="bi bi-pencil"></i>
-                    </button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<div class="modal fade" id="categoryModal">
-    <div class="modal-dialog modal-dialog-centered modal-md">
-        <div class="modal-content">
-
-            <div class="modal-header modal-brown">
-                <h5 class="modal-title" id="categoryModalTitle">Add Category</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-
-            <div class="modal-body">
-
-                <form id="categoryForm" method="post">
-                    <!-- Hidden input for ID -->
-                    <input type="hidden" id="categoryId" name="Id" />
-
-                    <div class="mb-3">
-                        <label class="form-label">Category Name*</label>
-                        <input id="categoryName" name="CategoryName" class="form-control" />
-                    </div>
-
-                    <div class="form-check">
-                        <input type="checkbox" id="statusCheck" name="Status" value="1" class="form-check-input" checked>
-                        <label class="form-check-label" for="statusCheck">
-                            Active
-                        </label>
-                    </div>
-
-                    <button type="submit" class="btn btn-brown">
-                        Save
-                    </button>
-                </form>
-
-            </div>
-
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="active">All</button>
+            <button>Drinks</button>
+            <button>Snacks</button>
+            <button>Food</button>
+            <button>Electronics</button>
+            <button>Other</button>
         </div>
+
+        <!-- Product Grid -->
+        <div class="product-grid">
+            @foreach (var item in Model.Products)
+            {
+                <div class="product-card" onclick="addToCart('@item.Name', @item.Price)">
+                    <img src="@item.ImageUrl" />
+                    <h5>@item.Name</h5>
+                    <p class="price">$@item.Price</p>
+                    <small>@item.Stock Stock</small>
+                </div>
+            }
+        </div>
+
+        <!-- Bottom Table -->
+        <div class="cart-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="cartItems"></tbody>
+            </table>
+
+            <div class="summary">
+                <span>Total:</span>
+                <span id="totalAmount">$0.00</span>
+            </div>
+
+            <div class="actions">
+                <button>Clear Cart</button>
+                <button>Hold</button>
+                <button>Cancel Sale</button>
+                <button>Print</button>
+                <button class="pay">Pay</button>
+            </div>
+        </div>
+
     </div>
+
+    <!-- RIGHT: CART SUMMARY -->
+    <div class="cart-section">
+        <h4>Cart</h4>
+
+        <div id="cartSummary"></div>
+
+        <div class="totals">
+            <p>Subtotal: <span id="subtotal">$0.00</span></p>
+            <p>Discount: $0.00</p>
+            <h3>Total: <span id="total">$0.00</span></h3>
+        </div>
+
+        <div class="payment">
+            <label>Customer Payment</label>
+            <input type="number" id="paymentInput" value="0" onkeyup="calculateChange()" />
+
+            <p>Change: <span id="change">$0.00</span></p>
+
+            <div class="methods">
+                <label><input type="radio" name="method" checked /> Cash</label>
+                <label><input type="radio" name="method" /> ABA</label>
+                <label><input type="radio" name="method" /> Credit Card</label>
+            </div>
+        </div>
+
+        <button class="pay-btn">Pay</button>
+    </div>
+
 </div>

@@ -1,0 +1,96 @@
+﻿
+
+.pos-container {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+}
+
+.products-section {
+    flex: 3;
+}
+
+.cart-section {
+    flex: 1;
+    background: #1e293b;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* Tabs */
+.tabs button {
+    background: #1e293b;
+    border: none;
+    padding: 10px;
+    margin-right: 5px;
+    
+    border-radius: 5px;
+}
+
+.tabs .active {
+    background: #22c55e;
+}
+
+/* Product Grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.product-card {
+    background: #1e293b;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+}
+
+    .product-card img {
+        width: 60px;
+        height: 60px;
+    }
+
+.price {
+    color: #22c55e;
+}
+
+/* Table */
+.cart-table {
+    margin-top: 20px;
+    background: #1e293b;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.summary {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+/* Buttons */
+.actions button {
+    margin: 5px;
+    padding: 8px;
+}
+
+.pay {
+    background: #22c55e;
+}
+
+/* Right Panel */
+.payment input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+}
+
+.pay-btn {
+    width: 100%;
+    background: #22c55e;
+    padding: 10px;
+    border: none;
+    margin-top: 10px;
+}

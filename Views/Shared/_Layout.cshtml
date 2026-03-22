@@ -16,6 +16,7 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js"></script>
 
+
 </head>
 
 <body>
@@ -103,24 +104,45 @@ class="me-2" />
     
 
         <ul class="nav flex-column">
-                    @using Newtonsoft.Json
-                    @using POS_ASP_ORA.Models
+                @using Newtonsoft.Json
+                @using POS_ASP_ORA.Models
+                @using System.Text
 
-                    @{
-                        var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+                @{
+                    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
 
-                        var menuJson = Context.Session.GetString("Menu");
+                    var menuBase64 = User.FindFirst("Menu")?.Value;
 
-                        var menus = string.IsNullOrEmpty(menuJson)
-                        ? new List<MenuModel>()
-                        : JsonConvert.DeserializeObject<List<MenuModel>>(menuJson);
+                    var menus = new List<MenuModel>();
+
+                    if (!string.IsNullOrEmpty(menuBase64))
+                    {
+                        try
+                        {
+                            var json = Encoding.UTF8.GetString(Convert.FromBase64String(menuBase64));
+                            menus = JsonConvert.DeserializeObject<List<MenuModel>>(json);
+                        }
+                        catch
+                        {
+                            menus = new List<MenuModel>();
+                        }
                     }
+                }
 
-                    <ul class="nav flex-column">
+                 
+                        <!-- Single Menu -->
+                        <li class="nav-item">
+                            <a class="nav-link @(controller == "POSScreen" ? "active" : "")"
+                                asp-controller="POSScreen"
+                               asp-action="ViewPOSScreen">
 
+                            <i class="bi bi-speedometer2"></i>
+                                <span class="menu-text">POS Screen</span>
+                            </a>
+                        </li>
                         @foreach (var parent in menus)
                         {
-                            var isActiveParent = parent.Children.Any(c => c.Controller == controller);
+                            var isActiveParent = parent.Children.Any(c => c.ControllerName == controller);
 
                             if (parent.Children.Any())
                             {
@@ -133,7 +155,7 @@ class="me-2" />
 
                                         <span>
                                             <i class="bi @parent.Icon"></i>
-                                            <span class="menu-text">@parent.Name</span>
+                                            <span class="menu-text">@parent.MenuName</span>
                                         </span>
 
                                         <i class="bi bi-chevron-down"></i>
@@ -145,11 +167,11 @@ class="me-2" />
                                             @foreach (var child in parent.Children)
                                             {
                                                 <li class="nav-item">
-                                                    <a class="nav-link @(controller == child.Controller ? "active" : "")"
-                                                       asp-controller="@child.Controller"
-                                                       asp-action="@child.Action">
-
-                                                        @child.Name
+                                                    <a class="nav-link @(controller == child.ControllerName ? "active" : "")"
+                                                       asp-controller="@child.ControllerName"
+                                                       asp-action="@child.ActionName">
+                                                        <i class="bi @child.Icon"></i>
+                                                        @child.MenuName
                                                     </a>
                                                 </li>
                                             }
@@ -163,18 +185,17 @@ class="me-2" />
                             {
                                 <!-- Single Menu -->
                                 <li class="nav-item">
-                                    <a class="nav-link @(controller == parent.Controller ? "active" : "")"
-                                       asp-controller="@parent.Controller"
-                                       asp-action="@parent.Action">
+                                    <a class="nav-link @(controller == parent.ControllerName ? "active" : "")"
+                                       asp-controller="@parent.ControllerName"
+                                       asp-action="@parent.ActionName">
 
                                         <i class="bi @parent.Icon"></i>
-                                        <span class="menu-text">@parent.Name</span>
+                                        <span class="menu-text">@parent.MenuName</span>
                                     </a>
                                 </li>
                             }
                         }
 
-                    </ul>
 
         </ul>
 

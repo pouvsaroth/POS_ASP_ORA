@@ -11,17 +11,16 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddSession(); // Enable session
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
         options.LoginPath = "/"; // or your login page
     });
 
-builder.Services.AddSession();
 builder.Services.AddSingleton<OracleDbHelper>(); // Register OracleDbHelper
 builder.Services.AddScoped<ProductCategoryService>();
 builder.Services.AddScoped<AuthService>(); // Register AuthenticationService
+builder.Services.AddScoped<MenuService>();
 
 var app = builder.Build();
 
@@ -38,12 +37,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseSession(); // Enable session
-
 app.UseAuthentication(); 
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=POSScreen}/{action=ViewPOSScreen}/{id?}");
 app.Run();
