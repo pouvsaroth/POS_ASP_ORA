@@ -1,0 +1,84 @@
+﻿@model IEnumerable<POS_ASP_ORA.Models.Company>
+
+@section Scripts {
+    <script src="~/js/company.js"></script>
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <button class="btn btn-brown" data-bs-toggle="modal" data-bs-target="#companyModal" id="addCompanyBtn">
+        Add Company
+    </button>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Company Name</th>
+            <th>Location</th>
+            <th>Phone</th>
+            <th>Remark</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var company in Model)
+        {
+            <tr>
+                <td>@company.Id</td>
+                <td>@company.CompanyName</td>
+                <td>@company.Location</td>
+                <td>@company.Phone</td>
+                <td>@company.Remark</td>
+                <td>
+                    <button class="btn btn-warning btn-sm edit-btn"
+                            data-id="@company.Id"
+                            data-name="@company.CompanyName"
+                            data-location="@company.Location"
+                            data-phone="@company.Phone"
+                            data-remark="@company.Remark"
+                            data-bs-toggle="modal" data-bs-target="#companyModal">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm delete-btn" data-id="@company.Id">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="companyModal">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+            <div class="modal-header modal-brown">
+                <h5 class="modal-title" id="companyModalTitle">Add Company</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="companyForm" method="post" asp-action="Save">
+                    <input type="hidden" id="companyId" name="Id" />
+                    <div class="mb-3">
+                        <label class="form-label">Company Name*</label>
+                        <input id="companyName" name="CompanyName" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Location*</label>
+                        <input id="location" name="Location" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone*</label>
+                        <input id="phone" name="Phone" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Remark*</label>
+                        <input id="remark" name="Remark" class="form-control" required />
+                    </div>
+                    <button type="submit" class="btn btn-brown">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
