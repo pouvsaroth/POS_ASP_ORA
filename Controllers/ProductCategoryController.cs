@@ -3,15 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using Oracle.ManagedDataAccess.Client;
 using POS_ASP_ORA.Data;
 using POS_ASP_ORA.Models;
-using POS_ASP_ORA.Services;
+using POS_ASP_ORA.Services.Interfaces;
 
 namespace POS_ASP_ORA.Controllers
 {
     public class ProductCategoryController : Controller
     {
-        private readonly ProductCategoryService _categoryService;
+        private readonly IProductCategoryService _categoryService;
 
-        public ProductCategoryController(ProductCategoryService categoryService)
+        public ProductCategoryController(IProductCategoryService categoryService)
         {
             _categoryService = categoryService;
         }

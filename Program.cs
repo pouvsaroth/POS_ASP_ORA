@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using POS_ASP_ORA.Data;
 using POS_ASP_ORA.Helpers;
+using POS_ASP_ORA.Models;
 using POS_ASP_ORA.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,11 +17,13 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         options.LoginPath = "/"; // or your login page
     });
-
-builder.Services.AddSingleton<OracleDbHelper>(); // Register OracleDbHelper
-builder.Services.AddScoped<ProductCategoryService>();
-builder.Services.AddScoped<AuthService>(); // Register AuthenticationService
-builder.Services.AddScoped<MenuService>();
+builder.Services.AddSingleton<OracleDbHelper>();
+// Auto register services
+builder.Services.Scan(scan => scan
+    .FromAssemblyOf<Program>()
+    .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Service")))
+    .AsImplementedInterfaces()
+    .WithScopedLifetime());
 
 var app = builder.Build();
 

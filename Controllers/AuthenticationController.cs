@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using POS_ASP_ORA.Helpers;
 using POS_ASP_ORA.Models;
-using POS_ASP_ORA.Services;
+using POS_ASP_ORA.Services.Interfaces;
 using System.Security.Claims;
 
 
@@ -12,9 +12,9 @@ namespace POS_ASP_ORA.Controllers
 {
     public class AuthenticationController : Controller
     {
-        private readonly AuthService _authService;
+        private readonly IAuthService _authService;
 
-        public AuthenticationController(AuthService authService)
+        public AuthenticationController(IAuthService authService)
         {
             _authService = authService;
         }

@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using POS_ASP_ORA.Models;
-using POS_ASP_ORA.Services;
+using POS_ASP_ORA.Services.Interfaces;
 
 namespace POS_ASP_ORA.Controllers
 {
     public class CompanyController : Controller
     {
-        private readonly CompanyService _companyService;
+        private readonly ICompanyService _companyService;
 
-        public CompanyController(CompanyService companyService)
+        public CompanyController(ICompanyService companyService)
         {
             _companyService = companyService;
         }

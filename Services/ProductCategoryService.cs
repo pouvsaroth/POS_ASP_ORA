@@ -1,11 +1,12 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using POS_ASP_ORA.Helpers;
 using POS_ASP_ORA.Models;
+using POS_ASP_ORA.Services.Interfaces;
 using System.Data;
 
 namespace POS_ASP_ORA.Services
 {    
-    public class ProductCategoryService
+    public class ProductCategoryService : IProductCategoryService
     {
         private readonly OracleDbHelper _db;
 

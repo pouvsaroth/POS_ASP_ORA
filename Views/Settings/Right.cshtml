@@ -1,0 +1,42 @@
+﻿@model List<RightModel>
+@section Scripts {
+    <script src="~/js/right.js"></script>
+}
+<div class="row">
+
+    <!-- GROUP -->
+    <div class="col-3 border-end">
+        <h5>Group</h5>
+        <ul class="list-group" id="groupList">
+            @foreach (var g in Model)
+            {
+                <li class="list-group-item group-item"
+                    data-id="@g.GroupId">
+                    @g.GroupName
+                </li>
+            }
+        </ul>
+    </div>
+
+    <!-- MENU -->
+    <div id="menuContainer">
+
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var item = Model[i];
+
+            <div style="margin-left:@(item.ParentId == null ? "0px" : "20px")">
+                <input type="checkbox"
+                       class="menu-check"
+                       data-id="@item.MenuId"
+                       data-parent="@item.ParentId"
+                       value="@item.MenuId"
+                       @(item.IsSelected == 1 ? "checked" : "") />
+
+                @item.MenuName
+            </div>
+        }
+
+    </div>
+
+</div>

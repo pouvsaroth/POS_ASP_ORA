@@ -1,11 +1,13 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using POS_ASP_ORA.Helpers;
 using POS_ASP_ORA.Models;
+using System.ComponentModel.Design;
 using System.Data;
+using POS_ASP_ORA.Services.Interfaces;
 
 namespace POS_ASP_ORA.Services
 {
-    public class MenuService
+    public class MenuService : IMenuService
     {
         private readonly OracleDbHelper _db;
 
@@ -21,7 +23,7 @@ namespace POS_ASP_ORA.Services
 
             var parameters = new List<OracleParameter>
         {
-            new OracleParameter("P_ACTION","GET"),
+            new OracleParameter("P_ACTION","GETMENUTREE"),
             new OracleParameter("P_ID",DBNull.Value),
             new OracleParameter("P_MENUNAME",DBNull.Value),
             new OracleParameter("P_CONTROLLERNAME",DBNull.Value),
@@ -47,7 +49,9 @@ namespace POS_ASP_ORA.Services
                     ActionName = row["ACTIONNAME"]?.ToString(),
                     Icon = row["ICON"]?.ToString(),
                     ParentId = row["PARENTID"] == DBNull.Value ? null : (int?)Convert.ToInt32(row["PARENTID"]),
-                    DisplayOrder = Convert.ToInt32(row["DISPLAYORDER"])
+                    DisplayOrder = Convert.ToInt32(row["DISPLAYORDER"]),
+                    MenuLevel = Convert.ToInt32(row["MENU_LEVEL"]),
+                    TreeName = row["TREE_NAME"].ToString(),
                 });
             }
 

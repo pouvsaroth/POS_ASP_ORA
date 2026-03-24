@@ -31,48 +31,12 @@ $(document).ready(function () {
         }
     });
 
-    // Handle delete selected
+    // Handle delete selected 
     $('#deleteSelected').on('click', function () {
-
-        var selectedIds = [];
-
-        $('.row-checkbox:checked').each(function () {
-            selectedIds.push(parseInt($(this).val()));
-        });
-
-        if (selectedIds.length === 0) {
-            showWarning('Please select at least one category to delete.');
-            return;
-        }
-
-        confirmDelete(function () {
-
-            $.ajax({
-                url: '/ProductCategory/DeleteSelected',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(selectedIds),
-
-                success: function (response) {
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Deleted',
-                        text: response.message
-                    }).then(() => {
-                        location.reload();
-                    });
-
-                },
-
-                error: function () {
-                    showError('Failed to delete categories.');
-                }
-
-            });
-
-        });
-
+        deleteSelectedItems({
+            table: categoryTable,
+            url: '/ProductCategory/DeleteSelected'
+        });  
     });
 
 
