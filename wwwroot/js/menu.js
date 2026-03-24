@@ -14,7 +14,7 @@
     });
 
     // DELETE SINGLE
-    $('.delete-btn').on('click', function () {
+    $('#menuTable').on('click', '.delete-btn', function () {
         var id = $(this).data('id');
 
         if (confirm('Are you sure you want to delete this menu?')) {
@@ -31,57 +31,16 @@
         }
     });
 
-    // DELETE SELECTED
     $('#deleteSelected').on('click', function () {
-
-        var selectedIds = [];
-
-        $('.row-checkbox:checked').each(function () {
-            selectedIds.push(parseInt($(this).val()));
+        deleteSelectedItems({
+            table: menuTable,
+            url: '/Menu/DeleteSelected'
         });
-
-        if (selectedIds.length === 0) {
-            showWarning('Please select at least one menu to delete.');
-            return;
-        }
-
-        confirmDelete(function () {
-
-            $.ajax({
-                url: '/Menu/DeleteSelected',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(selectedIds),
-
-                success: function (response) {
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Deleted',
-                        text: response.message
-                    }).then(() => {
-                        location.reload();
-                    });
-
-                },
-
-                error: function () {
-                    showError('Failed to delete menus.');
-                }
-
-            });
-
-        });
-
     });
 
     // SEARCH
     $('#searchBar').on('keyup', function () {
-        var value = $(this).val().toLowerCase();
-
-        $('#menuTable tbody tr').filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-        });
+        menuTable.search(this.value).draw();
     });
 
     // ADD BUTTON
@@ -95,12 +54,13 @@
         $('#controllerName').val('');
         $('#actionName').val('');
         $('#icon').val('');
-        $('#displayOrder').val('');
+        $('#displayOrder').val
+        $('#parentId').val(''); 
 
     });
 
     // EDIT BUTTON
-    $('.edit-btn').on('click', function () {
+    $('#menuTable').on('click', '.edit-btn', function () {
 
         var id = $(this).data('id');
         var name = $(this).data('name');
@@ -112,6 +72,7 @@
         $('#menuModalTitle').text('Edit Menu');
         $('#menuForm').attr('action', '/Menu/Update');
 
+        $('#parentId').val($(this).data('parent') || '').trigger('change');
         $('#menuId').val(id);
         $('#menuName').val(name);
         $('#controllerName').val(controller);
@@ -120,6 +81,13 @@
         $('#displayOrder').val(order);
 
         $('#menuModal').modal('show');
+    });
+
+    $('#parentId').select2({
+        placeholder: "-- Select Parent Menu --",
+        allowClear: true,
+        width: '100%',
+        dropdownParent: $('#menuModal') // 🔥 IMPORTANT for modal
     });
 
 });

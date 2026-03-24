@@ -1,12 +1,13 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using POS_ASP_ORA.Helpers;
 using POS_ASP_ORA.Models;
+using POS_ASP_ORA.Services.Interfaces;
 using System.Collections.Generic;
 using System.Data;
 
 namespace POS_ASP_ORA.Services
 {
-    public class AuthService
+    public class AuthService: IAuthService
     {
         private readonly OracleDbHelper _db;
 

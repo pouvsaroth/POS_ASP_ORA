@@ -32,7 +32,7 @@
         <tr>
             <th><input type="checkbox" id="selectAll" /></th>
             <th>ID</th>
-            <th>Menu Name</th>
+            <th>Menu</th>
             <th>Controller</th>
             <th>Action</th>
             <th>Icon</th>
@@ -49,7 +49,16 @@
                     <input type="checkbox" class="row-checkbox" value="@m.Id" />
                 </td>
                 <td>@m.Id</td>
-                <td>@m.MenuName</td>
+                <td>
+                    @if (m.MenuLevel == 1)
+                    {
+                        <strong>@m.MenuName</strong>
+                    }
+                    else
+                    {
+                        @Html.Raw(string.Concat(Enumerable.Repeat("&nbsp;&nbsp;&nbsp;&nbsp;", m.MenuLevel - 1)) + "↳ " + m.MenuName)
+                    }
+                </td>
                 <td>@m.ControllerName</td>
                 <td>@m.ActionName</td>
                 <td><i class="@m.Icon"></i></td>
@@ -62,7 +71,8 @@
                             data-controller="@m.ControllerName"
                             data-action="@m.ActionName"
                             data-icon="@m.Icon"
-                            data-order="@m.DisplayOrder">
+                            data-order="@m.DisplayOrder"
+                            data-parent="@m.ParentId">
                         <i class="bi bi-pencil"></i>
                     </button>
 
@@ -91,7 +101,18 @@
                 <form id="menuForm" method="post">
 
                     <input type="hidden" id="menuId" name="Id" />
-
+                    <div class="mb-3">
+                        <label class="form-label">Parent Menu</label>
+                        <select id="parentId" name="ParentId" class="form-control">
+                            <option value="">-- No Parent --</option>
+                            @foreach (var p in Model)
+                            {
+                                <option value="@p.Id">
+                                    @(new string('-', (p.MenuLevel - 1) * 2)) @p.MenuName
+                                </option>
+                            }
+                        </select>
+                    </div>
                     <div class="mb-3">
                         <label class="form-label">Menu Name*</label>
                         <input id="menuName" name="MenuName" class="form-control" />

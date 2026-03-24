@@ -8,8 +8,11 @@
         public string ActionName { get; set; }
         public string Icon { get; set; }
         public int? ParentId { get; set; }
+        public string ParentName { get; set; }
         public List<MenuModel> Children { get; set; } = new();
         public int DisplayOrder { get; set; }
+        public int MenuLevel { get; set; }   // LEVEL
+        public string TreeName { get; set; } // TREE_NAME
 
     }
 }

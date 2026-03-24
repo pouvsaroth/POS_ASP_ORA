@@ -13,3 +13,49 @@ function switchToLoginModal() {
         loginModal.show();
     }, { once: true });
 }
+
+//delete selected item
+function deleteSelectedItems(options) {
+
+    var table = options.table;
+    var url = options.url;
+    var confirmMessage = options.confirmMessage || 'Are you sure you want to delete selected items?';
+
+    var selectedIds = [];
+
+    // ✅ Get all selected rows (DataTable safe)
+    table.$('.row-checkbox:checked').each(function () {
+        selectedIds.push(parseInt($(this).val()));
+    });
+
+    if (selectedIds.length === 0) {
+        showWarning('Please select at least one item.');
+        return;
+    }
+
+    confirmDelete(function () {
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(selectedIds),
+
+            success: function (response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Deleted',
+                    text: response.message || 'Deleted successfully'
+                }).then(() => {
+                    location.reload();
+                });
+            },
+
+            error: function () {
+                showError('Failed to delete items.');
+            }
+
+        });
+
+    });
+}

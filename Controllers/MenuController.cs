@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using POS_ASP_ORA.Services;
+using POS_ASP_ORA.Services.Interfaces;
 using POS_ASP_ORA.Models;
 
 namespace POS_ASP_ORA.Controllers
 {
     public class MenuController:Controller
     {
-        private readonly MenuService _service;
+        private readonly IMenuService _service;
 
-        public MenuController(MenuService service)
+        public MenuController(IMenuService service)
         {
             _service = service;
         }
@@ -39,6 +39,21 @@ namespace POS_ASP_ORA.Controllers
         public IActionResult Delete(int id)
         {
             return Json(new { message = _service.Delete(id) });
+        }
+
+        public IActionResult DeleteSelected([FromBody] List<int> ids)
+        {
+            if (ids == null || !ids.Any())
+            {
+                return BadRequest(new { message = "No categories selected for deletion." });
+            }
+
+            foreach (var id in ids)
+            {
+                _service.Delete(id);
+            }
+
+            return Json(new { message = "Selected categories deleted successfully." });
         }
     }
 }
