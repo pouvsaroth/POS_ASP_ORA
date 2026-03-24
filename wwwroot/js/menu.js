@@ -1,11 +1,22 @@
 ﻿$(document).ready(function () {
 
+    if ($.fn.DataTable.isDataTable('#menuTable')) {
+        $('#menuTable').DataTable().destroy();
+    }
+
     var menuTable = $('#menuTable').DataTable({
         dom: 'rt<"bottom d-flex justify-content-between align-items-center"lip>',
         searching: false,
         scrollY: "60vh",
         scrollCollapse: true,
-        paging: true
+        paging: true,
+        columnDefs: [
+            {
+                targets: 1,
+                visible: false,
+                searchable: false
+            }
+        ]
     });
 
     // SELECT ALL
