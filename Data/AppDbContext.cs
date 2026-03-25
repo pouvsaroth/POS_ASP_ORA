@@ -29,7 +29,7 @@ namespace POS_ASP_ORA.Data
         public DbSet<GroupObject> GroupObjectModel { get; set; }
         public DbSet<GroupMember> GroupMemberModel { get; set; }
         public DbSet<Supplier> SupplierModel { get; set; }
-        public DbSet<Group> GroupModel { get; set; }
+        public DbSet<GroupModel> GroupModel { get; set; }
         public DbSet<Product> ProductModel { get; set; }
         public DbSet<Warehouse> WarehouseModel { get; set; }
 
@@ -146,7 +146,7 @@ namespace POS_ASP_ORA.Data
                       .OnDelete(DeleteBehavior.Restrict);
             });
 
-            modelBuilder.Entity<Group>(entity =>
+            modelBuilder.Entity<GroupModel>(entity =>
             {
                 entity.HasKey(e => e.Id);
 

@@ -203,3 +203,11 @@ table.dataTable thead th {
 .dropdown-item:hover {
     background-color: #f5f5f5;
 }
+
+.menu-check {
+    margin-right: 6px;
+}
+
+#menuContainer div {
+    padding: 4px 0;
+}

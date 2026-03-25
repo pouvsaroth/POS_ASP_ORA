@@ -10,5 +10,12 @@
         public int? ParentId { get; set; }
 
         public int IsSelected { get; set; } // 1 = checked, 0 = unchecked
+        public int DisplayOrder { get; set; }
+    }
+
+    public class SaveRightModel
+    {
+        public int GroupId { get; set; }
+        public List<int> MenuIds { get; set; }
     }
 }
