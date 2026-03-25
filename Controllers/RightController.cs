@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using POS_ASP_ORA.Models;
 using POS_ASP_ORA.Services.Interfaces;
 
 namespace POS_ASP_ORA.Controllers
@@ -28,9 +29,23 @@ namespace POS_ASP_ORA.Controllers
 
         // SAVE
         [HttpPost]
-        public IActionResult Save(int groupId, [FromBody] List<int> menuIds)
+        public IActionResult Save([FromBody] SaveRightModel model)
         {
-            var result = _service.SaveGroupMenu(groupId, menuIds);
+            var result = _service.SaveGroupMenu(model.GroupId, model.MenuIds);
+            return Json(new { message = result });
+        }
+
+        [HttpPost]
+        public IActionResult CreateGroup([FromBody] GroupModel model)
+        {
+            var result = _service.CreateGroup(model);
+            return Json(new { message = result });
+        }
+
+        [HttpPost]
+        public IActionResult UpdateGroup([FromBody] GroupModel model)
+        {
+            var result = _service.UpdateGroup(model);
             return Json(new { message = result });
         }
     }

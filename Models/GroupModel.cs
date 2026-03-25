@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace POS_ASP_ORA.Models
 {
     [Table("GROUP_TBL")]
-    public class Group
+    public class GroupModel
     {
         [Key]
         [Column("ID")]
-        public int Id { get; set; }
+        public int GroupId { get; set; }
 
         [Required]
         [MaxLength(100)]
@@ -22,7 +22,7 @@ namespace POS_ASP_ORA.Models
 
         [Required]
         [Column("COMPANYID")]
-        public int CompanyID { get; set; }
+        public int CompanyId { get; set; }
 
         // Navigation property (Recommended)
         public Company? Company { get; set; }

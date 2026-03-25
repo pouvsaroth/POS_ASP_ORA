@@ -7,5 +7,7 @@ namespace POS_ASP_ORA.Services.Interfaces
         List<RightModel> GetGroups();
         List<RightModel> GetMenusByGroup(int groupId);
         string SaveGroupMenu(int groupId, List<int> menuIds);
+        string CreateGroup(GroupModel model);
+        string UpdateGroup(GroupModel model);
     }
 }

@@ -70,7 +70,9 @@ namespace POS_ASP_ORA.Services
                     MenuId = Convert.ToInt32(row["ID"]),
                     MenuName = row["MENUNAME"].ToString(),
                     ParentId = row["PARENTID"] == DBNull.Value ? null : Convert.ToInt32(row["PARENTID"]),
-                    IsSelected = Convert.ToInt32(row["ISSELECTED"])
+                    IsSelected = Convert.ToInt32(row["ISSELECTED"]),
+                    DisplayOrder = Convert.ToInt32(row["DISPLAYORDER"]),
+                    GroupId=Convert.ToInt32(row["GROUPID"]),
                 });
             }
 
@@ -118,6 +120,60 @@ namespace POS_ASP_ORA.Services
             catch (Exception ex)
             {
                 return "Save failed: " + ex.Message;
+            }
+        }
+
+        public string CreateGroup(GroupModel model)
+        {
+            try
+            {
+                var parameters = new List<OracleParameter>
+        {
+            new OracleParameter("P_ACTION","CREATE_GROUP"),
+            new OracleParameter("P_GROUPID",DBNull.Value),
+            new OracleParameter("P_GROUPNAME",model.GroupName),
+            new OracleParameter("P_REMARK",model.Remark),
+            new OracleParameter("P_COMPANYID",model.CompanyId),
+            new OracleParameter("P_CURSOR", OracleDbType.RefCursor)
+            {
+                Direction = ParameterDirection.Output
+            }
+        };
+
+                _db.ExecuteNonQuery("SP_RIGHT", parameters);
+
+                return "Created successfully";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        public string UpdateGroup(GroupModel model)
+        {
+            try
+            {
+                var parameters = new List<OracleParameter>
+        {
+            new OracleParameter("P_ACTION","UPDATE_GROUP"),
+            new OracleParameter("P_GROUPID",model.GroupId),
+            new OracleParameter("P_GROUPNAME",model.GroupName),
+            new OracleParameter("P_REMARK",model.Remark),
+            new OracleParameter("P_COMPANYID",model.CompanyId),
+            new OracleParameter("P_CURSOR", OracleDbType.RefCursor)
+            {
+                Direction = ParameterDirection.Output
+            }
+        };
+
+                _db.ExecuteNonQuery("SP_RIGHT", parameters);
+
+                return "Updated successfully";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
             }
         }
     }
