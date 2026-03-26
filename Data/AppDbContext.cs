@@ -148,9 +148,9 @@ namespace POS_ASP_ORA.Data
 
             modelBuilder.Entity<GroupModel>(entity =>
             {
-                entity.HasKey(e => e.Id);
+                entity.HasKey(e => e.GroupId);
 
-                entity.Property(e => e.Id)
+                entity.Property(e => e.GroupId)
                       .HasColumnType("NUMBER")
                       .ValueGeneratedOnAdd();
 
@@ -162,14 +162,14 @@ namespace POS_ASP_ORA.Data
                       .HasColumnType("NVARCHAR2(50)")
                       .IsRequired();
 
-                entity.Property(e => e.CompanyID)
+                entity.Property(e => e.CompanyId)
                       .HasColumnType("NUMBER")
                       .IsRequired();
 
                 // Foreign Key Relationship
                 entity.HasOne(g => g.Company)
                       .WithMany()
-                      .HasForeignKey(g => g.CompanyID)
+                      .HasForeignKey(g => g.CompanyId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
 

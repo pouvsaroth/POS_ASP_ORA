@@ -278,29 +278,33 @@ $('#btnSaveGroup').click(function () {
     });
 });
 
-function initCompanyDropdown() {
 
-    $('#companyIdInput').select2({
-        placeholder: "Search company...",
-        allowClear: true,
-        width: '100%',
-        ajax: {
-            url: '/Right/GetCompanies',
-            dataType: 'json',
-            delay: 250,
-            processResults: function (data) {
+$(document).ready(function () {
 
-                return {
-                    results: data.map(x => ({
-                        id: x.id,
-                        text: x.companyName
-                    }))
-                };
-            }
+    loadCompanies();
+
+});
+
+function loadCompanies() {
+    $.ajax({
+        url: '/Right/GetCompanies',
+        type: 'GET',
+        success: function (data) {
+
+            let $select = $('#companyIdInput');
+
+            $select.empty();
+            $select.append('<option value="">-- Select Company --</option>');
+
+            $.each(data, function (i, item) {
+                $select.append(`<option value="${item.id}">${item.companyName}</option>`);
+            });
+
+            // Initialize Select2
+            $select.select2({
+                dropdownParent: $('#groupModal'),
+                width: '100%'
+            });
         }
     });
 }
-
-$('#groupModal').on('shown.bs.modal', function () {
-    initCompanyDropdown();
-});
