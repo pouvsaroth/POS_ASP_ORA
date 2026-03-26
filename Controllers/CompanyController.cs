@@ -20,24 +20,29 @@ namespace POS_ASP_ORA.Controllers
             return View("~/Views/Settings/Company.cshtml", companylist);
         }
 
-        // CREATE
+        // INSERT
         [HttpPost]
         public IActionResult Create(Company model)
         {
             string message = _companyService.InsertCompany(model);
             TempData["Success"] = message;
 
-            return RedirectToAction("Company");
+            return RedirectToAction("ViewCompany");
         }
 
         // UPDATE
         [HttpPost]
         public IActionResult Update(Company model)
         {
+            if (string.IsNullOrEmpty(model.CompanyName))
+            {
+                TempData["Error"] = "Company Name is required.";
+                return RedirectToAction("Company");
+            }
             string message = _companyService.UpdateCompany(model);
             TempData["Success"] = message;
 
-            return RedirectToAction("Company");
+            return RedirectToAction("ViewCompany");
         }
 
         // DELETE
@@ -46,6 +51,22 @@ namespace POS_ASP_ORA.Controllers
         {
             var result = _companyService.DeleteCompany(id);
             return Json(new { message = result });
+        }
+
+        [HttpPost]
+        public IActionResult DeleteSelected([FromBody] List<int> ids)
+        {
+            if (ids == null || !ids.Any())
+            {
+                return BadRequest(new { message = "No categories selected for deletion." });
+            }
+
+            foreach (var id in ids)
+            {
+                _companyService.DeleteCompany(id);
+            }
+
+            return Json(new { message = "Selected categories deleted successfully." });
         }
     }
 }

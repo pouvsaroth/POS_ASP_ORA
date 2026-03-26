@@ -86,6 +86,7 @@ namespace POS_ASP_ORA.Services
                     new OracleParameter("P_PHONE",model.Phone),
                     new OracleParameter("P_REMARK",model.Remark),
                     new OracleParameter("P_CURSOR", OracleDbType.RefCursor)
+ 
                     { Direction = ParameterDirection.Output }
                 };
 
