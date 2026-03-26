@@ -1,0 +1,148 @@
+﻿@model IEnumerable<Supplier>
+
+@section Scripts {
+    <script src="~/js/supplier.js"></script>
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+
+    <div>
+        <input type="text" id="searchBar" class="form-control" placeholder="Search Supplier..." />
+    </div>
+
+    <div>
+        <button class="btn btn-brown me-2"
+                id="addSupplierBtn"
+                data-bs-toggle="modal"
+                data-bs-target="#supplierModal">
+            Add
+        </button>
+
+        <button class="btn btn-danger" id="deleteSelected">
+            Delete
+        </button>
+    </div>
+
+</div>
+
+
+<table id="supplierTable" class="table">
+
+    <thead>
+        <tr>
+            <th><input type="checkbox" id="selectAll" /></th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Sex</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var supplier in Model)
+        {
+            <tr>
+
+                <td>
+                    <input type="checkbox" class="row-checkbox" value="@supplier.Id" />
+                </td>
+
+                <td>@supplier.Id</td>
+                <td>@supplier.SupplierName</td>
+                <td>@supplier.Sex</td>
+                <td>@supplier.Phone</td>
+                <td>@supplier.Email</td>
+                <td>@supplier.Address</td>
+
+                <td>
+
+                    <button class="btn btn-warning btn-sm edit-btn"
+                            data-id="@supplier.Id"
+                            data-name="@supplier.SupplierName"
+                            data-sex="@supplier.Sex"
+                            data-phone="@supplier.Phone"
+                            data-email="@supplier.Email"
+                            data-address="@supplier.Address"
+                            data-bs-toggle="modal"
+                            data-bs-target="#supplierModal">
+
+                        <i class="bi bi-pencil"></i>
+
+                    </button>
+
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+
+<!-- Supplier Modal -->
+
+<div class="modal fade" id="supplierModal">
+
+    <div class="modal-dialog modal-dialog-centered modal-md">
+
+        <div class="modal-content">
+
+            <div class="modal-header modal-brown">
+
+                <h5 class="modal-title" id="supplierModalTitle">Add Supplier</h5>
+
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+                <form id="supplierForm" method="post" asp-action="Create">
+
+                    <input type="hidden" id="supplierId" name="Id" />
+
+                    <div class="mb-3">
+                        <label class="form-label">Supplier Name*</label>
+                        <input id="supplierName" name="SupplierName" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Sex*</label>
+                        <select id="sex" name="Sex" class="form-control" required>
+                            <option value="">Select</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Phone*</label>
+                        <input id="phone" name="Phone" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email*</label>
+                        <input id="email" name="Email" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Address*</label>
+                        <input id="address" name="Address" class="form-control" />
+                    </div>
+
+                    <button type="submit" class="btn btn-brown">Save</button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
