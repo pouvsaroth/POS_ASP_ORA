@@ -121,7 +121,7 @@ namespace POS_ASP_ORA.Data
                 entity.Property(e => e.QtyAlert)
                       .HasColumnType("NUMBER");
 
-                entity.Property(e => e.Image)
+                entity.Property(e => e.ImageFile)
                       .HasColumnType("BLOB");
 
                 entity.Property(e => e.Description)
