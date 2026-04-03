@@ -31,6 +31,9 @@ namespace POS_ASP_ORA.Services
                 new OracleParameter("P_PRODUCTNAMEKH", DBNull.Value),
                 new OracleParameter("P_CATEGORYID", DBNull.Value),
                 new OracleParameter("P_SUPPLIERID", DBNull.Value),
+                new OracleParameter("P_QTYALERT", DBNull.Value),
+                new OracleParameter("P_DESCRIPTION", DBNull.Value),
+                new OracleParameter("P_IMAGENAME", DBNull.Value),
                 new OracleParameter("P_STATUS", DBNull.Value),
                 new OracleParameter("P_CURSOR", OracleDbType.RefCursor)
                 {
@@ -51,6 +54,12 @@ namespace POS_ASP_ORA.Services
                     ProductNameKh = row["PRODUCTNAMEKH"].ToString(),
                     CategoryId = Convert.ToInt32(row["CATEGORYID"]),
                     CategoryName = row["CATEGORYNAME"].ToString(),
+                    SupplierId = Convert.ToInt32(row["SUPPLIERID"]),
+                    SupplierName= row["SUPPLIERNAME"].ToString(),
+                    QtyOnHand = row["QTYONHAND"] != DBNull.Value ? Convert.ToDecimal(row["QTYONHAND"]) : (decimal?)null,
+                    QtyAlert = row["QTYALERT"] != DBNull.Value ? Convert.ToInt32(row["QTYALERT"]) : (int?)null,
+                    ImageName = row["IMAGENAME"].ToString(),
+                    Description = row["DESCRIPTION"] != DBNull.Value ? row["DESCRIPTION"].ToString() : null,
                     Status = Convert.ToInt32(row["STATUS"])
                 });
             }
@@ -73,6 +82,9 @@ namespace POS_ASP_ORA.Services
                     new OracleParameter("P_PRODUCTNAMEKH", model.ProductNameKh),
                     new OracleParameter("P_CATEGORYID", model.CategoryId),
                     new OracleParameter("P_SUPPLIERID", model.SupplierId),
+                    new OracleParameter("P_QTYALERT", model.QtyAlert),
+                    new OracleParameter("P_DESCRIPTION", model.Description),
+                    new OracleParameter("P_IMAGENAME", model.ImageName),
                     new OracleParameter("P_STATUS", model.Status),
                     new OracleParameter("P_CURSOR", OracleDbType.RefCursor)
                     {
@@ -104,6 +116,9 @@ namespace POS_ASP_ORA.Services
                     new OracleParameter("P_PRODUCTNAMEKH", model.ProductNameKh),
                     new OracleParameter("P_CATEGORYID", model.CategoryId),
                     new OracleParameter("P_SUPPLIERID", model.SupplierId),
+                    new OracleParameter("P_QTYALERT", model.QtyAlert),
+                    new OracleParameter("P_DESCRIPTION", model.Description),
+                    new OracleParameter("P_IMAGENAME", model.ImageName),
                     new OracleParameter("P_STATUS", model.Status),
                     new OracleParameter("P_CURSOR", OracleDbType.RefCursor)
                     {
@@ -135,6 +150,9 @@ namespace POS_ASP_ORA.Services
                     new OracleParameter("P_PRODUCTNAMEKH", DBNull.Value),
                     new OracleParameter("P_CATEGORYID", DBNull.Value),
                     new OracleParameter("P_SUPPLIERID", DBNull.Value),
+                    new OracleParameter("P_QTYALERT", DBNull.Value),
+                    new OracleParameter("P_DESCRIPTION", DBNull.Value),
+                    new OracleParameter("P_IMAGENAME", DBNull.Value),
                     new OracleParameter("P_STATUS", DBNull.Value),
                     new OracleParameter("P_CURSOR", OracleDbType.RefCursor)
                     {
@@ -168,6 +186,9 @@ namespace POS_ASP_ORA.Services
                     new OracleParameter("P_PRODUCTNAMEKH", DBNull.Value),
                     new OracleParameter("P_CATEGORYID", DBNull.Value),
                     new OracleParameter("P_SUPPLIERID", DBNull.Value),
+                    new OracleParameter("P_QTYALERT", DBNull.Value),
+                    new OracleParameter("P_DESCRIPTION", DBNull.Value),
+                    new OracleParameter("P_IMAGENAME", DBNull.Value),
                     new OracleParameter("P_STATUS", DBNull.Value),
                     new OracleParameter("P_CURSOR", OracleDbType.RefCursor)
                     {
@@ -176,7 +197,7 @@ namespace POS_ASP_ORA.Services
                 };
 
                 _db.ExecuteNonQuery("SP_PRODUCT_CRUD", parameters);
-                return "Products deleted successfully.";
+                return "true";
             }
             catch (Exception ex)
             {

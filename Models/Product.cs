@@ -41,8 +41,8 @@ namespace POS_ASP_ORA.Models
         [Column("QTYALERT")]
         public int? QtyAlert { get; set; }
 
-        [Column("IMAGEFILE")]
-        public string ImageFile { get; set; }
+        [Column("IMAGENAME")]
+        public string ImageName { get; set; }
 
         [MaxLength(50)]
         [Column("DESCRIPTION")]
@@ -59,6 +59,8 @@ namespace POS_ASP_ORA.Models
         public Supplier? Supplier { get; set; }
 
         [NotMapped]
-        public IFormFile FileName { get; set; }
+        public IFormFile ImageFile { get; set; }
+        public string SupplierName { get; set; } = string.Empty;
+        public string OldImageName { get; set; } = string.Empty;
     }
 }

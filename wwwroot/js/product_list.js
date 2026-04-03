@@ -1,4 +1,7 @@
-﻿$(document).ready(function () {
+﻿
+var imageBasePath = '/@Configuration["FileUpload:ProductImagePath"]/';
+
+$(document).ready(function () {
 
     var productTable = $('#productTable').DataTable({
         dom: 'rt<"bottom d-flex justify-content-between align-items-center"lip>',
@@ -73,6 +76,7 @@
         $('#categoryId').val(null).trigger('change');
         $('#supplierId').val(null).trigger('change');
         $('#statusCheck').prop('checked', true);
+        resetForm();
     });
 
     // =========================
@@ -87,10 +91,28 @@
         $('#barcode').val($(this).data('barcode'));
         $('#productName').val($(this).data('name'));
         $('#productNameKh').val($(this).data('namekh'));
+        $('#qtyAlert').val($(this).data('qtyalert'));
         $('#categoryId').val($(this).data('category')).trigger('change');
-
+        $('#supplierId').val($(this).data('supplier')).trigger('change');
+        $('#description').val($(this).data('description')); 
+        $('#oldImageName').val($(this).data('imagename'));
         let status = $(this).data('status');
         $('#statusCheck').prop('checked', status === 1);
+
+        // 🔥 IMAGE PART
+        let fileName = $(this).data('imagename');
+        var imageBasePath = $('#imageBasePath').val();
+        const preview = document.getElementById("previewImage");
+        const placeholder = document.getElementById("placeholderText");
+
+        if (fileName) {
+            preview.src = imageBasePath + fileName; // ✅ combine
+            preview.style.display = "block";
+            placeholder.style.display = "none";
+        } else {
+            preview.style.display = "none";
+            placeholder.style.display = "block";
+        }
 
         $('#productModal').modal('show');
     });
@@ -101,23 +123,18 @@
     $('#productForm').on('submit', function (e) {
         e.preventDefault();
 
-        var formData = {
-            Id: $('#productId').val(),
-            ProductCode: $('#productCode').val(),
-            Barcode: $('#barcode').val(),
-            ProductName: $('#productName').val(),
-            ProductNameKh: $('#productNameKh').val(),
-            CategoryId: $('#categoryId').val(),
-            SupplierId: $('#supplierId').val(),
-            Status: $('#statusCheck').is(':checked') ? 1 : 0
-        };
+        var form = document.getElementById('productForm');
+        var formData = new FormData(form); // 🔥 IMPORTANT
 
-        var url = formData.Id ? '/ProductList/Update' : '/ProductList/Create';
+        var id = $('#productId').val();
+        var url = id ? '/ProductList/Update' : '/ProductList/Create';
 
         $.ajax({
             url: url,
             type: 'POST',
             data: formData,
+            processData: false,   // 🔥 REQUIRED
+            contentType: false,   // 🔥 REQUIRED
             success: function (res) {
                 showToast(res);
 
@@ -138,8 +155,10 @@
     $('#deleteSelected').on('click', function () {
 
         var ids = [];
+        var ImageNames = [];
         $('.row-checkbox:checked').each(function () {
             ids.push($(this).val());
+            ImageNames.push($(this).data('imagename'));
         });
 
         if (ids.length === 0) {
@@ -152,7 +171,7 @@
         $.ajax({
             url: '/ProductList/DeleteMultiple',
             type: 'POST',
-            data: { ids: ids },
+            data: { ids: ids, ImageNames: ImageNames },
             success: function (res) {
                 showToast(res);
                 setTimeout(() => location.reload(), 800);
@@ -214,3 +233,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+function resetForm() {
+    $('#productForm')[0].reset();
+    $('#previewImage').hide();
+    $('#placeholderText').show();
+}
+//Handle Missing Image

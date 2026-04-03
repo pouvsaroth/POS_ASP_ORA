@@ -1,7 +1,11 @@
 ﻿@model POS_ASP_ORA.Models.POSScreenModel
+@inject IConfiguration Configuration
+<link rel="stylesheet" href="~/css/posscreen.css" />
+
 @section Scripts {
     <script src="~/js/posscreen.js"></script>
 }
+
 
 <div class="pos-container">
 
@@ -10,27 +14,34 @@
 
         <!-- Tabs -->
         <div class="tabs">
-            <button class="active">All</button>
-            <button>Drinks</button>
-            <button>Snacks</button>
-            <button>Food</button>
-            <button>Electronics</button>
-            <button>Other</button>
-        </div>
+            <button class="active" onclick="filterCategory(0)">All</button>
 
+            @foreach (var cat in Model.Categories)
+            {
+                <button onclick="filterCategory(@cat.Id)">
+                    @cat.CategoryName
+                </button>
+            }
+        </div>
+        <hr />
         <!-- Product Grid -->
         <div class="product-grid">
             @foreach (var item in Model.Products)
             {
-                <div class="product-card" onclick="addToCart('@item.Name', @item.Price)">
-                    <img src="@item.ImageUrl" />
-                    <h5>@item.Name</h5>
-                    <p class="price">$@item.Price</p>
-                    <small>@item.Stock Stock</small>
+                <div class="product-card"
+                     data-category="@item.CategoryId"
+                     onclick="addToCart(@item.Id,'@item.ProductNameKh', 1">
+                    <img src="@(string.IsNullOrEmpty(item.ImageName)
+                             ? "/images/no-image.png"
+                              : @Model.ImageBasePath +"/"+item.ImageName)" />
+                    <h5>@item.ProductNameKh</h5>
+                    <h6>@item.ProductName</h6>
+                    <p class="price">$1</p>
+                    
                 </div>
             }
         </div>
-
+        <hr />
         <!-- Bottom Table -->
         <div class="cart-table">
             <table>
