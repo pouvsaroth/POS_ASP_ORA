@@ -7,10 +7,13 @@ namespace POS_ASP_ORA.Controllers
     public class POSScreenController:Controller
     {
         private readonly IProductCategoryService _categoryService;
-
-        public POSScreenController(IProductCategoryService categoryService)
+        private readonly IProductListService _productListService;
+        private readonly IConfiguration _config;
+        public POSScreenController(IProductCategoryService categoryService, IProductListService productListService, IConfiguration config)
         {
             _categoryService = categoryService;
+            _productListService = productListService;
+            _config = config;
         }
 
         // LIST
@@ -18,13 +21,11 @@ namespace POS_ASP_ORA.Controllers
         {
             var model = new POSScreenModel
             {
-                Products = new List<ProductTest>
-                {
-                    new ProductTest { Name = "Coca Cola", Price = 1, Stock = 120, ImageUrl="/images/coke.png" },
-                    new ProductTest { Name = "Pepsi", Price = 1, Stock = 80, ImageUrl="/images/pepsi.png" },
-                    new ProductTest { Name = "Red Bull", Price = 2, Stock = 50, ImageUrl="/images/redbull.png" }
-                } 
+                Products = _productListService.GetProducts(),
+                Categories = _categoryService.GetCategories(),
+                ImageBasePath = _config["FileUpload:ProductImagePath"]
             };
+            
             return View("~/Views/Sales/POSScreen.cshtml",model);
         }
 

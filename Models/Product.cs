@@ -29,6 +29,7 @@ namespace POS_ASP_ORA.Models
         [Required]
         [Column("CATEGORYID")]
         public int CategoryId { get; set; }
+        public string CategoryName { get; set; } = string.Empty;
 
         [Required]
         [Column("SUPPLIERID")]
@@ -40,15 +41,15 @@ namespace POS_ASP_ORA.Models
         [Column("QTYALERT")]
         public int? QtyAlert { get; set; }
 
-        [Column("IMAGE")]
-        public byte[]? Image { get; set; }
+        [Column("IMAGENAME")]
+        public string ImageName { get; set; }
 
         [MaxLength(50)]
         [Column("DESCRIPTION")]
         public string? Description { get; set; }
 
         [Column("STATUS")]
-        public bool? Status { get; set; }  // ✅ Keep bool, fix in Fluent API
+        public int Status { get; set; }
 
         [Column("USERACCESSID")]
         public int? UserAccessId { get; set; }
@@ -56,5 +57,10 @@ namespace POS_ASP_ORA.Models
         // Navigation properties
         public Category? Category { get; set; }
         public Supplier? Supplier { get; set; }
+
+        [NotMapped]
+        public IFormFile ImageFile { get; set; }
+        public string SupplierName { get; set; } = string.Empty;
+        public string OldImageName { get; set; } = string.Empty;
     }
 }

@@ -1,0 +1,181 @@
+﻿@model IEnumerable<Product>
+@inject IConfiguration Configuration
+@section Scripts {
+    <script src="~/js/product_list.js" asp-append-version="true"></script>
+}
+
+<div class="d-flex justify-content-between mb-3">
+    <input type="text" id="searchBar" class="form-control w-25" placeholder="Search product..." />
+
+    <div>
+        <button class="btn btn-brown me-2" id="btnAddProduct" data-bs-toggle="modal" data-bs-target="#productModal">
+            Add
+        </button>
+        <button class="btn btn-danger" id="deleteSelected">
+            Delete
+        </button>
+    </div>
+</div>
+
+<table class="table" id="productTable">
+    <thead>
+        <tr>
+            <th><input type="checkbox" id="selectAll" /></th>
+            <th style="display:none">ID</th>
+            <th>Code</th>
+            <th>Barcode</th>
+            <th>Name</th>
+            <th>Khmer Name</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td><input type="checkbox" class="row-checkbox" value="@p.Id" data-imagename="@p.ImageName"/></td>
+                <td style="display:none">@p.Id</td>
+                <td>@p.ProductCode</td>
+                <td>@p.Barcode</td>
+                <td>@p.ProductName</td>
+                <td>@p.ProductNameKh</td>
+                <td>@p.CategoryName</td>
+                <td>
+                    <input type="checkbox" disabled @(p.Status == 1 ? "checked" : "") />
+                </td>
+                <td>
+                    <button class="btn btn-warning btn-sm edit-btn"
+                            data-id="@p.Id"
+                            data-code="@p.ProductCode"
+                            data-barcode="@p.Barcode"
+                            data-name="@p.ProductName"
+                            data-namekh="@p.ProductNameKh"
+                            data-category="@p.CategoryId"
+                            data-supplier="@p.SupplierId"
+                            data-qtyalert="@p.QtyAlert"
+                            data-imagename="@p.ImageName"
+                            data-status="@p.Status"
+                            data-description="@p.Description">
+                        
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- MODAL -->
+<div class="modal fade" id="productModal">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+
+            <div class="modal-header modal-brown">
+                <h5 class="modal-title" id="productModalTitle">Add Product</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <form id="productForm" method="post" enctype="multipart/form-data">
+
+                    <div class="row">
+                        <input type="hidden" id="imageBasePath" value="/@Configuration["FileUpload:ProductImagePath"]/" />
+                        <input type="hidden" id="productId" name="Id" class="form-control" />
+                        <input type="hidden" id="oldImageName" name="OldImageName"/>
+                        <!-- COLUMN 1 -->
+                        <div class="col-md-4">
+
+                            <div class="mb-3">
+                                <label class="form-label">Product Code*</label>
+                                <input id="productCode" name="ProductCode" class="form-control" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Barcode</label>
+                                <input id="barcode" name="Barcode" class="form-control" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Product Name*</label>
+                                <input id="productName" name="ProductName" class="form-control" required />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Product Name​ KH*</label>
+                                <input id="productNameKh" name="ProductNameKh" class="form-control" required />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Qty Alert</label>
+                                <input type="number" id="qtyAlert" name="QtyAlert" class="form-control" />
+                            </div>
+
+                        </div>
+
+                        <!-- COLUMN 2 -->
+                        <div class="col-md-4">
+
+                            <div class="mb-3">
+                                <label class="form-label">Category*</label>
+                                <select id="categoryId" name="CategoryId" class="form-control">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Supplier*</label>
+                                <select id="supplierId" name="SupplierId" class="form-control">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea id="description" name="Description" class="form-control" rows="4"></textarea>
+                            </div>
+
+                            <div class="form-check mt-2">
+                                <input type="checkbox" id="statusCheck" name="Status" value="1" class="form-check-input" checked>
+                                <label class="form-check-label">Active</label>
+                            </div>
+
+                        </div>
+
+                        <!-- COLUMN 3 (IMAGE BOX) -->
+                        <div class="col-md-4 text-center">
+
+                            <label class="form-label">Product Image</label>
+
+                            <!-- Image Preview Box -->
+                            <div id="imageBox" onclick="document.getElementById('imageInput').click()" style="width: 100%; height: 220px; border: 2px dashed #ccc; border-radius: 10px;
+                display: flex; align-items: center; justify-content: center; overflow: hidden; background:#f8f9fa; cursor:pointer;">
+
+                                <span id="placeholderText" style="color:#999;">No Image</span>
+
+                                <img id="previewImage"
+                                     style="max-width: 100%; max-height: 100%; display: none;" />
+                            </div>
+
+                            <!-- Upload Button -->
+                            <input type="file" id="imageInput" name="ImageFile"
+                                   class="form-control mt-3" accept="image/*" />
+
+                        </div>
+
+                    </div>
+
+                    <!-- SUBMIT -->
+                    <div class="text-end mt-3">
+                        <button type="submit" class="btn btn-brown">Save</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>

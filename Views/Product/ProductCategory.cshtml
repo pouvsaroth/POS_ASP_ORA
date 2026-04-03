@@ -27,7 +27,7 @@
     <thead>
         <tr>
             <th><input type="checkbox" id="selectAll" /></th>
-            <th>ID</th>
+            <th style="display:none">ID</th>
             <th>Category Name</th>
             <th>Status</th>
             <th>Actions</th>
@@ -40,7 +40,7 @@
                 <td>
                     <input type="checkbox" class="row-checkbox" value="@category.Id" />
                 </td>
-                <td>@category.Id</td>
+                <td style="display:none">@category.Id</td>
                 <td>@category.CategoryName</td>
                 <td>
                     <input type="checkbox" disabled @(category.Status == 1 ? "checked" : "") />

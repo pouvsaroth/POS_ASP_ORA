@@ -24,6 +24,8 @@ namespace POS_ASP_ORA.Models
         [Column("SUPPLIERID")]
         public int SupplierId { get; set; }
 
+        public string SupplierName { get; set; }
+
         [Required]
         [Column("TOTALAMOUNT", TypeName = "NUMBER(18,6)")]
         public decimal TotalAmount { get; set; }
@@ -38,5 +40,20 @@ namespace POS_ASP_ORA.Models
 
         [Column("USERACCESSID")]
         public int? UserAccessId { get; set; }
+        public decimal Total { get; set; }
+        public decimal Paid { get; set; }
+        public List<PurchaseDetail> Items { get; set; }
+    }
+    public class PurchaseDetail
+    {
+        public int ProductId { get; set; }
+
+        public string ProductName { get; set; }
+
+        public decimal Qty { get; set; }
+
+        public decimal Cost { get; set; }
+
+        public decimal Total => Qty * Cost;
     }
 }
