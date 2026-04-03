@@ -24,9 +24,16 @@ function renderCart() {
         html += `
             <tr>
                 <td>${item.name}</td>
-                <td>${item.qty}</td>
+
+                <td>
+                    <button onclick="decreaseQty(${index})">-</button>
+                    ${item.qty}
+                    <button onclick="increaseQty(${index})">+</button>
+                </td>
+
                 <td>$${item.price}</td>
                 <td>$${itemTotal.toFixed(2)}</td>
+
                 <td>
                     <button onclick="removeItem(${index})">❌</button>
                 </td>
@@ -77,3 +84,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+function increaseQty(index) {
+    cart[index].qty++;
+    renderCart();
+}
+
+function decreaseQty(index) {
+    if (cart[index].qty > 1) {
+        cart[index].qty--;
+    } else {
+        removeItem(index);
+    }
+    renderCart();
+}
+function removeItem(index) {
+    cart.splice(index, 1);
+    renderCart();
+}

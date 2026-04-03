@@ -171,3 +171,16 @@
     border-radius: 10px;
     font-size: 16px;
 }
+.cart-table button {
+    padding: 4px 8px;
+    margin: 0 3px;
+    border: none;
+    border-radius: 5px;
+    background: #EADFD7;
+    cursor: pointer;
+}
+
+.cart-table button:hover {
+        background: #2E7D32;
+        color: white;
+    }

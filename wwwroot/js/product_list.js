@@ -33,17 +33,30 @@ $(document).ready(function () {
     // =========================
     $('#categoryId').select2({
         dropdownParent: $('#productModal'),
-        width: '100%'
+        width: '100%',
+        placeholder: "Select category",
+        allowClear: true
     });
 
     loadCategories();
 
-    function loadCategories() {
+    function loadCategories() {  
+        let $select = $('#categoryId');
+
         $.get('/ProductList/GetCategories', function (data) {
-            $('#categoryId').empty();
+            $select.empty();
+
+            // 🔥 Keep empty option
+            $select.append(`<option value=""></option>`);
+
             data.forEach(c => {
-                $('#categoryId').append(`<option value="${c.id}">${c.categoryName}</option>`);
+                $select.append(
+                    `<option value="${c.id}">${c.categoryName}</option>`
+                );
             });
+
+            // 🔥 Reset value
+            $select.val(null).trigger('change');
         });
     }
 
@@ -52,17 +65,30 @@ $(document).ready(function () {
     // =========================
     $('#supplierId').select2({
         dropdownParent: $('#productModal'),
-        width: '100%'
+        width: '100%',
+        placeholder: "Select supplier",
+        allowClear: true
     });
 
     loadSupplier();
 
     function loadSupplier() {
+        let $select = $('#supplierId');
+
         $.get('/ProductList/GetSupplier', function (data) {
-            $('#supplierId').empty();
+            $select.empty();
+
+            // 🔥 Keep empty option
+            $select.append(`<option value=""></option>`);
+
             data.forEach(c => {
-                $('#supplierId').append(`<option value="${c.id}">${c.supplierName}</option>`);
+                $select.append(
+                    `<option value="${c.id}">${c.supplierName}</option>`
+                );
             });
+
+            // 🔥 Reset value
+            $select.val(null).trigger('change');
         });
     }
 

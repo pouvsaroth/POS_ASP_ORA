@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Product>
 @inject IConfiguration Configuration
 @section Scripts {
-    <script src="~/js/product_list.js"></script>
+    <script src="~/js/product_list.js" asp-append-version="true"></script>
 }
 
 <div class="d-flex justify-content-between mb-3">
@@ -120,12 +120,16 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Category*</label>
-                                <select id="categoryId" name="CategoryId" class="form-control"></select>
+                                <select id="categoryId" name="CategoryId" class="form-control">
+                                    <option value=""></option>
+                                </select>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Supplier*</label>
-                                <select id="supplierId" name="SupplierId" class="form-control"></select>
+                                <select id="supplierId" name="SupplierId" class="form-control">
+                                    <option value=""></option>
+                                </select>
                             </div>
 
                             <div class="mb-3">
