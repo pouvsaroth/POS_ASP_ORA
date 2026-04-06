@@ -99,7 +99,8 @@
 
         var id = $(this).data('id');
         var name = $(this).data('name');
-        var type = $(this).data('type');
+        
+        
         var qty = $(this).data('qty');
         var remark = $(this).data('remark');
 
@@ -109,9 +110,10 @@
 
         $('#unitId').val(id);
         $('#unitName').val(name);
-        $('#unitTypeId').val(type);
-        $('#qtyPerUnit').val(qty);
         $('#remark').val(remark);
+        $('#UnitTypeId').val($(this).data('type')).trigger('change');
+        $('#qtyPerUnit').val(qty);
+        
 
         $('#unitModal').modal('show');
     });

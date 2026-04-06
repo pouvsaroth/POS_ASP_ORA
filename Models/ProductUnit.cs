@@ -14,6 +14,7 @@ namespace POS_ASP_ORA.Models
         [MaxLength(50)]
         [Column("UNIT_NAME")]
         public string UnitName { get; set; } = string.Empty;
+        public string UnitTypeName { get; set; } = string.Empty;
 
         [Column("UNITTYPE_ID")]
         public int? UnitTypeId { get; set; }

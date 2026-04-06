@@ -41,6 +41,7 @@ namespace POS_ASP_ORA.Services
                     Id = Convert.ToInt32(row["ID"]),
                     UnitName = row["UNIT_NAME"].ToString(),
                     UnitTypeId = row["UNITTYPE_ID"] == DBNull.Value ? null : Convert.ToInt32(row["UNITTYPE_ID"]),
+                    UnitTypeName = row["UNITTYPE_NAME"].ToString(),
                     QtyPerUnit = row["QTY_PER_UNIT"] == DBNull.Value ? null : Convert.ToDecimal(row["QTY_PER_UNIT"]),
                     Remark = row["REMARK"].ToString(),
                     Status = row["STATUS"] == DBNull.Value ? null : Convert.ToInt32(row["STATUS"])
