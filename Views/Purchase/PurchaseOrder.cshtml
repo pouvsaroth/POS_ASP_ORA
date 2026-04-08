@@ -1,22 +1,27 @@
 ﻿@model IEnumerable<Purchase>
 
 @section Scripts {
-    <script src="~/js/purchase.js" asp-append-version="true"></script>
+    <script src="~/js/purchase_order.js" asp-append-version="true"></script>
 }
 
 <div class="d-flex justify-content-between mb-3">
     <input type="text" id="searchPurchase" class="form-control w-25" placeholder="Search purchase..." />
 
     <div>
-        <button class="btn btn-brown" data-bs-toggle="modal" data-bs-target="#purchaseModal">
-            Add Purchase
+        <button class="btn btn-brown me-2" id="btnAddPurchaseOrder" data-bs-toggle="modal" data-bs-target="#purchaseModal">
+            Add
+        </button>
+        <button class="btn btn-danger" id="deleteSelected">
+            Delete
         </button>
     </div>
 </div>
 
-<table class="table">
+<table id="purchaseOrderTable" class="table">
     <thead>
         <tr>
+            <th><input type="checkbox" id="selectAll" /></th>
+            <th style="display:none">ID</th>
             <th>Bill No</th>
             <th>Date</th>
             <th>Supplier</th>
@@ -32,24 +37,32 @@
             foreach (var p in Model)
             {
                 <tr>
+                    <td>
+                        <input type="checkbox" class="row-checkbox" value="@p.Id" />
+                    </td>
+                    <td style="display:none">@p.Id</td>
                     <td>@p.BillNo</td>
                     <td>@p.PurchaseDate.ToString("yyyy-MM-dd")</td>
                     <td>@p.SupplierName</td>
+                    <td>@p.Total</td>
+                    <td>@p.Paid</td>
+                    <td>
+                        @(p.Status == 1 ? "Paid" : p.Status == 2 ? "Partial" : "Unpaid")
+                    </td>
+                    <td>
+                        <button class="btn btn-warning btn-sm edit-btn" data-id="@p.Id">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                    </td>
                 </tr>
             }
-        }
-        else
-        {
-            <tr>
-                <td colspan="7" class="text-center">No Data</td>
-            </tr>
-        }
+        } 
     </tbody>
 </table>
 
 <!-- MODAL -->
 <div class="modal fade" id="purchaseModal">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-fullscreen">
         <div class="modal-content">
 
             <!-- HEADER -->
@@ -64,85 +77,86 @@
 
                     <div class="row">
 
-                        <!-- COLUMN 1 -->
-                        <div class="col-md-4">
+                        <!-- FULL WIDTH -->
+                        <div class="col-md-12">
 
-                            <div class="mb-3">
-                                <label>Supplier*</label>
-                                <select id="supplierId" class="form-control"></select>
+                            <!-- HEADER ROW -->
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Bill No</label>
+                                    <input type="text" id="billNo" class="form-control" readonly />
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Supplier*</label>
+                                    <select id="supplierId" class="form-control"></select>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Purchase Date*</label>
+                                    <input type="text" id="purchaseDate" class="form-control" />
+                                </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label>Bill No</label>
-                                <input type="text" id="billNo" class="form-control" />
-                            </div>
+                            <!-- ADD ROW BUTTON -->
+                            <button type="button" class="btn btn-primary btn-sm my-2" id="btnAddRow">
+                                + Add Row
+                            </button>
 
-                            <div class="mb-3">
-                                <label>Purchase Date*</label>
-                                <input type="date" id="purchaseDate" class="form-control" />
-                            </div>
-
-                        </div>
-
-                        <!-- COLUMN 2 -->
-                        <div class="col-md-4">
-
-                            <div class="mb-3">
-                                <label>Search Product</label>
-                                <input type="text" id="searchProduct" class="form-control" placeholder="Search or scan..." />
-                            </div>
-
+                            <!-- TABLE -->
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>Product</th>
-                                        <th width="70">Qty</th>
-                                        <th width="90">Cost</th>
-                                        <th width="90">Total</th>
-                                        <th width="40"></th>
+                                        <th>Qty</th>
+                                        <th>Product Unit</th>
+                                        <th>Unit</th>
+                                        <th>UnitPrice</th>
+                                        <th>Discount</th>
+                                        <th>VAT</th>
+                                        <th>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody id="purchaseItems"></tbody>
                             </table>
 
-                        </div>
+                            <!-- ✅ SUMMARY BELOW TABLE -->
+                            <div class="justify-content-end">
+                                <div style="border:2px dashed #ccc; padding:15px; border-radius:10px; background:#f8f9fa;">
 
-                        <!-- COLUMN 3 (SUMMARY like your IMAGE BOX) -->
-                        <div class="col-md-4 text-center">
+                                    <label class="fw-bold">Summary</label>
+                                    <hr/>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label>Subtotal</label>
+                                            <input type="text" id="subtotal" class="form-control" readonly />
+                                        </div>
 
-                            <label class="form-label">Summary</label>
+                                        <div class="col-md-2">
+                                            <label>Discount</label>
+                                            <input type="number" id="discount" class="form-control" value="0" />
+                                        </div>
 
-                            <div style="width:100%; border:2px dashed #ccc; border-radius:10px; padding:15px; background:#f8f9fa;">
+                                        <div class="col-md-2">
+                                            <label>Total</label>
+                                            <input type="text" id="total" class="form-control fw-bold" readonly />
+                                        </div>
 
-                                <div class="mb-2">
-                                    <label>Subtotal</label>
-                                    <input type="text" id="subtotal" class="form-control" readonly />
+                                        <div class="col-md-2">
+                                            <label>Paid</label>
+                                            <input type="number" id="paid" class="form-control" value="0" />
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <label>Balance</label>
+                                            <input type="text" id="balance" class="form-control text-danger" readonly />
+                                        </div>
+                                    </div>
+
                                 </div>
-
-                                <div class="mb-2">
-                                    <label>Discount</label>
-                                    <input type="number" id="discount" class="form-control" value="0" />
-                                </div>
-
-                                <div class="mb-2">
-                                    <label>Total</label>
-                                    <input type="text" id="total" class="form-control fw-bold" readonly />
-                                </div>
-
-                                <div class="mb-2">
-                                    <label>Paid</label>
-                                    <input type="number" id="paid" class="form-control" value="0" />
-                                </div>
-
-                                <div class="mb-2">
-                                    <label>Balance</label>
-                                    <input type="text" id="balance" class="form-control text-danger" readonly />
-                                </div>
-
                             </div>
 
                         </div>
-
                     </div>
 
                     <!-- FOOTER -->
