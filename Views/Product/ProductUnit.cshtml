@@ -1,0 +1,139 @@
+﻿@model IEnumerable<POS_ASP_ORA.Models.ProductUnit>
+
+@section Scripts {
+    <script src="~/js/product_unit.js" asp-append-version="true"></script>
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+
+    <div>
+        <input type="text" id="searchBar" class="form-control" placeholder="Search unit..." />
+    </div>
+
+    <div>
+        <button class="btn btn-brown me-2"
+                id="addBtn"
+                data-bs-toggle="modal"
+                data-bs-target="#unitModal">
+            Add
+        </button>
+
+        <button class="btn btn-danger" id="deleteSelected">
+            Delete
+        </button>
+    </div>
+
+</div>
+
+<table id="unitTable" class="table">
+
+    <thead>
+        <tr>
+            <th><input type="checkbox" id="selectAll" /></th>
+            <th>ID</th>
+            <th>Unit Name</th>
+            <th>UnitType Name</th>
+            <th>Qty Per Unit</th>
+            <th>Remark</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var unit in Model)
+        {
+            <tr>
+
+                <td>
+                    <input type="checkbox" class="row-checkbox" value="@unit.Id" />
+                </td>
+
+                <td>@unit.Id</td>
+                <td>@unit.UnitName</td>
+                <td>@unit.UnitTypeName</td>
+                <td>@unit.QtyPerUnit</td>
+                <td>@unit.Remark</td>
+
+                <td>
+
+                    <button class="btn btn-warning btn-sm edit-btn"
+                            data-id="@unit.Id"
+                            data-name="@unit.UnitName"
+                            data-type="@unit.UnitTypeId"
+                            data-qty="@unit.QtyPerUnit"
+                            data-remark="@unit.Remark"
+                            data-bs-toggle="modal"
+                            data-bs-target="#unitModal">
+
+                        <i class="bi bi-pencil"></i>
+
+                    </button>
+
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+<!-- Modal -->
+
+<div class="modal fade" id="unitModal">
+
+    <div class="modal-dialog modal-dialog-centered modal-md">
+
+        <div class="modal-content">
+
+            <div class="modal-header modal-brown">
+
+                <h5 class="modal-title" id="unitModalTitle">Add Unit</h5>
+
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+
+                <form id="unitForm" method="post" asp-action="Create">
+
+                    <input type="hidden" id="unitId" name="Id" />
+
+                    <div class="mb-3">
+                        <label class="form-label">Unit Name*</label>
+                        <input id="unitName" name="UnitName" class="form-control" required />
+                    </div>
+
+                    
+
+                    <div class="mb-3">
+                        <label class="form-label">Qty Per Unit</label>
+                        <input id="qtyPerUnit" name="QtyPerUnit" class="form-control" type="number" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Unit Type</label>
+                        <select id="UnitTypeId" name="UnitTypeId" class="form-control">
+                            <option value=""></option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Remark</label>
+                        <input id="remark" name="Remark" class="form-control" />
+                    </div>
+
+                    <button type="submit" class="btn btn-brown">Save</button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

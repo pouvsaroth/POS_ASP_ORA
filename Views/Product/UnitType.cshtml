@@ -1,0 +1,124 @@
+﻿@model IEnumerable<POS_ASP_ORA.Models.UnitType>
+
+@section Scripts {
+	<script src="~/js/unittype.js"></script>
+}
+
+<div class="d-flex justify-content-between mb-3">
+
+	<input type="text" id="searchBar" class="form-control w-25" placeholder="Search..." />
+
+	<div>
+		<button class="btn btn-brown me-2"
+				id="btnAddUnitType"
+				data-bs-toggle="modal"
+				data-bs-target="#unittypeModal">
+			Add
+		</button>
+
+		<button class="btn btn-danger" id="deleteSelected">
+			Delete
+		</button>
+	</div>
+
+</div>
+
+<table class="table" id="unittypeTable">
+
+	<thead>
+		<tr>
+			<th><input type="checkbox" id="selectAll" /></th>
+			<th>ID</th>
+			<th>UnitType Name</th>
+			<th>Status</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+
+	<tbody>
+
+		@foreach (var item in Model)
+		{
+			<tr>
+
+				<td>
+					<input type="checkbox" class="row-checkbox" value="@item.Id" />
+				</td>
+
+				<td>@item.Id</td>
+
+				<td>@item.UnitTypeName</td>
+
+				<td>
+					<input type="checkbox" disabled @(item.Status == 1 ? "checked" : "") />
+				</td>
+
+				<td>
+
+					<button class="btn btn-warning btn-sm edit-btn"
+							data-id="@item.Id"
+							data-name="@item.UnitTypeName"
+							data-status="@item.Status">
+						<i class="bi bi-pencil"></i>
+					</button>
+
+				</td>
+
+			</tr>
+		}
+
+	</tbody>
+
+</table>
+
+<!-- Modal -->
+
+<div class="modal fade" id="unittypeModal">
+
+	<div class="modal-dialog modal-dialog-centered">
+
+		<div class="modal-content">
+
+			<div class="modal-header modal-brown">
+
+				<h5 class="modal-title" id="unittypeModalTitle">Add UnitType</h5>
+
+				<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+
+			</div>
+
+			<div class="modal-body">
+
+				<form id="unittypeForm" method="post">
+
+					<input type="hidden" id="unittypeId" name="Id" />
+
+					<div class="mb-3">
+
+						<label>UnitType Name</label>
+
+						<input id="unittypeName" name="UnitTypeName" class="form-control" />
+
+					</div>
+
+					<div class="form-check">
+
+						<input type="checkbox" id="statusCheck" name="Status" value="1" checked class="form-check-input">
+
+						<label class="form-check-label">Active</label>
+
+					</div>
+
+					<br>
+
+					<button type="submit" class="btn btn-brown">Save</button>
+
+				</form>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>

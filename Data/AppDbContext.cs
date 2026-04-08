@@ -32,9 +32,37 @@ namespace POS_ASP_ORA.Data
         public DbSet<GroupModel> GroupModel { get; set; }
         public DbSet<Product> ProductModel { get; set; }
         public DbSet<Warehouse> WarehouseModel { get; set; }
+        public DbSet<ProductUnit> ProductUnitModel { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ProductUnit>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                      .HasColumnType("NUMBER")
+                      .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.UnitName)
+                      .HasColumnType("NVARCHAR2(50)")
+                      .IsRequired();
+
+                entity.Property(e => e.UnitTypeId)
+                      .HasColumnType("NUMBER");
+
+                entity.Property(e => e.QtyPerUnit)
+                      .HasColumnType("NUMBER")
+                      .HasDefaultValue(1);
+
+                entity.Property(e => e.Remark)
+                      .HasColumnType("NVARCHAR2(200)");
+
+                entity.Property(e => e.Status)
+                      .HasColumnType("NUMBER(1)")
+                      .HasDefaultValue(1);
+            });
+
             modelBuilder.Entity<Users>(entity =>
             {
                 entity.Property(e => e.Id)
