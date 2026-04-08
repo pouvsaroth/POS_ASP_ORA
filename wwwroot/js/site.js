@@ -79,21 +79,31 @@ function site_loadDataDropDown(idDropdown,url) {
     });
 }
 
-function site_loadDataDropDownTable($select, url) {
+
+function site_loadDataDropDownTable($select, url, id = null) {
 
     $.get(url, function (data) {
 
         $select.empty();
 
-        // empty option
         $select.append(`<option value=""></option>`);
 
         data.forEach(c => {
+
+            let selected = '';
+
+            // 🔥 set default currency = KHR
+            if (id && c.id === id) {
+                selected = 'selected';
+            }
+
             $select.append(
-                `<option value="${c.id}">${c.name}</option>`
+                `<option value="${c.id}" ${selected}>${c.name}</option>`
             );
         });
 
+        // 🔥 trigger change (important if you calculate total)
+        $select.trigger('change');
     });
 }
 function setTodayDateYYYYMMDD() {
@@ -117,4 +127,8 @@ function setTodayDateDDMMYYYY() {
     let formatted = `${dd}-${mm}-${yyyy}`;
 
     return formatted;
+}
+function formatDateToISO(dateStr) {
+    let parts = dateStr.split("-");
+    return `${parts[2]}-${parts[1]}-${parts[0]}`;
 }

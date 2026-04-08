@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Purchase>
+﻿@model IEnumerable<PurchaseModel>
 
 @section Scripts {
     <script src="~/js/purchase_order.js" asp-append-version="true"></script>
@@ -44,7 +44,7 @@
                     <td>@p.BillNo</td>
                     <td>@p.PurchaseDate.ToString("yyyy-MM-dd")</td>
                     <td>@p.SupplierName</td>
-                    <td>@p.Total</td>
+                    <td>@p.TotalAmount</td>
                     <td>@p.Paid</td>
                     <td>
                         @(p.Status == 1 ? "Paid" : p.Status == 2 ? "Partial" : "Unpaid")
@@ -112,6 +112,7 @@
                                         <th>Product Unit</th>
                                         <th>Unit</th>
                                         <th>UnitPrice</th>
+                                        <th>Currency</th>
                                         <th>Discount</th>
                                         <th>VAT</th>
                                         <th>Total</th>
@@ -127,16 +128,6 @@
                                     <label class="fw-bold">Summary</label>
                                     <hr/>
                                     <div class="row">
-                                        <div class="col-md-2">
-                                            <label>Subtotal</label>
-                                            <input type="text" id="subtotal" class="form-control" readonly />
-                                        </div>
-
-                                        <div class="col-md-2">
-                                            <label>Discount</label>
-                                            <input type="number" id="discount" class="form-control" value="0" />
-                                        </div>
-
                                         <div class="col-md-2">
                                             <label>Total</label>
                                             <input type="text" id="total" class="form-control fw-bold" readonly />
@@ -162,7 +153,6 @@
                     <!-- FOOTER -->
                     <div class="text-end mt-3">
                         <button type="button" class="btn btn-brown" id="savePurchase">Save</button>
-                        <button type="button" class="btn btn-warning" id="saveAndPay">Save & Pay</button>
                     </div>
 
                 </form>

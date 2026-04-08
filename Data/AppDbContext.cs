@@ -19,7 +19,7 @@ namespace POS_ASP_ORA.Data
         public DbSet<OwnerDrawing> OwnerDrawingModel { get; set; }
         public DbSet<ExpenseType> ExpenseTypeModel { get; set; }
         public DbSet<PurchasePayment> PurchasePaymentModel { get; set; }
-        public DbSet<Purchase> PurchaseModel { get; set; }
+        public DbSet<PurchaseModel> PurchaseModel { get; set; }
         public DbSet<PaymentMethod> PaymentMethodModel { get; set; }
         public DbSet<UnitType> UnitTypeModel { get; set; }
         public DbSet<SalePayment> SalePaymentModel { get; set; }
@@ -593,7 +593,7 @@ namespace POS_ASP_ORA.Data
                       .IsRequired();
             });
 
-            modelBuilder.Entity<Purchase>(entity =>
+            modelBuilder.Entity<PurchaseModel>(entity =>
             {
                 entity.HasKey(e => e.Id);
 
@@ -617,16 +617,10 @@ namespace POS_ASP_ORA.Data
                       .HasColumnType("NUMBER(18,6)")
                       .IsRequired();
 
-                entity.Property(e => e.Discount)
-                      .HasColumnType("NUMBER(18,6)")
-                      .IsRequired();
-
                 entity.Property(e => e.Status)
                       .HasColumnType("NUMBER(1)")
                       .IsRequired();
 
-                entity.Property(e => e.UserAccessId)
-                      .HasColumnType("NUMBER");
             });
 
             modelBuilder.Entity<PaymentMethod>(entity =>

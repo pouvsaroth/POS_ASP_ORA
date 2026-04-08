@@ -18,12 +18,12 @@ namespace POS_ASP_ORA.Controllers
             return View("~/Views/Purchase/PurchaseOrder.cshtml", data);
         }
         [HttpPost]
-        public IActionResult Save([FromBody] Purchase model)
+        public IActionResult Save([FromBody] PurchaseModel model)
         {
-            if (model == null || model.Items.Count == 0)
+            if (model == null || model.Items == null || model.Items.Count == 0)
                 return Json("Invalid data");
 
-            var result = _purchaseService.SavePurchase(model);
+            var result = _purchaseService.InsertPurchase(model);
 
             return Json(result);
         }
