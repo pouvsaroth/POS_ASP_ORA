@@ -95,7 +95,7 @@ $(document).ready(function () {
     // =========================
     // ADD
     // =========================
-    $('#btnAddProduct').on('click', function () {
+    $('#btnAddPurchaseOrder').on('click', function () {
         $('#productModalTitle').text('Add Product');
         $('#productForm')[0].reset();
         $('#productId').val('');

@@ -46,7 +46,7 @@ namespace POS_ASP_ORA.Helpers
                 using (OracleCommand cmd = new OracleCommand(procedureName, conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-
+                    cmd.BindByName = true;
                     foreach (var param in parameters)
                     {
                         cmd.Parameters.Add(param);

@@ -59,3 +59,76 @@ function deleteSelectedItems(options) {
 
     });
 }
+function site_loadDataDropDown(idDropdown,url) {
+    let $select = $(idDropdown);
+
+    $.get(url, function (data) {
+        $select.empty();
+
+        // 🔥 Keep empty option
+        $select.append(`<option value=""></option>`);
+
+        data.forEach(c => {
+            $select.append(
+                `<option value="${c.id}">${c.name}</option>`
+            );
+        });
+
+        // 🔥 Reset value
+        $select.val(null).trigger('change');
+    });
+}
+
+
+function site_loadDataDropDownTable($select, url, id = null) {
+
+    $.get(url, function (data) {
+
+        $select.empty();
+
+        $select.append(`<option value=""></option>`);
+
+        data.forEach(c => {
+
+            let selected = '';
+
+            // 🔥 set default currency = KHR
+            if (id && c.id === id) {
+                selected = 'selected';
+            }
+
+            $select.append(
+                `<option value="${c.id}" ${selected}>${c.name}</option>`
+            );
+        });
+
+        // 🔥 trigger change (important if you calculate total)
+        $select.trigger('change');
+    });
+}
+function setTodayDateYYYYMMDD() {
+    let today = new Date();
+
+    let yyyy = today.getFullYear();
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    let dd = String(today.getDate()).padStart(2, '0');
+
+    let formatted = `${yyyy}-${mm}-${dd}`; // required for input type=date
+
+    return formatted;
+}
+function setTodayDateDDMMYYYY() {
+    let today = new Date();
+
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    let yyyy = today.getFullYear();
+
+    let formatted = `${dd}-${mm}-${yyyy}`;
+
+    return formatted;
+}
+function formatDateToISO(dateStr) {
+    let parts = dateStr.split("-");
+    return `${parts[2]}-${parts[1]}-${parts[0]}`;
+}
