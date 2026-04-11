@@ -39,6 +39,7 @@ namespace POS_ASP_ORA.Models
     }
     public class PurchaseDetailModel
     {
+        public int PurchaseId { get; set; }
         public int ProductId { get; set; }
 
         public string ProductName { get; set; }

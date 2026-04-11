@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="~/css/posscreen.css" />
 
 @section Scripts {
-    <script src="~/js/posscreen.js"></script>
+    <script src="~/js/posscreen.js" asp-append-version="true"></script>
 }
 
 
@@ -28,16 +28,17 @@
         <div class="product-grid">
             @foreach (var item in Model.Products)
             {
-                <div class="product-card"
-                     data-category="@item.CategoryId"
-                     onclick="addToCart(@item.Id,'@item.ProductNameKh', 1">
+                <div class="product-card" data-category="@item.CategoryId">
                     <img src="@(string.IsNullOrEmpty(item.ImageName)
                              ? "/images/no-image.png"
                               : @Model.ImageBasePath +"/"+item.ImageName)" />
                     <h5>@item.ProductNameKh</h5>
                     <h6>@item.ProductName</h6>
-                    <p class="price">$1</p>
-                    
+                    <p class="price">@item.Price @item.Currency</p>
+                    <!-- ICON BUY BUTTON -->
+                    <button class="buy-icon" onclick="addToCart(@item.Id, '@item.ProductNameKh',@item.Price, '@item.Currency')">
+                        <i class="fa fa-shopping-cart"></i>
+                    </button>
                 </div>
             }
         </div>
@@ -57,10 +58,7 @@
                 <tbody id="cartItems"></tbody>
             </table>
 
-            <div class="summary">
-                <span>Total:</span>
-                <span id="totalAmount">$0.00</span>
-            </div>
+            
 
             <div class="actions">
                 <button>Clear Cart</button>

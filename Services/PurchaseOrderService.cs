@@ -28,6 +28,7 @@ namespace POS_ASP_ORA.Services
         {
             new OracleParameter("P_ACTION","GET"),
             new OracleParameter("P_ID",DBNull.Value),
+            new OracleParameter("P_IDLIST", DBNull.Value ),
             new OracleParameter("P_SUPPLIERID",DBNull.Value),
             new OracleParameter("P_PURCHASEDATE",DBNull.Value),
             new OracleParameter("P_TOTAL",DBNull.Value),
@@ -82,6 +83,7 @@ namespace POS_ASP_ORA.Services
             {
                 new OracleParameter("P_ACTION","INSERT"),
                 new OracleParameter("P_ID",DBNull.Value),
+                new OracleParameter("P_IDLIST", DBNull.Value ),
                 new OracleParameter("P_SUPPLIERID",model.SupplierId),
                 new OracleParameter("P_PURCHASEDATE",model.PurchaseDate),
                 new OracleParameter("P_TOTAL",model.TotalAmount),
@@ -125,7 +127,8 @@ namespace POS_ASP_ORA.Services
             var parameters = new List<OracleParameter>
             {
                 new OracleParameter("P_ACTION","INSERT_DETAIL"),
-                new OracleParameter("P_ID",DBNull.Value),
+                new OracleParameter("P_ID",d.PurchaseId),
+                new OracleParameter("P_IDLIST", DBNull.Value ),
                 new OracleParameter("P_SUPPLIERID",DBNull.Value),
                 new OracleParameter("P_PURCHASEDATE",DBNull.Value),
                 new OracleParameter("P_TOTAL",DBNull.Value),
@@ -149,7 +152,7 @@ namespace POS_ASP_ORA.Services
 
             _db.ExecuteNonQuery("SP_PURCHASE_CRUD", parameters);
         }
-
+       
         // =========================
         // INSERT PAYMENT
         // =========================
@@ -159,6 +162,7 @@ namespace POS_ASP_ORA.Services
             {
                 new OracleParameter("P_ACTION","INSERT_PAYMENT"),
                 new OracleParameter("P_ID",purchaseId),
+                new OracleParameter("P_IDLIST", DBNull.Value ),
                 new OracleParameter("P_SUPPLIERID",DBNull.Value),
                 new OracleParameter("P_PURCHASEDATE",DBNull.Value),
                 new OracleParameter("P_TOTAL",DBNull.Value),
@@ -186,14 +190,17 @@ namespace POS_ASP_ORA.Services
         // =========================
         // DELETE
         // =========================
-        public string DeletePurchase(int id)
+        public string DeleteMultiple(List<int> ids)
         {
             try
             {
+                string idStr = string.Join(",", ids);
+
                 var parameters = new List<OracleParameter>
                 {
-                    new OracleParameter("P_ACTION","DELETE"),
-                    new OracleParameter("P_ID",id),
+                    new OracleParameter("P_ACTION","DELETE_MULTIPLE"),
+                    new OracleParameter("P_ID",DBNull.Value),
+                    new OracleParameter("P_IDLIST", idStr ),
                     new OracleParameter("P_SUPPLIERID",DBNull.Value),
                     new OracleParameter("P_PURCHASEDATE",DBNull.Value),
                     new OracleParameter("P_TOTAL",DBNull.Value),

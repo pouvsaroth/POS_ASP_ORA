@@ -8,6 +8,6 @@ namespace POS_ASP_ORA.Services.Interfaces
         (int id, string billNo) InsertPurchase(PurchaseModel model);
         void InsertDetail(PurchaseDetailModel detail);
         void InsertPayment(int purchaseId, decimal paid);
-        string DeletePurchase(int id);
+        string DeleteMultiple(List<int> ids);
     }
 }

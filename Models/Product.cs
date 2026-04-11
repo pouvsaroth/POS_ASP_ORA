@@ -62,5 +62,7 @@ namespace POS_ASP_ORA.Models
         public IFormFile ImageFile { get; set; }
         public string SupplierName { get; set; } = string.Empty;
         public string OldImageName { get; set; } = string.Empty;
+        public decimal? Price { get; set; }
+        public string Currency { get; set; } = "USD"; // Default currency, can be changed as needed
     }
 }

@@ -59,7 +59,7 @@ function deleteSelectedItems(options) {
 
     });
 }
-function site_loadDataDropDown(idDropdown,url) {
+function site_loadDataDropDown(idDropdown, url, defaultid = null) {
     let $select = $(idDropdown);
 
     $.get(url, function (data) {
@@ -69,13 +69,21 @@ function site_loadDataDropDown(idDropdown,url) {
         $select.append(`<option value=""></option>`);
 
         data.forEach(c => {
+
+            let selected = '';
+
+            // 🔥 set default currency = KHR
+            if (defaultid && c.id === defaultid) {
+                selected = 'selected';
+            }
+
             $select.append(
-                `<option value="${c.id}">${c.name}</option>`
+                `<option value="${c.id}" ${selected}>${c.name}</option>`
             );
         });
 
         // 🔥 Reset value
-        $select.val(null).trigger('change');
+        $select.trigger('change');
     });
 }
 

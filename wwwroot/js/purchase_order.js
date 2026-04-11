@@ -30,7 +30,48 @@ $(document).ready(function () {
     
 
 });
+$('#deleteSelected').on('click', function () {
 
+    var ids = [];
+
+    $('.row-checkbox:checked').each(function () {
+        ids.push($(this).val());
+    });
+
+    if (ids.length === 0) {
+        showToast("Please select at least one product", true);
+        return;
+    }
+
+    if (!confirm('Are you sure to delete?')) return;
+
+    $.ajax({
+        url: '/PurchaseOrder/DeleteMultiple',
+        type: 'POST',
+        data: { ids: ids },
+        success: function (res) {
+            showToast(res);
+            setTimeout(() => location.reload(), 800);
+        }
+    });
+});
+function showToast(message, isError = false) {
+    var bg = isError ? 'bg-danger' : 'bg-success';
+
+    var toast = $(`
+            <div class="toast align-items-center text-white ${bg} border-0 position-fixed bottom-0 end-0 m-3" role="alert">
+                <div class="d-flex">
+                    <div class="toast-body">${message}</div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                </div>
+            </div>
+        `);
+
+    $('body').append(toast);
+    new bootstrap.Toast(toast[0]).show();
+
+    setTimeout(() => toast.remove(), 3000);
+}
 // =========================
 // ADD
 // =========================
@@ -139,23 +180,16 @@ function calculateSummary() {
 
     });
 
-    $('#subtotal').val(subtotal.toFixed(2));
-
-    let discount = parseFloat($('#discount').val()) || 0;
-    let total = subtotal - discount;
+    $('#total').val(subtotal.toFixed(2));
     let paid = parseFloat($('#paid').val()) || 0;
 
-    $('#total').val(total.toFixed(2));
-    $('#balance').val((total - paid).toFixed(2));
+    $('#balance').val((subtotal - paid).toFixed(2));
 }
 
 function calculateTotal() {
-    let subtotal = parseFloat($("#subtotal").val()) || 0;
-    let discount = parseFloat($("#discount").val()) || 0;
-    let total = subtotal - discount;
+    let total = parseFloat($("#total").val()) || 0;
     let paid = parseFloat($("#paid").val()) || 0;
 
-    $("#total").val(total.toFixed(2));
     $("#balance").val((total - paid).toFixed(2));
 }
 
@@ -199,6 +233,7 @@ function savePurchase() {
         BillNo: $("#billNo").val(),
         PurchaseDate: formatDateToISO($("#purchaseDate").val()),
         Total: parseFloat($("#total").val()) || 0,
+        Paid: parseFloat($("#paid").val()) || 0,
         Status: 1,
         Items: purchaseItems
     };
@@ -209,7 +244,7 @@ function savePurchase() {
         data: JSON.stringify(data),
         contentType: "application/json",
         success: function (res) {
-            alert(res);
+            alert("Success");
             location.reload();
         },
         error: function () {

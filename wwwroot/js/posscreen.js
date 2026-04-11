@@ -1,6 +1,6 @@
 ﻿let cart = [];
 
-function addToCart(id, name, price) {
+function addToCart(id, name, price, currency) {
 
     let item = cart.find(x => x.id === id);
 
@@ -10,10 +10,10 @@ function addToCart(id, name, price) {
         cart.push({ id: id, name: name, price: price, qty: 1 });
     }
 
-    renderCart();
+    renderCart(currency);
 }
 
-function renderCart() {
+function renderCart(currency) {
     let html = "";
     let total = 0;
 
@@ -26,25 +26,25 @@ function renderCart() {
                 <td>${item.name}</td>
 
                 <td>
-                    <button onclick="decreaseQty(${index})">-</button>
+                    <button onclick="decreaseQty(${index},'${currency}')">-</button>
                     ${item.qty}
-                    <button onclick="increaseQty(${index})">+</button>
+                    <button onclick="increaseQty(${index},'${currency}')">+</button>
                 </td>
 
-                <td>$${item.price}</td>
-                <td>$${itemTotal.toFixed(2)}</td>
+                <td>${item.price} ${currency}</td>
+                <td>${itemTotal.toFixed(2)} ${currency}</td>
 
                 <td>
-                    <button onclick="removeItem(${index})">❌</button>
+                    <button onclick="removeItem(${index},${currency})">❌</button>
                 </td>
             </tr>
         `;
     });
 
     document.getElementById("cartItems").innerHTML = html;
-    document.getElementById("totalAmount").innerText = "$" + total.toFixed(2);
-    document.getElementById("subtotal").innerText = "$" + total.toFixed(2);
-    document.getElementById("total").innerText = "$" + total.toFixed(2);
+    //document.getElementById("totalAmount").innerText = total.toFixed(2) + currency;
+    document.getElementById("subtotal").innerText = total.toFixed(2) + currency;
+    document.getElementById("total").innerText = total.toFixed(2) + currency;
 }
 
 function calculateChange() {
@@ -84,20 +84,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-function increaseQty(index) {
+function increaseQty(index, currency) {
     cart[index].qty++;
-    renderCart();
+    renderCart(currency);
 }
 
-function decreaseQty(index) {
+function decreaseQty(index,currency) {
     if (cart[index].qty > 1) {
         cart[index].qty--;
     } else {
         removeItem(index);
     }
-    renderCart();
+    renderCart(currency);
 }
-function removeItem(index) {
+function removeItem(index, currency) {
     cart.splice(index, 1);
-    renderCart();
+    renderCart(currency);
 }

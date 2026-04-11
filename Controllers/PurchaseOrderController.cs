@@ -24,6 +24,35 @@ namespace POS_ASP_ORA.Controllers
                 return Json("Invalid data");
 
             var result = _purchaseService.InsertPurchase(model);
+            //payment
+            if (result.id > 0) {
+                _purchaseService.InsertPayment(result.id, model.Paid);
+            }
+            //detail
+            if (result.id > 0 && model.Items.Count>0) {
+                foreach (var detail in model.Items)
+                {
+                    detail.PurchaseId = result.id;
+                    _purchaseService.InsertDetail(detail);
+                    
+                }
+            }
+
+            return Json(result);
+        }
+
+        // =========================
+        // DELETE MULTIPLE (AJAX)
+        // =========================
+        [HttpPost]
+        public IActionResult DeleteMultiple(List<int> ids)
+        {
+
+
+            if (ids == null || ids.Count == 0)
+                return Json("No items selected");
+
+            var result = _purchaseService.DeleteMultiple(ids);
 
             return Json(result);
         }

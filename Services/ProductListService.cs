@@ -60,7 +60,9 @@ namespace POS_ASP_ORA.Services
                     QtyAlert = row["QTYALERT"] != DBNull.Value ? Convert.ToInt32(row["QTYALERT"]) : (int?)null,
                     ImageName = row["IMAGENAME"].ToString(),
                     Description = row["DESCRIPTION"] != DBNull.Value ? row["DESCRIPTION"].ToString() : null,
-                    Status = Convert.ToInt32(row["STATUS"])
+                    Status = Convert.ToInt32(row["STATUS"]),
+                    Price = row["saleprice"] != DBNull.Value ? Convert.ToDecimal(row["saleprice"]) : (decimal?)null,
+                    Currency= row["CODE"].ToString(),
                 });
             }
 
