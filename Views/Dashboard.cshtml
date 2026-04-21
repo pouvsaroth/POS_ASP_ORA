@@ -1,0 +1,119 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<div class="dashboard-container">
+
+    <!-- TOP SUMMARY -->
+    <div class="summary-section">
+
+        <div class="summary-card green">
+            <h4>Today Sales</h4>
+            <h2>$@ViewBag.TodaySales</h2>
+        </div>
+
+        <div class="summary-card blue">
+            <h4>Orders</h4>
+            <h2>@ViewBag.TotalOrders</h2>
+        </div>
+
+        <div class="summary-card orange">
+            <h4>Products</h4>
+            <h2>@ViewBag.TotalProducts</h2>
+        </div>
+
+        <div class="summary-card red">
+            <h4>Low Stock</h4>
+            <h2>@ViewBag.LowStock</h2>
+        </div>
+
+    </div>
+
+    <!-- CHART + TOP PRODUCTS -->
+    <div class="middle-section">
+
+        <!-- SALES CHART -->
+        <div class="chart-box">
+            <h4>Sales Overview</h4>
+            <canvas id="salesChart"></canvas>
+        </div>
+
+        <!-- TOP PRODUCTS -->
+        <div class="top-products">
+            <h4>Top Products</h4>
+
+            <ul>
+                @if (ViewBag.TopProducts != null)
+                {
+                    foreach (var item in ViewBag.TopProducts)
+                    {
+                        <li>
+                            <span>@item.ProductName</span>
+                            <b>@item.Qty</b>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- RECENT ORDERS -->
+    <div class="bottom-section">
+
+        <h4>Recent Orders</h4>
+
+        <table class="dashboard-table">
+            <thead>
+                <tr>
+                    <th>Invoice</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ViewBag.RecentOrders != null)
+                {
+                    foreach (var item in ViewBag.RecentOrders)
+                    {
+                        <tr>
+                            <td>@item.InvoiceNo</td>
+                            <td>@item.Date</td>
+                            <td>$@item.Total</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+<!-- CHART -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('salesChart').getContext('2d');
+
+    const salesData = @Html.Raw(Json.Serialize(ViewBag.SalesData ?? new int[] { 10, 20, 30, 40, 50, 60, 70 }));
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{
+                label: 'Sales',
+                data: salesData,
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+</script>

@@ -36,5 +36,9 @@ namespace POS_ASP_ORA.Models
 
         [Column("USERACCESSID")]
         public int? UserAccessID { get; set; }
+
+        public List<SaleDetail> Details { get; set; }
+        public SalePayment Payment { get; set; }
+        public string CustomerName { get; set; }
     }
 }

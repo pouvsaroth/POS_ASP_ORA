@@ -1,0 +1,82 @@
+﻿.dashboard-container {
+    padding: 15px;
+}
+
+/* SUMMARY */
+.summary-section {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.summary-card {
+    padding: 15px;
+    border-radius: 10px;
+    color: white;
+}
+
+    .summary-card h4 {
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .summary-card h2 {
+        margin: 5px 0 0;
+    }
+
+/* COLORS */
+.green {
+    background: #28a745;
+}
+
+.blue {
+    background: #007bff;
+}
+
+.orange {
+    background: #fd7e14;
+}
+
+.red {
+    background: #dc3545;
+}
+
+/* MIDDLE */
+.middle-section {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.chart-box, .top-products, .bottom-section {
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+    /* TOP PRODUCTS */
+    .top-products ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .top-products li {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+/* TABLE */
+.dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .dashboard-table th,
+    .dashboard-table td {
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+    }

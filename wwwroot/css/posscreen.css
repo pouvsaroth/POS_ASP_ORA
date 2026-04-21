@@ -107,18 +107,21 @@
 /* Buttons */
 .actions {
     display: flex;
+    justify-content: center;
     gap: 10px;
     margin-top: 10px;
 }
 
-.actions button {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
-    background: #EADFD7;
-    cursor: pointer;
-}
+    .actions button {
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        background: #EADFD7;
+        cursor: pointer;
+        
+        flex: none; 
+        width: auto;
+    }
 
 .actions .pay {
     background: #2E7D32;

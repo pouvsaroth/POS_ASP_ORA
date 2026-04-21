@@ -9,11 +9,13 @@ namespace POS_ASP_ORA.Controllers
         private readonly IProductCategoryService _categoryService;
         private readonly IProductListService _productListService;
         private readonly IConfiguration _config;
-        public POSScreenController(IProductCategoryService categoryService, IProductListService productListService, IConfiguration config)
+        private readonly IPOSScreenService _posScreenService;
+        public POSScreenController(IProductCategoryService categoryService, IProductListService productListService, IConfiguration config, IPOSScreenService posScreenService)
         {
             _categoryService = categoryService;
             _productListService = productListService;
             _config = config;
+            _posScreenService = posScreenService;
         }
 
         // LIST
@@ -29,67 +31,15 @@ namespace POS_ASP_ORA.Controllers
             return View("~/Views/Sales/POSScreen.cshtml",model);
         }
 
-        // INSERT
         [HttpPost]
-        public IActionResult Create(Category model)
+        public IActionResult SaveInvoice([FromBody] Sale model)
         {
-            if (string.IsNullOrEmpty(model.CategoryName))
-            {
-                TempData["Error"] = "Category Name is required.";
-                return RedirectToAction("ProductCategory");
-            }
+            if (model == null || model.Details == null || model.Details.Count == 0)
+                return Json("Invalid");
 
-            string message = _categoryService.InsertCategory(model);
+            var result = _posScreenService.SaveSales(model);
 
-            if (message.Contains("successfully"))
-                TempData["Success"] = message;
-            else
-                TempData["Error"] = message;
-
-            return RedirectToAction("ProductCategory");
-        }
-
-        // UPDATE
-        [HttpPost]
-        public IActionResult Update(Category model)
-        {
-            if (string.IsNullOrEmpty(model.CategoryName))
-            {
-                TempData["Error"] = "Category Name is required.";
-                return RedirectToAction("ProductCategory");
-            }
-            string message = _categoryService.UpdateCategory(model);
-
-            if (message.Contains("successfully"))
-                TempData["Success"] = message;
-            else
-                TempData["Error"] = message;
-
-            return RedirectToAction("ProductCategory");
-        }
-
-        // DELETE
-        [HttpPost]
-        public IActionResult Delete(int id)
-        {
-            var result = _categoryService.DeleteCategory(id);
-            return Json(new { message = result });
-        }
-
-        [HttpPost]
-        public IActionResult DeleteSelected([FromBody] List<int> ids)
-        {
-            if (ids == null || !ids.Any())
-            {
-                return BadRequest(new { message = "No categories selected for deletion." });
-            }
-
-            foreach (var id in ids)
-            {
-                _categoryService.DeleteCategory(id);
-            }
-
-            return Json(new { message = "Selected categories deleted successfully." });
+            return Json(result);
         }
     }
 }

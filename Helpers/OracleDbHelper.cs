@@ -7,22 +7,59 @@ namespace POS_ASP_ORA.Helpers
     {
         private readonly string _connectionString;
 
+        private OracleConnection _connection;
+        private OracleTransaction _transaction;
+
         public OracleDbHelper(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("OracleDb");
         }
 
-        // Execute Insert / Update / Delete
+        // =========================
+        // 🔥 BEGIN TRANSACTION
+        // =========================
+        public void BeginTransaction()
+        {
+            _connection = new OracleConnection(_connectionString);
+            _connection.Open();
+            _transaction = _connection.BeginTransaction();
+        }
+
+        // =========================
+        // 🔥 COMMIT
+        // =========================
+        public void Commit()
+        {
+            _transaction?.Commit();
+            _connection?.Close();
+            _transaction = null;
+            _connection = null;
+        }
+
+        // =========================
+        // 🔥 ROLLBACK
+        // =========================
+        public void Rollback()
+        {
+            _transaction?.Rollback();
+            _connection?.Close();
+            _transaction = null;
+            _connection = null;
+        }
+
+        // =========================
+        // EXECUTE NON QUERY
+        // =========================
         public void ExecuteNonQuery(string procedureName, List<OracleParameter> parameters)
         {
-            using (OracleConnection conn = new OracleConnection(_connectionString))
+            // 🔥 Use existing connection if transaction is active
+            if (_connection != null)
             {
-                conn.Open();
-
-                using (OracleCommand cmd = new OracleCommand(procedureName, conn))
+                using (OracleCommand cmd = new OracleCommand(procedureName, _connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.BindByName = true;
+                    cmd.Transaction = _transaction;
 
                     foreach (var param in parameters)
                     {
@@ -32,9 +69,32 @@ namespace POS_ASP_ORA.Helpers
                     cmd.ExecuteNonQuery();
                 }
             }
+            else
+            {
+                // ✅ fallback (no transaction)
+                using (OracleConnection conn = new OracleConnection(_connectionString))
+                {
+                    conn.Open();
+
+                    using (OracleCommand cmd = new OracleCommand(procedureName, conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.BindByName = true;
+
+                        foreach (var param in parameters)
+                        {
+                            cmd.Parameters.Add(param);
+                        }
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
         }
 
-        // Execute Select
+        // =========================
+        // EXECUTE QUERY
+        // =========================
         public DataTable ExecuteQuery(string procedureName, List<OracleParameter> parameters)
         {
             DataTable dt = new DataTable();
@@ -47,6 +107,7 @@ namespace POS_ASP_ORA.Helpers
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.BindByName = true;
+
                     foreach (var param in parameters)
                     {
                         cmd.Parameters.Add(param);
